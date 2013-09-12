@@ -294,18 +294,19 @@ provoda.View.extendTo(RunMapCtr, {
 			};*/
 
 
+
 			var getAltVPoints = function(el){
 				var pjr = _this.projection(el);
 				return [
 					{
-						x: pjr[0],
-						y: (_this.height - (el[2] - min_alt)),
-						z: _this.height - pjr[1]
+						x: Math.round(pjr[0]),
+						y: Math.round((_this.height - (el[2] - min_alt))),
+						z: Math.round(_this.height - pjr[1])
 					},
 					{
-						x: (el[2] - min_alt),
-						y: pjr[1],
-						z: pjr[0]
+						x: Math.round((el[2] - min_alt)),
+						y: Math.round(pjr[1]),
+						z: Math.round(pjr[0])
 					}
 				];
 			};
