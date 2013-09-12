@@ -25,10 +25,10 @@ provoda.View.extendTo(RunMapCtr, {
 
 
 		knodes.bottom_group = this.svg.append('g');
-		knodes.bottom_path = knodes.bottom_group.append('path').style({
+		/*knodes.bottom_path = knodes.bottom_group.append('path').style({
 			stroke: '#333',
 			"fill": 'none'
-		});
+		});*/
 		knodes.bottom_lines = knodes.bottom_group.append('g');
 
 
@@ -56,6 +56,13 @@ provoda.View.extendTo(RunMapCtr, {
 		this.grays = colors.getRGBGradient(250, ['#333333', '#EEEEEE'].map(colors.parseHEXString));
 	},
 	earth_radius: mh.earth_radius,
+	updateManyStates: function(obj) {
+		var changes_list = [];
+		for (var name in obj) {
+			changes_list.push(name, obj[name]);
+		}
+		this._updateProxy(changes_list);
+	},
 	createBBDetails: function() {
 		var container = this.c.parent();
 
@@ -82,10 +89,33 @@ provoda.View.extendTo(RunMapCtr, {
 			.scale(this.projection.scale())
 			.on("zoom", function() {
 				//_this.redraw;
-				_this.setVisState('map_event', Date.now());
+
+
+
+			
+
+				if (d3.event) {
+					var result = {};
+					var t = _this.projection.translate();
+					var t1 =t, t2 = d3.event.translate,
+						tval = [t2[0]-t1[0], t2[1]-t1[1]];
+
+					result.translate = tval;
+					result.scale = d3.event.scale;
+
+					_this.projection
+							//.translate(d3.event.translate)
+							.scale(d3.event.scale);
+
+					_this.updateManyStates(result);
+				}
+
+
+				//_this.setVisState('map_event', Date.now());
 			}));
 
 	},
+
 	'compx-time_value': {
 		depends_on: ['selected_time', 'cvs_data'],
 		fn: function(selected_time, cvs_data) {
@@ -144,33 +174,24 @@ provoda.View.extendTo(RunMapCtr, {
 
 				var _this = this;
 				(function(){
-					var dot = this.svg.append('circle')
+					_this.dot = this.svg.append('circle')
 						.attr("r", 5)
 						.style({
 							stroke: 'none',
 							"fill": 'red'
 						});
 
-					var setDot = function(distance){
-						var pp = mh.getPointAtDistance(geodata.geometry.coordinates, distance);
-						var pjr = _this.projection(pp.target);
-
-					
-						dot
-							.attr("cy", pjr[1])
-							.attr("cx", pjr[0]);
-					};
 
 					var input = document.querySelector('input.dot');
 					if (!input){
-						setDot(15985);
+						_this.setDot(geodata, 15985);
 						return;
 					}
 					input.oninput = function(){
-						setDot(input.value * 1);
+						_this.setDot(geodata, input.value * 1);
 					};
 
-					setDot(input.value * 1);
+					_this.setDot(geodata, input.value * 1);
 
 						
 				}).call(this);
@@ -180,44 +201,35 @@ provoda.View.extendTo(RunMapCtr, {
 			
 		}
 	},
+	setDot: function(geodata, distance){
+		var pp = mh.getPointAtDistance(geodata.geometry.coordinates, distance);
+		var pjr = this.projection(pp.target);
+
+	
+		this.dot
+			.attr("cy", pjr[1])
+			.attr("cx", pjr[0]);
+	},
+	'compx-ddot': {
+		depends_on: ['geodata', 'basedet', 'scale'],
+		fn: function(geodata, basedet) {
+			if (basedet && geodata){
+				this.setDot(geodata, 15985);
+			}
+		}
+	},
 
 	'compx-draw': {
-		depends_on: ['basedet', 'cvs_data', 'time_value', 'vis_map_event'],
-		fn: function(basedet, cvs_data, time_value) {
+		depends_on: ['basedet', 'cvs_data', 'time_value', 'scale'],
+		fn: function(basedet, cvs_data, time_value, scale) {
 			if (!basedet || !cvs_data || typeof time_value == 'undefined'){
 				return;
 			}
-			var t = this.projection.translate();
-
 			
 
-			if (d3.event) {
-				var t1 =t, t2 = d3.event.translate,
-					tval = [t2[0]-t1[0], t2[1]-t1[1]];
-
-				if (this.current_translate != tval){
-					this.current_translate = tval;
-					this.knodes.main_group.attr("transform", "translate(" + tval+ ")");
-				}
-				if (this.current_scale != d3.event.scale){
-					this.current_scale = d3.event.scale;
-					this.projection
-						//.translate(d3.event.translate)
-						.scale(d3.event.scale);
-					this.knodes.base.attr("d", this.path);
-					this.knodes.base.points_cache_key = this.behavior.scale();
-					mh.getPoints(cvs_data, this.knodes, time_value, false, cvs_data.start_time, this.total_distance);
-				}
-				
-				
-				
-
-
-			} else {
-				this.knodes.base.attr("d", this.path);
-				this.knodes.base.points_cache_key = this.behavior.scale();
-				mh.getPoints(cvs_data, this.knodes, time_value, false, cvs_data.start_time, this.total_distance);
-			}
+			this.knodes.base.attr("d", this.path);
+			this.knodes.base.points_cache_key = this.behavior.scale();
+			mh.getPoints(cvs_data, this.knodes, time_value, false, cvs_data.start_time, this.total_distance);
 
 			
 
@@ -228,8 +240,16 @@ provoda.View.extendTo(RunMapCtr, {
 			return {};
 		}
 	},
+	'stch-translate': function(state) {
+		var translate_str =  "translate(" + state + ")";
+		this.knodes.main_group.attr("transform", translate_str);
+		this.dot.attr("transform", translate_str);
+		this.knodes.bottom_group.attr("transform", "translate(" + [state[0], 0] + ")");
+		this.knodes.left_group.attr("transform", "translate(" + [0, state[1]] + ")");
+		
+	},
 	'compx-altit':{
-		depends_on: ['basedet', 'cvs_data', 'geodata'],
+		depends_on: ['basedet', 'cvs_data', 'geodata', 'scale'],
 		fn: function(draw, cvs_data, geodata) {
 			if (!draw || !geodata){
 				return;
@@ -384,7 +404,7 @@ provoda.View.extendTo(RunMapCtr, {
 
 
 			});
-			_this.knodes.bottom_path.attr("d", getPathData(points_bottom));
+			//_this.knodes.bottom_path.attr("d", getPathData(points_bottom));
 
 
 
