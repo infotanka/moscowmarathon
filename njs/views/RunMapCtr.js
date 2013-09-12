@@ -96,7 +96,7 @@ provoda.View.extendTo(RunMapCtr, {
 
 		$(window).on('resize', spv.debounce(function() {
 			_this.checkSizes();
-		},200));
+		},100));
 
 
 
@@ -110,7 +110,7 @@ provoda.View.extendTo(RunMapCtr, {
 			result.width = container.width();
 		}
 
-		result.height = Math.max(window.innerHeight - 200, 400);
+		result.height = Math.max(window.innerHeight - 70, 400);
 		this.updateManyStates(result);
 	},
 	updateManyStates: function(obj) {
@@ -197,11 +197,9 @@ provoda.View.extendTo(RunMapCtr, {
 
 				var _this = this;
 
-				this.nextTick(function() {
-					this.updateManyStates({
-						scale: 0,
-						translate: [0,0]
-					});
+				this.updateManyStates({
+					scale: 0,
+					translate: [0,0]
 				});
 
 				//this.redraw();
@@ -255,7 +253,7 @@ provoda.View.extendTo(RunMapCtr, {
 			
 
 			this.knodes.base.attr("d", this.path);
-			this.knodes.base.points_cache_key = this.behavior.scale();
+			this.knodes.base.points_cache_key = this.projection.scale() + '_' + this.projection.translate();
 			mh.getPoints(cvs_data, this.knodes, time_value, false, cvs_data.start_time, this.total_distance);
 
 			
