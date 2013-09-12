@@ -17,8 +17,12 @@ path {
 	height: 400px;
 }
 .bmap{
-	height: 700px;
 	font-size: 13px;
+}
+.mapoverlay{
+	position: absolute;
+	left:0;
+	right:0;
 }
 .controlls{
 	height: 345px;

@@ -4,16 +4,29 @@ function(d3, provoda, spv, simplify, veon, colors, mh, $) {
 
 var RunMapCtr = function() {};
 provoda.View.extendTo(RunMapCtr, {
+	gender_grads: [colors.getRGBGradient(250, ['#FFCBD5', '#EE2046'].map(colors.parseHEXString)), colors.getRGBGradient(250, ['#B8E8FF', '#1D56DF'].map(colors.parseHEXString))],
+	grays: colors.getRGBGradient(250, ['#333333', '#EEEEEE'].map(colors.parseHEXString)),
 	createBase: function() {
 
 		var svg = document.createElementNS(mh.SVGNS, 'svg');
 		this.c = $(svg).css('display', 'none');
 		this.svg = d3.select(svg);
+
+
+		this.dot = this.svg.append('circle')
+			.attr("r", 5)
+			.style({
+				stroke: 'none',
+				"fill": 'red'
+			});
+
 		this.knodes = {};
 		var knodes = this.knodes;
 
 		var main_group = this.svg.append('g');
 		knodes.main_group = main_group;
+
+
 
 		knodes.base = main_group.append("path");
 
@@ -47,15 +60,59 @@ provoda.View.extendTo(RunMapCtr, {
 		
 		this.wch(this, 'vis_con-appended', function(e) {
 			if (e.value){
-				this.createBBDetails();
+				this.checkSizes();
 			}
 			this.setVisState('ready', e.value);
 			
 		});
 
-		this.grays = colors.getRGBGradient(250, ['#333333', '#EEEEEE'].map(colors.parseHEXString));
+
+		this.projection = d3.geo.mercator().scale(1).translate([0, 0]);
+		this.path = d3.geo.path().projection(this.projection);
+		this.behavior = d3.behavior.zoom();
+
+		this.behavior.on("zoom", function() {
+			if (d3.event) {
+				var result = {};
+				var t = _this.projection.translate();
+				var t1 = t, t2 = d3.event.translate,
+					tval = [t2[0]-t1[0], t2[1]-t1[1]];
+
+				result.translate = tval;
+				result.scale = d3.event.scale;
+
+				_this.projection
+						//.translate(d3.event.translate)
+						.scale(d3.event.scale);
+
+				_this.updateManyStates(result);
+			}
+
+
+			//_this.setVisState('map_event', Date.now());
+		});
+		this.svg.call(this.behavior);
+		var _this = this;
+
+		$(window).on('resize', spv.debounce(function() {
+			_this.checkSizes();
+		},200));
+
+
+
 	},
 	earth_radius: mh.earth_radius,
+	checkSizes: function() {
+		var result = {};
+		var container = this.c.parent();
+		
+		if (container[0]){
+			result.width = container.width();
+		}
+
+		result.height = Math.max(window.innerHeight - 200, 400);
+		this.updateManyStates(result);
+	},
 	updateManyStates: function(obj) {
 		var changes_list = [];
 		for (var name in obj) {
@@ -63,58 +120,7 @@ provoda.View.extendTo(RunMapCtr, {
 		}
 		this._updateProxy(changes_list);
 	},
-	createBBDetails: function() {
-		var container = this.c.parent();
 
-
-		this.width = $(container).width();
-		this.height = $(container).height();
-		this.c.css('display', '');
-		this.projection = d3.geo.mercator().scale(1).translate([0, 0]);
-		this.path = d3.geo.path().projection(this.projection);
-
-		this.behavior = d3.behavior.zoom();
-
-		this.svg.attr({
-			width: this.width,
-			height: this.height
-		});
-		
-
-		
-		var _this = this;
-
-		this.svg.call(this.behavior
-			.translate(this.projection.translate())
-			.scale(this.projection.scale())
-			.on("zoom", function() {
-				//_this.redraw;
-
-
-
-			
-
-				if (d3.event) {
-					var result = {};
-					var t = _this.projection.translate();
-					var t1 =t, t2 = d3.event.translate,
-						tval = [t2[0]-t1[0], t2[1]-t1[1]];
-
-					result.translate = tval;
-					result.scale = d3.event.scale;
-
-					_this.projection
-							//.translate(d3.event.translate)
-							.scale(d3.event.scale);
-
-					_this.updateManyStates(result);
-				}
-
-
-				//_this.setVisState('map_event', Date.now());
-			}));
-
-	},
 
 	'compx-time_value': {
 		depends_on: ['selected_time', 'cvs_data'],
@@ -125,22 +131,18 @@ provoda.View.extendTo(RunMapCtr, {
 		}
 	},
 	'compx-genderpaths': {
-		depends_on: ['cvs_data', 'vis_ready'],
-		fn: function(cvs_data, vis_ready) {
-			if (!vis_ready || !cvs_data){
+		depends_on: ['cvs_data'],
+		fn: function(cvs_data) {
+			if (!cvs_data){
 				return;
 			}
 			this.knodes.age_areas = {};
 
-			var man_colors_gradient = colors.getRGBGradient(250, ['#B8E8FF', '#1D56DF'].map(colors.parseHEXString));
-			var woman_colors_gradient = colors.getRGBGradient(250, ['#FFCBD5', '#EE2046'].map(colors.parseHEXString));
-
-			var gender_grads = [woman_colors_gradient, man_colors_gradient];
 
 			var array = cvs_data.runners_groups.slice().reverse();
 			var _this = this;
 			array.forEach(function(el) {
-				var grad = gender_grads[el.gender];
+				var grad = _this.gender_grads[el.gender];
 				var color = colors.getGradColor(el.num, 1, el.groups_count, grad);
 				_this.knodes.age_areas[ el.key ] = (_this.knodes.areas_group.append('path').style({
 					stroke: 'none',
@@ -150,37 +152,62 @@ provoda.View.extendTo(RunMapCtr, {
 			});
 		}
 	},
+	'compx-basepath': {
+		depends_on: ['geodata'],
+		fn: function(geodata) {
+			var rad_distance = d3.geo.length(geodata);
+			this.total_distance = rad_distance * this.earth_radius;
+			this.knodes.base.data([geodata]);
+		}
+	},
+	'compx-bd': {
+		depends_on: ['height', 'width', 'vis_ready'],
+		fn: function(height, width, vis_ready) {
+			if (!height || !width || !vis_ready){
+				return;
+			}
+			var container = this.c.parent();
+			container.css('height', height);
+			this.width = width;
+			this.height = height;
+			this.c.css('display', '');
+			this.svg.attr({
+				width: this.width,
+				height: this.height
+			});
+	
+				
+			return Date.now();
+		}
+	},
 	'compx-basedet': {
-		depends_on: ['geodata', 'vis_ready'],
-		fn: function(geodata, vis_ready) {
-			if (geodata && vis_ready){
+		depends_on: ['geodata', 'bd'],
+		fn: function(geodata, bd) {
+			if (geodata && bd){
+				this.projection.scale(1).translate([0, 0]);
 				var b = this.path.bounds(geodata),
 					s = 0.95 / Math.max((b[1][0] - b[0][0]) / this.width, (b[1][1] - b[0][1]) / this.height),
 					t = [(this.width - s * (b[1][0] + b[0][0])) / 2, (this.height - s * (b[1][1] + b[0][1])) / 2];
 
 				this.behavior.translate(t).scale(s);
 
-				this.projection
-					.scale(s)
-					.translate(t);
+				this.projection.scale(s).translate(t);
 
 				
-				this.knodes.base.data([geodata]);
 
-				var rad_distance = d3.geo.length(geodata);
-				this.total_distance = rad_distance * this.earth_radius;
+				var _this = this;
+
+				this.nextTick(function() {
+					this.updateManyStates({
+						scale: 0,
+						translate: [0,0]
+					});
+				});
 
 				//this.redraw();
 
 				var _this = this;
 				(function(){
-					_this.dot = this.svg.append('circle')
-						.attr("r", 5)
-						.style({
-							stroke: 'none',
-							"fill": 'red'
-						});
-
 
 					var input = document.querySelector('input.dot');
 					if (!input){
@@ -196,7 +223,7 @@ provoda.View.extendTo(RunMapCtr, {
 						
 				}).call(this);
 
-				return {};
+				return Date.now();
 			}
 			
 		}
@@ -369,9 +396,8 @@ provoda.View.extendTo(RunMapCtr, {
 
 
 
-
-			var bottom_range = [16998, Infinity];
 			var points_bottom = [];
+			var bottom_range = [16998, Infinity];
 			var bottom_array = getPathPartByRange(coordinates, bottom_range);
 			bottom_array.forEach(function(el){
 				var point = getAltVPoints(el);
@@ -390,7 +416,12 @@ provoda.View.extendTo(RunMapCtr, {
 					stroke: 'none',
 					fill: colors.getGradColor(el.mid_dist, complects_bo.min_dist, complects_bo.max_dist, _this.grays),
 					opacity: 0.8
-				}).attr('d', 'M' + el.start.x + ',' + _this.height + ' L ' + formatForPath(el.start) + ' L ' + formatForPath(el.end) + ' L ' + el.end.x +',' + _this.height + "Z");
+				}).attr('d',
+					'M' + el.start.x + ',' + _this.height +
+					' L ' + formatForPath(el.start) +
+					' L ' + formatForPath(el.end) +
+					' L ' + el.end.x +',' + _this.height +
+					'Z');
 
 				_this.knodes.bottom_lines.append('line').style({
 					stroke: '#666',
@@ -414,14 +445,42 @@ provoda.View.extendTo(RunMapCtr, {
 			var points_left = [];
 			var left_range = [0, 16998];
 			var left_array = getPathPartByRange(coordinates, left_range);
-	
-
 			left_array.forEach(function(el){
 				var point = getAltVPoints(el);
 				points_left.push(point[1]);
 
 			});
 			points_left = simplify(points_left, 10, true);
+
+			var complects_left = getSortedPointsGroups(points_left);
+			this.knodes.left_lines.selectAll('*').remove();
+			complects_left.forEach(function(el){
+
+				_this.knodes.left_lines.append('path').style({
+					stroke: 'none',
+					fill: colors.getGradColor(el.mid_dist, complects_left.min_dist, complects_left.max_dist, _this.grays),
+					opacity: 0.8
+				}).attr('d',
+					'M' + 0 + ',' + el.start.y +
+					' L ' + formatForPath(el.start) +
+					' L ' + formatForPath(el.end) +
+					' L ' + 0 +',' + el.end.y +
+					'Z');
+
+				_this.knodes.left_lines.append('line').style({
+					stroke: '#666',
+					fill: 'none'
+				}).attr({
+					x1: el.start.x,
+					y1: el.start.y,
+					x2: el.end.x,
+					y2: el.end.y
+				});
+
+
+
+			});
+
 			_this.knodes.left_path.attr("d", getPathData(points_left));
 		}
 	}

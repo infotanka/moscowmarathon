@@ -162,6 +162,9 @@ var getGradColor = function(val, min, max, grad) {
 	smooth_value = Math.min(smooth_value, max);
 
 	var value_factor = ( smooth_value - min ) / ( max - min );
+  if (max == min){
+    value_factor = 0.5;
+  }
 
 	var color = grad [ Math.floor( (grad.length - 1) * value_factor ) ];
 	return '#' + color.map(ggco.getResult).join('').toUpperCase();
