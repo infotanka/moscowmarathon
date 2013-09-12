@@ -91,7 +91,7 @@ provoda.View.extendTo(RunMapCtr, {
 
 			//_this.setVisState('map_event', Date.now());
 		});
-		this.svg.call(this.behavior);
+		//this.svg.call(this.behavior);
 		var _this = this;
 
 		$(window).on('resize', spv.debounce(function() {
