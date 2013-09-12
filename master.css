@@ -1,0 +1,227 @@
+body,dt,dd,p,dl,li,ul,ol,h1,h2,h3,h5,h6{
+	margin: 0;
+	padding:0;
+	color:#222;
+	}
+body{
+	font: 14px/1.5 Arial, sans-serif;
+}
+
+path {
+
+  fill: none;
+  stroke: #999;
+  stroke-width: 1px;
+}
+#map-con{
+	height: 400px;
+}
+.bmap{
+	height: 700px;
+	font-size: 13px;
+}
+.controlls{
+	height: 345px;
+	border-radius: 2rem;
+	position: relative;
+}
+	.timeline{
+		margin-top: 40px;
+		height: 205px;
+		border: 1px solid #ccc;
+		border-width: 1px 0;
+	}
+		.scroll_marker{
+			position: absolute;
+			margin-top: -33px;
+			}
+
+.big_block{
+	padding: 0 20px;
+	}
+
+.factoid{
+	margin-top: 20px;
+	}
+	.factoid_h{
+		font-size: 23px;
+		font-weight: 700;
+		}
+	.factoid_d{
+		font-size: 14px;
+		}
+
+.timemark{
+	margin-top: 5px;
+	position: absolute;
+	}
+	.timemark_t{
+		font-size: 18px;
+		font-weight: 700;
+		}
+	.timemark_d{
+		font-size: 13px;
+		}
+.controlls_desc{
+	top:50px;
+
+	position: absolute;
+	}
+	.controlls_desc_h{
+		font-size: 24px;
+		line-height: 1.3;
+	}
+	.controlls_desc_i{
+		font-size: 18px;
+	}
+
+
+
+.main_header{
+	padding-top: 50px;
+	float:left;
+	width:50%;
+	}
+.bmap_etc{
+	float:right;
+	}
+	.weather{
+		text-align: center;
+		width: 250px;
+		padding-top: 170px;
+		background: no-repeat 50% 50%;
+		}
+		.weather{
+			
+			}
+		.we_temperature{
+			font-size: 24px;
+			font-weight: 700;
+		}
+		.we_wind{
+			font-size: 13px;
+		}
+
+	.we_bg_sun{
+		background-image: url(i/w-sun.png)
+		}
+	.legend{
+		width: 75px;
+		float: right;
+		font-size: 13px;
+		font-weight: 700;
+
+	}
+.bmap_header{
+	font-size: 43px;
+	line-height: 1;
+}
+.bmap_desc{
+	margin-top: 15px;
+	font-size: 16px;
+}
+
+.filters{
+	padding: 22px 0;
+	}
+	.firunr_search{
+		border-radius: 9px;
+		padding-left: 10px;
+	}
+	.filtrr{
+		font-weight: 700;
+		color:#333;
+		position: relative;
+		display: inline-block;
+		border: 1px solid #f4f4f4;
+		border-bottom-color: #e5e5e5;
+		border-radius: 3px;
+		padding: 2px 10px;
+		box-sizing: border-box;
+
+		background-image: -o-linear-gradient(#fdfdfd,#f5f5f5);
+		background-image: -moz-linear-gradient(100% 0% 270deg, #fdfdfd, #f5f5f5);
+		background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#fdfdfd), to(#f5f5f5));
+		background-image: linear-gradient(#fdfdfd,#f5f5f5);
+		cursor: pointer;
+	}
+	.filtrr:after{
+		position: absolute;
+		display: inline-block;
+		background: url(i/icon-arrow-down.png) no-repeat 50% 50%;
+		height: 8px;
+		width: 8px;
+		right:10px;
+		top:8px;
+		content: "";
+	}
+
+	.firunr_search{
+		display: inline-block;
+		margin-left: 30px;
+		margin-right: 35px;
+		width: 360px;
+		}
+	.firunr_age{
+		display: inline-block;
+		width: 150px;
+		margin-right: 35px;
+		}
+	.firunr_teem{
+		display: inline-block;
+		width: 165px;
+		margin-right: 35px;
+		}
+	.firunr_place{
+		display: inline-block;
+		width: 220px;
+		}
+.runr_pos,
+.runr_name,
+.runr_num,
+.runr_age,
+.runr_team,
+.runr_place,
+.runr_time{
+	display: inline-block;
+}
+.runners_block{
+	
+	}
+	.runners_block h2{
+		font-size: 24px;
+		display: inline-block;
+		}
+		.sex_filter{
+			margin-left: 30px;
+		}
+	.runners_list{
+		padding-bottom: 100px;
+		}
+		.runr_pos{
+			width: 52px;
+		}
+
+		.runr_name{
+			width:170px;
+			}
+		.runr_num{
+			width: 172px;
+			text-align: center;
+
+		}
+		.runr_age{
+			width: 140px;
+			margin-left: 48px;
+		}
+		.runr_team{
+			width: 165px;
+			margin-left: 20px;
+			}
+		.runr_place{
+			width: 200px;
+			margin-left: 47px;
+			}
+		.runr_time{
+			margin-left: 10px;
+		}
