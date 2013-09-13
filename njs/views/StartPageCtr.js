@@ -14,7 +14,10 @@ provoda.View.extendTo(StartPageCtr, {
 	},
 
 	tpl_events:{
-		
+		switchMenu: function(e, node) {
+			$(node).parent().toggleClass('menu_opened');
+			console.log(arguments);
+		}
 	},
 	tpl_r_events:{
 		filter_team: {
@@ -25,6 +28,11 @@ provoda.View.extendTo(StartPageCtr, {
 		filter_ages:{
 			setFilterBy: function(e, node, scope) {
 				this.RPCLegacy('setFilterBy', 'ages', scope.filtr_item.label);
+			}
+		},
+		filter_city:{
+			setFilterBy: function(e, node, scope) {
+				this.RPCLegacy('setFilterBy', 'city', scope.filtr_item.label);
 			}
 		}
 	}
