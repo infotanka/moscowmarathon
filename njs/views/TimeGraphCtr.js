@@ -120,7 +120,7 @@ provoda.View.extendTo(TimeGraphCtr, {
 			var y_scale = 1.2;
 			var _this = this;
 			var px_step = 3;
-			var steps = this.width/2;
+			var steps = this.width/px_step;
 
 			var max_runners = 0;
 
