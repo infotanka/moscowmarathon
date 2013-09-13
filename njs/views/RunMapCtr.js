@@ -9,6 +9,7 @@ provoda.View.extendTo(RunMapCtr, {
 
 		var svg = document.createElementNS(mh.SVGNS, 'svg');
 		this.c = $(svg).css('display', 'none');
+
 		this.svg = d3.select(svg);
 
 
@@ -97,7 +98,8 @@ provoda.View.extendTo(RunMapCtr, {
 			_this.checkSizes();
 		},100));
 
-
+		this.parent_view.c.append(this.c);
+		this.setVisState('con-appended', true);
 
 	},
 	earth_radius: mh.earth_radius,
@@ -141,7 +143,7 @@ provoda.View.extendTo(RunMapCtr, {
 			var array = cvs_data.runners_groups.slice().reverse();
 			var _this = this;
 			array.forEach(function(el) {
-				var grad = _this.parent_view.gender_grads[el.gender];
+				var grad = _this.parent_view.parent_view.gender_grads[el.gender];
 				var color = colors.getGradColor(el.num, 1, el.groups_count, grad);
 				_this.knodes.age_areas[ el.key ] = (_this.knodes.areas_group.append('path').style({
 					stroke: 'none',
@@ -405,13 +407,13 @@ provoda.View.extendTo(RunMapCtr, {
 
 			var complects_bo = getSortedPointsGroups(points_bottom);
 
-			
+			var grays = _this.parent_view.parent_view.grays;
 			this.knodes.bottom_lines.selectAll('*').remove();
 			complects_bo.forEach(function(el){
 
 				_this.knodes.bottom_lines.append('path').style({
 					stroke: 'none',
-					fill: colors.getGradColor(el.mid_dist, complects_bo.min_dist, complects_bo.max_dist, _this.parent_view.grays),
+					fill: colors.getGradColor(el.mid_dist, complects_bo.min_dist, complects_bo.max_dist, grays),
 					opacity: 0.8
 				}).attr('d',
 					'M' + el.start.x + ',' + _this.height +
@@ -455,7 +457,7 @@ provoda.View.extendTo(RunMapCtr, {
 
 				_this.knodes.left_lines.append('path').style({
 					stroke: 'none',
-					fill: colors.getGradColor(el.mid_dist, complects_left.min_dist, complects_left.max_dist, _this.parent_view.grays),
+					fill: colors.getGradColor(el.mid_dist, complects_left.min_dist, complects_left.max_dist, grays),
 					opacity: 0.8
 				}).attr('d',
 					'M' + 0 + ',' + el.start.y +

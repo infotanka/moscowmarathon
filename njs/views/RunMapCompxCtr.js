@@ -1,5 +1,5 @@
-define(['provoda', 'jquery', './RunMapCtr', './TimeGraphCtr', './modules/colors', 'spv'],
-function(provoda, $, RunMapCtr, TimeGraphCtr, colors, spv) {
+define(['provoda', 'jquery', './GeoMapCtr', './TimeGraphCtr', './modules/colors', 'spv'],
+function(provoda, $, GeoMapCtr, TimeGraphCtr, colors, spv) {
 "use strict";
 
 var RunMapCompxCtr = function() {};
@@ -7,10 +7,9 @@ provoda.View.extendTo(RunMapCompxCtr, {
 	gender_grads: [colors.getRGBGradient(250, ['#FFCBD5', '#EE2046'].map(colors.parseHEXString)), colors.getRGBGradient(250, ['#B8E8FF', '#1D56DF'].map(colors.parseHEXString))],
 	grays: colors.getRGBGradient(250, ['#333333', '#EEEEEE'].map(colors.parseHEXString)),
 	children_views:{
-		run_map: RunMapCtr,
+		geo_map: GeoMapCtr,
 		time_graph: TimeGraphCtr
 	},
-	'collch-run_map': 'tpl.ancs.map-con',
 	'collch-time_graph': 'tpl.ancs.timeline',
 	createDetails: function() {
 		this.c = this.root_view.els.runm_c;

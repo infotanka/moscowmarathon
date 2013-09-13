@@ -2,6 +2,8 @@ define(['provoda', './modules/mm2013geo', './modules/cvsloader'], function(provo
 "use strict";
 
 
+
+
 var TimeGraph = function() {};
 provoda.HModel.extendTo(TimeGraph, {
 	init: function(opts) {
@@ -20,13 +22,29 @@ provoda.HModel.extendTo(RunMap, {
 	init: function(opts) {
 		this._super(opts);
 
-		this.wch(this.map_parent, 'selected_time');
+		this.wch(this.map_parent.map_parent, 'selected_time');
 		this.updateState('geodata', geodata);
 		cvsloader.on('load', function(cvs_data) {
 			this.updateState('cvs_data', cvs_data);
 		}, this.getContextOpts());
 	}
 });
+
+var GeoMap = function() {};
+provoda.HModel.extendTo(GeoMap, {
+	init: function(opts) {
+		this._super(opts);
+
+
+		var run_map = new RunMap();
+		run_map.init({
+			app: this.app,
+			map_parent: this
+		});
+		this.updateNesting('run_map', run_map);
+	}
+});
+
 
 var RunnerMapComplex = function() {};
 provoda.HModel.extendTo(RunnerMapComplex, {
@@ -37,19 +55,17 @@ provoda.HModel.extendTo(RunnerMapComplex, {
 			this.updateState('cvs_data', cvs_data);
 		}, this.getContextOpts());
 
-		var run_map = new RunMap();
-		run_map.init({
+		var common_sub_opts = {
 			app: this.app,
 			map_parent: this
-		});
-		this.updateNesting('run_map', run_map);
-
+		};
+		
+		var geo_map = new GeoMap();
+		geo_map.init(common_sub_opts);
+		this.updateNesting('geo_map', geo_map);
 
 		var time_graph = new TimeGraph();
-		time_graph.init({
-			app: this.app,
-			map_parent: this
-		});
+		time_graph.init(common_sub_opts);
 		this.updateNesting('time_graph', time_graph);
 
 
