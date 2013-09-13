@@ -65,10 +65,10 @@ var checkData = function() {
 		var compact_age_ranges = [
 		{
 			start: 0,
-			end: 18,
-			label: '<18'
+			end: 25,
+			label: '<25'
 		}, {
-			start: 18,
+			start: 25,
 			end: 45,
 			label: '45'
 		},{
@@ -80,16 +80,18 @@ var checkData = function() {
 			end: Infinity,
 			label: '>60'
 		}];
-		var age_range_to_use = compact_age_ranges;
+		var age_ranges_to_use = compact_age_ranges;
+		var age_field = [3];
 
-		var getAgeGroups = function(array){
+		var start_year = (new Date(start_time)).getFullYear();
+
+		var getAgeGroups = function(array, ranges, field){
 			var age_groups = [];
 			var r = array;
-			var start_year = (new Date(start_time)).getFullYear();
-			var field = [3];
-			for (var i = 0; i < age_range_to_use.length; i++) {
+			
+			for (var i = 0; i < ranges.length; i++) {
 
-				var age_range = age_range_to_use[i];
+				var age_range = ranges[i];
 				var g = spv.filter(r, field, function(value) {
 					var date = start_year - value;
 					if (date > age_range.start && date <= age_range.end){
@@ -118,10 +120,11 @@ var checkData = function() {
 			var i;
 			for ( i = 0; i < cvs.length; i++) {
 				var gender = Math.random() > 0.66 ? 0 : 1;
+				cvs[i].gender = gender;
 				genders_groups[gender].raw.push(cvs[i]);
 			}
 			genders_groups.forEach(function(el) {
-				el.age_groups = getAgeGroups(el.raw);
+				el.age_groups = getAgeGroups(el.raw, age_ranges_to_use, age_field);
 			});
 			for ( i = 0; i < genders_groups[0].age_groups.length; i++) {
 				runners_groups.push({
@@ -145,10 +148,12 @@ var checkData = function() {
 
 
 		})();
-
+		cvs_data.getAgeGroups = getAgeGroups;
+		cvs_data.genders_groups = genders_groups;
 		cvs_data.runners_groups = runners_groups;
 		cvs_data.start_time = start_time;
 		cvs_data.last_finish_time = last_finish_time;
+		cvs_data.age_ranges = age_ranges_to_use;
 		eventor.trigger('load', cvs_data);
 	}
 };
