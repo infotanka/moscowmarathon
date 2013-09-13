@@ -1,5 +1,5 @@
-define(['provoda', 'jquery', './RunMapCtr', './TimeGraphCtr', './modules/colors'],
-function(provoda, $, RunMapCtr, TimeGraphCtr, colors) {
+define(['provoda', 'jquery', './RunMapCtr', './TimeGraphCtr', './modules/colors', 'spv'],
+function(provoda, $, RunMapCtr, TimeGraphCtr, colors, spv) {
 "use strict";
 
 var RunMapCompxCtr = function() {};
@@ -26,14 +26,14 @@ provoda.View.extendTo(RunMapCompxCtr, {
 
 		var _this = this;
 
-		this.con_width = relative_con.width();
+
+		this.setVisState('con_width', relative_con.width());
 
 		var changeTime = function(pos) {
-			var factor = pos/(_this.con_width + _this.marker_width);
+			var factor = pos/(_this.state('vis_con_width') + _this.marker_width);
 			factor = Math.min(factor, 1);
 			factor = Math.max(factor, 0);
 			_this.promiseStateUpdate('', factor);
-			//_this.setCursorPos(factor);
 			_this.RPCLegacy('setTime', factor);
 		};
 
@@ -53,22 +53,27 @@ provoda.View.extendTo(RunMapCompxCtr, {
 					$(document).off('mousemove', watchPos);
 				});
 			});
+		$(window).on('resize', spv.debounce(function() {
+			_this.checkSizes();
+		},100));
 	},
-	'stch-selected_time': function(factor) {
-		if (!this.con_offset){
-			this.con_offset = this.tpl.ancs['timeline'].offset();
+	checkSizes: function() {
+		this.setVisState('con_width', this.tpl.ancs['timeline'].width());
+	},
+	'compx-curpos':{
+		depends_on: ['selected_time', 'vis_con_width'],
+		fn: function(factor, con_width) {
+			if (!this.con_offset){
+				this.con_offset = this.tpl.ancs['timeline'].offset();
+			}
+			var start_pos = this.con_offset.left - this.half_width;
+
+
+			var target_pos = start_pos + con_width * factor;
+			this.tpl.ancs['scroll_marker'].css('left', target_pos + 'px');
 		}
-		var start_pos = this.con_offset.left - this.half_width;
-
-
-		var target_pos = start_pos + this.con_width * factor;
-		this.tpl.ancs['scroll_marker'].css('left', target_pos + 'px');
 	},
-	setCursorPos: function() {
 
-
-		
-	},
 	/*'compx-bigdata': {
 		depends_on: ['geodata', 'cvs_data'],
 		fn: function(geodata, cvs_data) {
