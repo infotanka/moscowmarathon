@@ -50,14 +50,14 @@ AppBaseView.extendTo(AppView, {
 	handleStartScreen: function(start_screen) {
 		var st_scr_scrl_con = start_screen.parent();
 		var start_page_wrap = st_scr_scrl_con.parent();
-		var tpl = this.buildTemplate();
+		/*var tpl = this.buildTemplate();
 		tpl.init({
 			node: start_page_wrap,
 			spec_states: {
 				'$lev_num': -1
 			}
 		});
-		this.tpls.push(tpl);
+		this.tpls.push(tpl);*/
 
 		this.lev_containers[-1] = {
 			c: start_page_wrap,

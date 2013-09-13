@@ -1,5 +1,5 @@
-define(['../libs/BrowseMap', 'spv', 'provoda', './Runner', './modules/cvsloader'],
-function(BrowseMap, spv, provoda, Runner, cvsloader) {
+define(['../libs/BrowseMap', 'spv', 'provoda', './Runner', './modules/cvsloader', 'lodash'],
+function(BrowseMap, spv, provoda, Runner, cvsloader, _) {
 "use strict";
 
 var StartPage = function() {};
@@ -21,8 +21,10 @@ BrowseMap.Model.extendTo(StartPage, {
 			}
 			this.updateNesting('runners', runners);
 			this.getIndexes(runners, data);
+			this.makeFiltersResult();
 		}, this.getContextOpts());
 
+		this.filters = {};
 		this.filters_cache = {};
 		
 		return this;
@@ -30,7 +32,7 @@ BrowseMap.Model.extendTo(StartPage, {
 	getFilterData: function(runners, field, limit) {
 		limit = limit || 0;
 		var full_field = ['states', field];
-		var index = spv.makeIndexByField(runners, full_field);
+		var index = spv.makeIndexByField(runners, full_field, true);
 
 		var result = [];
 		for (var name in index){
@@ -39,13 +41,13 @@ BrowseMap.Model.extendTo(StartPage, {
 			}
 			result.push({
 				label: name,
-				length: index[name].length
+				counter: index[name].length
 			});
 		}
 
 
 		var filter_opts = [{
-			field: ['length'],
+			field: ['counter'],
 			reverse: true
 		}, {
 			field: ['label']
@@ -98,21 +100,79 @@ BrowseMap.Model.extendTo(StartPage, {
 		var result = [];
 		var field = ['states', 'birthyear'];
 		var groups = cvsdata.getAgeGroups(runners, age_ranges, field);
+		var index = {};
 
 		for (var i = 0; i < age_ranges.length; i++) {
-			
+			index[age_ranges[i].label] = groups[i];
 			result.push({
 				label: age_ranges[i].label,
-				length: groups[i].length
+				counter: groups[i].length
 			});
 
 			//age_ranges[i]
 		}
 		return {
-			index: groups,
+			index: index,
 			items: result
 		};
+	},
+	setFilterBy: function(type, name) {
+		if (this.filters[type] == name){
+			this.filters[type] = null;
+		} else {
+			this.filters[type] = name;
+		}
+		this.checkFilters();
+	},
+	checkFilters: function() {
+		var result = [];
+		var caches = [];
+		for (var type in  this.filters) {
+			var cur = this.filters[type];
+			if (!cur){
+				continue;
+			}
+			result.push({
+				type: type,
+				value: cur
+			});
+		}
+		var _this = this;
+		var sort_rule = [{
+			field: function(el) {
+				var array = _this.filters_cache[el.type];
+				array = array && array[el.value];
+				return array && array.length;
+			}
+		}];
+
+		result.sort(function(a, b) {
+			return spv.sortByRules(a, b, sort_rule);
+		});
+		result.forEach(function(el) {
+			caches.push(_this.filters_cache[el.type][el.value]);
+		});
+
+		this.makeFiltersResult(result, caches);
+
+		//console.log(result);
+
+	},
+	makeFiltersResult: function(filters, caches) {
+		var result = this.getNesting('runners');
+		if (filters && filters.length){
+
+			result = _.intersection.apply(_, caches);
+		//	console.log(result);
+			//return result;
+		} else {
+			//return result;
+		}
+		this.updateNesting('runners_filtered', result);
+		
+
 	}
+
 });
 return StartPage;
 

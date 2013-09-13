@@ -259,7 +259,10 @@ path {
 			}
 		.menu_opened .filtrr:after{
 			display: none;
-		}
+		}	
+			.filter_item_name{
+				font-weight: 700;
+			}
 			.flrr_item_col1{
 				display: inline-block;
 				width: 44%;
@@ -278,11 +281,15 @@ path {
 			background-color: #F5F5F5;
 			}
 		.flrr_menu_list{
+			display: none;
 			padding: 5px 0 2px;
 			border-radius: 0 0 3px 3px;
 			border:1px solid #DCDCDC;
 			margin-top:-1px;
 			position: relative;
+		}
+		.menu_opened .flrr_menu_list{
+			display: block;
 		}
 		.flrr_menu_item{
 			padding: 2px 10px;

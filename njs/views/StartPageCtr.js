@@ -17,7 +17,16 @@ provoda.View.extendTo(StartPageCtr, {
 		
 	},
 	tpl_r_events:{
-		
+		filter_team: {
+			setFilterBy: function(e, node, scope) {
+				this.RPCLegacy('setFilterBy', 'team', scope.filtr_item.label);
+			}
+		},
+		filter_ages:{
+			setFilterBy: function(e, node, scope) {
+				this.RPCLegacy('setFilterBy', 'ages', scope.filtr_item.label);
+			}
+		}
 	}
 });
 return StartPageCtr;

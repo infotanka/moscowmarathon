@@ -119,7 +119,7 @@
 		<div class="runners_list">
 
 
-			<div pv-nest="runners|limitTo:25" class="runrs_item">
+			<div pv-nest="runners_filtered|limitTo:50" class="runrs_item">
 				<div class="runr_pos" pv-text="{{pos}}"></div>
 				<div class="runr_name" pv-text="{{full_name}}"></div>
 				<div class="runr_num" pv-text="{{num}}"></div>
@@ -130,32 +130,33 @@
 			</div>
 			
 		</div>
+	
 
-	</div>
-
-	<div class="big_block">
-		<div class="filterr_menu menu_opened">
-			<div class="filtrr">Все команды</div>
-			<div class="flrr_menu_list">
-				<div class="flrr_menu_item">
-					<div class="flrr_item_col1">IRC, <span class="counter">15</span></div>
-					<div class="flrr_item_col2">Хорватия</div>
+		<div class="big_block">
+			<div class="filterr_menu menu_opened">
+				<div class="filtrr">Все команды</div>
+				<div class="flrr_menu_list" >
+					<div class="flrr_menu_item" pv-repeat="filtr_item in filter_team" pv-events="click:setFilterBy">
+						<span pv-text="{{filtr_item.label}}" class="filter_item_name"></span>
+						<span class="counter" pv-text="{{filtr_item.counter}}"></span>
+					</div>
 				</div>
-				<div class="flrr_menu_item">
-					<div class="flrr_item_col1">IRC, <span class="counter">15</span></div>
-					<div class="flrr_item_col2">Хорватия</div>
-				</div>
-				<div class="flrr_menu_item">
-					<div class="flrr_item_col1">IRC, <span class="counter">15</span></div>
-					<div class="flrr_item_col2">Хорватия</div>
-				</div>
-				<div class="flrr_menu_item">
-					<div class="flrr_item_col1">IRC, <span class="counter">15</span></div>
-					<div class="flrr_item_col2">Хорватия</div>
+			</div>
+		</div>
+		<div class="big_block">
+			<div class="filterr_menu menu_opened">
+				<div class="filtrr">Все возрасты</div>
+				<div class="flrr_menu_list" >
+					<div class="flrr_menu_item" pv-repeat="filtr_item in filter_ages" pv-events="click:setFilterBy">
+						<span pv-text="{{filtr_item.label}}" class="filter_item_name"></span>
+						<span class="counter" pv-text="{{filtr_item.counter}}"></span>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+
+	
 
 <div id="dom-templates" style="display:none"></div>
 </body>

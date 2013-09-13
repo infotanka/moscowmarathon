@@ -7,7 +7,8 @@ requirejs.config({
 		angbo: 'libs/StatementsAngularParser.min',
 		jquery: 'libs/jquery-2.0.2.min',
 		d3: 'libs/d3.v3.min',
-		leaflet: 'libs/leaflet'
+		leaflet: 'libs/leaflet',
+		lodash: 'libs/lodash.min'
 	},
 	shim: {
 		"jquery-ui": {
