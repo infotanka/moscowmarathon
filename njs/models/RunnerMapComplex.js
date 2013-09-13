@@ -2,6 +2,19 @@ define(['provoda', './modules/mm2013geo', './modules/cvsloader'], function(provo
 "use strict";
 
 
+var TimeGraph = function() {};
+provoda.HModel.extendTo(TimeGraph, {
+	init: function(opts) {
+		this._super(opts);
+
+		this.wch(this.map_parent, 'selected_time');
+		this.updateState('geodata', geodata);
+		cvsloader.on('load', function(cvs_data) {
+			this.updateState('cvs_data', cvs_data);
+		}, this.getContextOpts());
+	}
+});
+
 var RunMap = function() {};
 provoda.HModel.extendTo(RunMap, {
 	init: function(opts) {
@@ -30,6 +43,15 @@ provoda.HModel.extendTo(RunnerMapComplex, {
 			map_parent: this
 		});
 		this.updateNesting('run_map', run_map);
+
+
+		var time_graph = new TimeGraph();
+		time_graph.init({
+			app: this.app,
+			map_parent: this
+		});
+		this.updateNesting('time_graph', time_graph);
+
 
 		this.setTime(0.2);
 	},

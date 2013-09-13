@@ -235,7 +235,7 @@ getStringPattern = function (str) {
 		return new RegExp(str, 'gi');
 	}
 };
-
+spv.getStringPattern = getStringPattern;
 ttime = function(f){
 	var d = +new Date();
 

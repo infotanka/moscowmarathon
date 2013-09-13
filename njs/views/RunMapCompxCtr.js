@@ -15,45 +15,55 @@ provoda.View.extendTo(RunMapCompxCtr, {
 
 
 		var scroll_marker = this.tpl.ancs['scroll_marker'];
-		var marker_width = scroll_marker.width();
-		var half_width = marker_width/2;
+		this.marker_width = scroll_marker.width();
+		this.half_width = this.marker_width/2;
 
 		var relative_con = this.tpl.ancs['timeline'];
 
 		var _this = this;
 
+		this.con_width = relative_con.width();
 
-		var changeTime = function(pos, offset, width) {
-			var factor = pos/(width + marker_width);
+		var changeTime = function(pos) {
+			var factor = pos/(_this.con_width + _this.marker_width);
 			factor = Math.min(factor, 1);
 			factor = Math.max(factor, 0);
-
-			var start_pos = offset.left - half_width;
-
-
-			var target_pos = start_pos + width * factor;
-			scroll_marker.css('left', target_pos + 'px');
+			_this.promiseStateUpdate('', factor);
+			//_this.setCursorPos(factor);
 			_this.RPCLegacy('setTime', factor);
 		};
 
-		var con_offset;
-		var con_width;
+
 		var watchPos = function(e) {
-			var pos = e.pageX - con_offset.left;
-			changeTime(pos, con_offset, con_width);
+			var pos = e.pageX - _this.con_offset.left;
+			changeTime(pos, _this.con_offset);
 		};
 
 		
 		scroll_marker
 			.on('mousedown', function(e) {
 				e.preventDefault();
-				con_offset = relative_con.offset();
-				con_width = relative_con.width();
+				_this.con_offset = relative_con.offset();
 				$(document).on('mousemove', watchPos);
 				$(document).on('mouseup', function() {
 					$(document).off('mousemove', watchPos);
 				});
 			});
+	},
+	'stch-selected_time': function(factor) {
+		if (!this.con_offset){
+			this.con_offset = this.tpl.ancs['timeline'].offset();
+		}
+		var start_pos = this.con_offset.left - this.half_width;
+
+
+		var target_pos = start_pos + this.con_width * factor;
+		this.tpl.ancs['scroll_marker'].css('left', target_pos + 'px');
+	},
+	setCursorPos: function() {
+
+
+		
 	},
 	/*'compx-bigdata': {
 		depends_on: ['geodata', 'cvs_data'],
