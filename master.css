@@ -46,13 +46,14 @@ path {
 
 .factoid{
 	margin-top: 20px;
+	width:200px;
 	}
 	.factoid_h{
-		font-size: 23px;
+		font-size: 18px;
 		font-weight: 700;
 		}
 	.factoid_d{
-		font-size: 14px;
+		font-size: 13px;
 		}
 
 .timemark{
@@ -82,17 +83,18 @@ path {
 
 
 .main_header{
-	padding-top: 50px;
+	padding-top: 20px;
 	float:left;
 	width:50%;
 	}
 .bmap_etc{
 	float:right;
+	width: 200px;
 	}
 	.weather{
 		text-align: center;
-		width: 250px;
-		padding-top: 170px;
+		width: 160px;
+		padding-top: 100px;
 		background: no-repeat 50% 50%;
 		}
 		.weather{
@@ -104,20 +106,34 @@ path {
 		}
 		.we_wind{
 			font-size: 13px;
+			font-weight: 100;
 		}
 
 	.we_bg_sun{
 		background-image: url(i/w-sun.png)
 		}
+
 	.legend{
 		width: 75px;
-		float: right;
+		float: left;
 		font-size: 13px;
 		font-weight: 700;
 
 	}
+	
+	.share{
+		width: 150px;
+		float: left;
+		font-size: 13px;
+
+	}
+
+.marath-icon{
+	padding-top:10px;
+}
+
 .bmap_header{
-	font-size: 43px;
+	font-size: 32px;
 	line-height: 1;
 }
 .bmap_desc{
