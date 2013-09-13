@@ -28,26 +28,71 @@ var checkData = function() {
 		var normlz_maxtime = cvs_data.max_time /4;
 		var start_diff = (normlz_maxtime / groups_count) * 1000;
 
+		var last_finish_time = 0;
+
 		for (var i = 0; i < cvs.length; i++) {
 
 			cvs[i].start_time = start_time + (Math.ceil((i+1)/groups_count) - 1) * start_diff;
 			cvs[i].end_time = start_time + cvs[i][8] * 1000;
+			last_finish_time = Math.max(last_finish_time, cvs[i].end_time);
 		}
 
+		var age_ranges = [
+		{
+			start: 0,
+			end: 18,
+			label: '<18'
+		},
+		{
+			start: 18,
+			end: 33,
+			label: 33
+		},{
+			start: 33,
+			end: 48,
+			label: 48
+		},{
+			start: 48,
+			end: 65,
+			label: 65
+		}, {
+			start: 65,
+			end: Infinity,
+			label: '>65'
+		}
+		];
 
+		var compact_age_ranges = [
+		{
+			start: 0,
+			end: 18,
+			label: '<18'
+		}, {
+			start: 18,
+			end: 45,
+			label: '45'
+		},{
+			start: 45,
+			end: 60,
+			label: '60'
+		},{
+			start: 60,
+			end: Infinity,
+			label: '>60'
+		}];
+		var age_range_to_use = compact_age_ranges;
 
 		var getAgeGroups = function(array){
 			var age_groups = [];
-			var age_groups_count = 3;
-			var age_groups_diff = (65 - 18)/age_groups_count;
 			var r = array;
 			var start_year = (new Date(start_time)).getFullYear();
 			var field = [3];
-			for (var i = 0; i < age_groups_count; i++) {
-				var age_group_range = 18 + i * age_groups_diff;
+			for (var i = 0; i < age_range_to_use.length; i++) {
+
+				var age_range = age_range_to_use[i];
 				var g = spv.filter(r, field, function(value) {
 					var date = start_year - value;
-					if (date < age_group_range){
+					if (date > age_range.start && date <= age_range.end){
 						return true;
 					}
 
@@ -56,6 +101,8 @@ var checkData = function() {
 				r = g.not;
 				//console.log(g);
 			}
+
+
 			return age_groups;
 
 		};
@@ -73,7 +120,7 @@ var checkData = function() {
 				var gender = Math.random() > 0.66 ? 0 : 1;
 				genders_groups[gender].raw.push(cvs[i]);
 			}
-			genders_groups.forEach(function(el, num) {
+			genders_groups.forEach(function(el) {
 				el.age_groups = getAgeGroups(el.raw);
 			});
 			for ( i = 0; i < genders_groups[0].age_groups.length; i++) {
@@ -101,6 +148,7 @@ var checkData = function() {
 
 		cvs_data.runners_groups = runners_groups;
 		cvs_data.start_time = start_time;
+		cvs_data.last_finish_time = last_finish_time;
 		eventor.trigger('load', cvs_data);
 	}
 };

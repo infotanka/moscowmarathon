@@ -522,7 +522,8 @@ return {
 	earth_radius: earth_radius,
 	getPoints: getPoints,
 	getPointAtDistance: getPointAtDistance,
-	SVGNS: SVGNS
+	SVGNS: SVGNS,
+	format: format
 };
 
 

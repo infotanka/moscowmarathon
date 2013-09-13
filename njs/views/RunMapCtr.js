@@ -4,8 +4,7 @@ function(d3, provoda, spv, simplify, veon, colors, mh, $) {
 
 var RunMapCtr = function() {};
 provoda.View.extendTo(RunMapCtr, {
-	gender_grads: [colors.getRGBGradient(250, ['#FFCBD5', '#EE2046'].map(colors.parseHEXString)), colors.getRGBGradient(250, ['#B8E8FF', '#1D56DF'].map(colors.parseHEXString))],
-	grays: colors.getRGBGradient(250, ['#333333', '#EEEEEE'].map(colors.parseHEXString)),
+	
 	createBase: function() {
 
 		var svg = document.createElementNS(mh.SVGNS, 'svg');
@@ -142,7 +141,7 @@ provoda.View.extendTo(RunMapCtr, {
 			var array = cvs_data.runners_groups.slice().reverse();
 			var _this = this;
 			array.forEach(function(el) {
-				var grad = _this.gender_grads[el.gender];
+				var grad = _this.parent_view.gender_grads[el.gender];
 				var color = colors.getGradColor(el.num, 1, el.groups_count, grad);
 				_this.knodes.age_areas[ el.key ] = (_this.knodes.areas_group.append('path').style({
 					stroke: 'none',
@@ -412,7 +411,7 @@ provoda.View.extendTo(RunMapCtr, {
 
 				_this.knodes.bottom_lines.append('path').style({
 					stroke: 'none',
-					fill: colors.getGradColor(el.mid_dist, complects_bo.min_dist, complects_bo.max_dist, _this.grays),
+					fill: colors.getGradColor(el.mid_dist, complects_bo.min_dist, complects_bo.max_dist, _this.parent_view.grays),
 					opacity: 0.8
 				}).attr('d',
 					'M' + el.start.x + ',' + _this.height +
@@ -456,7 +455,7 @@ provoda.View.extendTo(RunMapCtr, {
 
 				_this.knodes.left_lines.append('path').style({
 					stroke: 'none',
-					fill: colors.getGradColor(el.mid_dist, complects_left.min_dist, complects_left.max_dist, _this.grays),
+					fill: colors.getGradColor(el.mid_dist, complects_left.min_dist, complects_left.max_dist, _this.parent_view.grays),
 					opacity: 0.8
 				}).attr('d',
 					'M' + 0 + ',' + el.start.y +

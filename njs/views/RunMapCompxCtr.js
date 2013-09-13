@@ -1,13 +1,17 @@
-define(['provoda', 'jquery', './RunMapCtr'],
-function(provoda, $, RunMapCtr) {
+define(['provoda', 'jquery', './RunMapCtr', './TimeGraphCtr', './modules/colors'],
+function(provoda, $, RunMapCtr, TimeGraphCtr, colors) {
 "use strict";
 
 var RunMapCompxCtr = function() {};
 provoda.View.extendTo(RunMapCompxCtr, {
+	gender_grads: [colors.getRGBGradient(250, ['#FFCBD5', '#EE2046'].map(colors.parseHEXString)), colors.getRGBGradient(250, ['#B8E8FF', '#1D56DF'].map(colors.parseHEXString))],
+	grays: colors.getRGBGradient(250, ['#333333', '#EEEEEE'].map(colors.parseHEXString)),
 	children_views:{
-		run_map: RunMapCtr
+		run_map: RunMapCtr,
+		time_graph: TimeGraphCtr
 	},
 	'collch-run_map': 'tpl.ancs.map-con',
+	'collch-time_graph': 'tpl.ancs.timeline',
 	createDetails: function() {
 		this.c = this.root_view.els.runm_c;
 		this.createTemplate();
