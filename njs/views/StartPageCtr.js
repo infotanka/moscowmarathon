@@ -16,7 +16,6 @@ provoda.View.extendTo(StartPageCtr, {
 	tpl_events:{
 		switchMenu: function(e, node) {
 			$(node).parent().toggleClass('menu_opened');
-			console.log(arguments);
 		}
 	},
 	tpl_r_events:{

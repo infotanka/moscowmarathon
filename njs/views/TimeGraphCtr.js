@@ -13,7 +13,7 @@ provoda.View.extendTo(TimeGraphCtr, {
 		$(window).on('resize', spv.debounce(function() {
 			_this.checkSizes();
 		},100));
-		this.wch(this, 'vis_con-appended', function(e) {
+		this.wch(this, 'vis_con_appended', function(e) {
 			if (e.value){
 				this.checkSizes();
 			}

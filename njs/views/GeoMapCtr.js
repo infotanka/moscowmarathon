@@ -25,7 +25,7 @@ provoda.View.extendTo(GeoMapCtr, {
 			attribution: '<a href="http://www.mapbox.com/about/maps/">Terms & Feedback</a>',
 		}).addTo(this.map);
 
-		this.wch(this, 'vis_con-appended', function(e) {
+		this.wch(this, 'vis_con_appended', function(e) {
 			if (e.value){
 				this.createDD();
 			}

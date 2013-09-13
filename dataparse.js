@@ -7,10 +7,21 @@ var stringToTime = function(obj, place) {
 		obj[place] = (date[0] * 60 + date[1]*1) * 60 + date[2]*1;
 	}
 };
+var stringToNum = function(obj, space) {
+	if (obj[space]){
+		var num = obj[space] * 1;
+		if (!isNaN(num)){
+			obj[space] = num;
+		}
+		
+	}
+};
 var cvs = document.getElementById('cvs').textContent.replace(/✌/gi, '').split(/\n/gi).map(function(el){
 	var pa = el.split('✄');
 	stringToTime(pa, 15);
 	stringToTime(pa, 8);
+	stringToNum(pa, 0);
+	stringToNum(pa, 1);
 	if (pa[8]){
 		max_time = Math.max(pa[8], max_time);
 	}

@@ -73,13 +73,16 @@ BrowseMap.Model.extendTo(StartPage, {
 		
 		[{
 			name: 'team',
-			limit: 3
+			limit: 3,
+			no_flabel: 'Все команды'
 		}, {
 			name: 'city',
-			limit: 3
+			limit: 3,
+			no_flabel: 'Со всего мира'
 		}, {
 			name: 'country',
-			limit: 3
+			limit: 3,
+			no_flabel: 'Со всего мира'
 		}].forEach(function(el) {
 			var result = _this.getFilterData(runners, el.name, el.limit);
 			setFilterResult(result, el.name);
@@ -168,6 +171,10 @@ BrowseMap.Model.extendTo(StartPage, {
 		} else {
 			//return result;
 		}
+		var rules = [{field: ['states', 'pos']}];
+		result.sort(function(a, b) {
+			return spv.sortByRules(a, b, rules);
+		});
 		this.updateNesting('runners_filtered', result);
 		
 

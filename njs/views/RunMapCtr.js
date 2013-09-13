@@ -58,7 +58,7 @@ provoda.View.extendTo(RunMapCtr, {
 
 		
 		
-		this.wch(this, 'vis_con-appended', function(e) {
+		this.wch(this, 'vis_con_appended', function(e) {
 			if (e.value){
 				this.checkSizes();
 			}
@@ -99,7 +99,7 @@ provoda.View.extendTo(RunMapCtr, {
 		},100));
 
 		this.parent_view.c.append(this.c);
-		this.setVisState('con-appended', true);
+		this.setVisState('con_appended', true);
 
 	},
 	earth_radius: mh.earth_radius,
