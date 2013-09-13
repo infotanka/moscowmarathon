@@ -131,26 +131,21 @@
 			
 		</div>
 	
-
-		<div class="big_block">
-			<div class="filterr_menu menu_opened">
-				<div class="filtrr">Все команды</div>
-				<div class="flrr_menu_list" >
-					<div class="flrr_menu_item" pv-repeat="filtr_item in filter_team" pv-events="click:setFilterBy">
-						<span pv-text="{{filtr_item.label}}" class="filter_item_name"></span>
-						<span class="counter" pv-text="{{filtr_item.counter}}"></span>
-					</div>
+		<div class="filterr_menu menu_opened">
+			<div class="filtrr">Все команды</div>
+			<div class="flrr_menu_list" >
+				<div class="flrr_menu_item" pv-repeat="filtr_item in filter_team" pv-events="click:setFilterBy">
+					<span pv-text="{{filtr_item.label}}" class="filter_item_name"></span>
+					<span class="counter" pv-text="{{filtr_item.counter}}"></span>
 				</div>
 			</div>
 		</div>
-		<div class="big_block">
-			<div class="filterr_menu menu_opened">
-				<div class="filtrr">Все возрасты</div>
-				<div class="flrr_menu_list" >
-					<div class="flrr_menu_item" pv-repeat="filtr_item in filter_ages" pv-events="click:setFilterBy">
-						<span pv-text="{{filtr_item.label}}" class="filter_item_name"></span>
-						<span class="counter" pv-text="{{filtr_item.counter}}"></span>
-					</div>
+		<div class="filterr_menu menu_opened">
+			<div class="filtrr">Все возрасты</div>
+			<div class="flrr_menu_list" >
+				<div class="flrr_menu_item" pv-repeat="filtr_item in filter_ages" pv-events="click:setFilterBy">
+					<span pv-text="{{filtr_item.label}}" class="filter_item_name"></span>
+					<span class="counter" pv-text="{{filtr_item.counter}}"></span>
 				</div>
 			</div>
 		</div>
