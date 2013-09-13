@@ -117,6 +117,7 @@ provoda.View.extendTo(TimeGraphCtr, {
 			if (!basedet || !cvs_data ||!age_areas){
 				return;
 			}
+			var y_scale = 1.2;
 			var _this = this;
 			var px_step = 1;
 			var steps = this.width/2;
@@ -168,7 +169,7 @@ provoda.View.extendTo(TimeGraphCtr, {
 
 			var points_byd = {};
 
-			var height_factor = this.height/max_runners;
+			var height_factor = this.height/(max_runners * y_scale);
 
 			var getRunByDPoints = function(array) {
 				var result = [];
