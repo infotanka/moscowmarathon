@@ -126,18 +126,7 @@ shuffleArray = spv.shuffleArray = function(obj) {
 	return shuffled;
 };
 
-getFields = function(obj, fields){
-	var r = [];
-	for (var i=0; i < fields.length; i++) {
-		var cur = fields[i];
 
-		var value = (typeof cur == 'function') ? cur(obj) : spv.getTargetField(obj, cur);
-		if (value){
-			r.push(value);
-		}
-	}
-	return r;
-};
 getDiffObj = spv.getDiffObj = function(one, two) {
 	var
 		i,
@@ -191,6 +180,19 @@ matchWords = spv.matchWords = function(source, query){
 			}
 		}
 		r.any = any_order;
+	}
+	return r;
+};
+
+getFields = function(obj, fields){
+	var r = [];
+	for (var i=0; i < fields.length; i++) {
+		var cur = fields[i];
+
+		var value = (typeof cur == 'function') ? cur(obj) : spv.getTargetField(obj, cur);
+		if (value){
+			r.push(value);
+		}
 	}
 	return r;
 };

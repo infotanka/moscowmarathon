@@ -9,7 +9,7 @@ BrowseMap.Model.extendTo(StartPage, {
 	init: function(opts) {
 		this._super(opts);
 		this.common_sopts = {app: this.app, map_parent: this};
-
+		this.updateState('query', '');
 		
 		cvsloader.on('load', function(data) {
 			var runners = [];
@@ -26,9 +26,30 @@ BrowseMap.Model.extendTo(StartPage, {
 
 		this.filters = {};
 		this.filters_cache = {};
+
+
+
+
+		this.wch(this, 'query', function(e) {
+			var runners = this.getNesting('runners');
+			if (!runners){
+				return;
+			}
+			if (e.value){
+				this.searched_r = spv.searchInArray(runners, e.value, this.search_fields);
+			} else {
+				this.searched_r = [];
+				
+			}
+			this.checkRunners();
+		});
 		
 		return this;
 	},
+	makeSearch: function(query) {
+		this.updateState('query', query);
+	},
+	search_fields: [['states','pos'], ['states','full_name']],
 	getFilterData: function(runners, field, limit) {
 		limit = limit || 0;
 		var full_field = ['states', field];
@@ -95,9 +116,6 @@ BrowseMap.Model.extendTo(StartPage, {
 		setFilterResult(agesgroups, 'ages');
 
 		this.updateManyStates(states);
-
-		console.log(states);
-		console.log('ff', agesgroups);
 	},
 	getAgesGroups: function(runners, age_ranges, cvsdata) {
 		var result = [];
@@ -175,9 +193,19 @@ BrowseMap.Model.extendTo(StartPage, {
 		result.sort(function(a, b) {
 			return spv.sortByRules(a, b, rules);
 		});
-		this.updateNesting('runners_filtered', result);
+		this.filtered_r = result;
+		this.checkRunners();
+		
 		
 
+	},
+	checkRunners: function() {
+		var has_query = !!this.state('query');
+		if (has_query){
+			this.updateNesting('runners_filtered', this.searched_r);
+		} else {
+			this.updateNesting('runners_filtered', this.filtered_r);
+		}
 	}
 
 });
