@@ -13,11 +13,32 @@
 				<div class="main_header">
 					<h1 class="bmap_header">Мы бежали <span class="marath-icon"><img src="i/marathon-logo.png"></span>марафон</h1>
 					<p class="bmap_desc"></p>
+					<div class="factoids">
+						<style>
+						.factoids{
+							position: relative;
+						}
+						.factoid{
+							position: absolute;
+						}
+						.hidden{
+							display: none;
+						}
+						</style>
+						<div 
+							pv-props="
+								style.left:  {{mapwidth * 0.3}}
+								style.top:   {{mapheight * 0.25}}
+								style.width: {{mapwidth * 0.1}}
+							"
+							pv-class="factoid {{ !( time_value|compareTime: '25:52' : '2:00:52' ) && 'hidden'}}"
+							class="factoid">
 
-					<div class="factoid">
-						<h5 class="factoid_h">  Динамо бежит!</h5>
-						<div class="factoid_d">Во время уличных пробежек бегунов часто спрашивают, бежит ли Динамо. На этот раз ответ — да!</div>
+							<h5 class="factoid_h">  Динамо бежит!</h5>
+							<div class="factoid_d">Во время уличных пробежек бегунов часто спрашивают, бежит ли Динамо. На этот раз ответ — да!</div>
+						</div>
 					</div>
+					
 
 				</div>
 				<div class="bmap_etc">

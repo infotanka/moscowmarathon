@@ -72,6 +72,14 @@ provoda.View.extendTo(RunMapCompxCtr, {
 			this.tpl.ancs['scroll_marker'].css('left', target_pos + 'px');
 		}
 	},
+	'compx-time_value': {
+		depends_on: ['selected_time', 'cvs_data'],
+		fn: function(selected_time, cvs_data) {
+			if (cvs_data && typeof selected_time != 'undefined'){
+				return cvs_data.max_time * selected_time;
+			}
+		}
+	},
 
 	/*'compx-bigdata': {
 		depends_on: ['geodata', 'cvs_data'],
