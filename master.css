@@ -43,21 +43,31 @@ path {
 .big_block{
 	padding: 0 20px;
 	}
-
-.factoid{
-
+.factoids{
+		position: absolute;
+		top:0;
+		left:0;
 	}
-	.factoid_h{
-		font-family: Arial Black;
-		font-size: 16px;
-		font-weight: 700;
-		}
-	.factoid_d{
-		font-size: 12px;
-		}
-	.factoid_img{
-		margin-bottom:5px;
+	.factoid{
+		position: absolute;
 	}
+	.hidden{
+		display: none;
+	}
+	.factoid{
+
+		}
+		.factoid_h{
+			font-family: Arial Black;
+			font-size: 16px;
+			font-weight: 700;
+			}
+		.factoid_d{
+			font-size: 12px;
+			}
+		.factoid_img{
+			margin-bottom:5px;
+		}
 
 .timemark{
 	margin-top: 5px;

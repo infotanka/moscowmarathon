@@ -19,7 +19,7 @@
 								style.left:  {{track_left_padding - (trackwidth * 0.2)}}
 								style.width: {{trackwidth * 1}}
 							"
-							pv-class="factoid {{ !( time_value|compareTime: '00:00' : '0:30:00' ) && 'hidden'}}" class="factoid">
+							pv-class="factoid {{ !( time_value|compareTime: '00:00' : '0:30:00' ) && 'hidden'}}" class="factoid hidden">
 						<h5 class="factoid_h">Стартовый взнос</h5>
 						<div style="margin-left:-23px;">
 							<table class="factoid_d" >
@@ -57,19 +57,6 @@
 						</div>
 					</div>
 					<div class="factoids">
-						<style>
-						.factoids{
-							position: absolute;
-							top:0;
-							left:0;
-						}
-						.factoid{
-							position: absolute;
-						}
-						.hidden{
-							display: none;
-						}
-						</style>
 						<div 
 							pv-props="
 								style.top:   {{track_top_padding +  (trackheight * 0.35)}}
