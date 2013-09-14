@@ -16,7 +16,9 @@
 					<div class="factoids">
 						<style>
 						.factoids{
-							position: relative;
+							position: absolute;
+							top:0;
+							left:0;
 						}
 						.factoid{
 							position: absolute;
@@ -27,8 +29,8 @@
 						</style>
 						<div 
 							pv-props="
-								style.top:   {{track_top_padding +  (trackheight * 0.1)}}
-								style.left:  {{track_left_padding + (trackwidth * 0.1)}}
+								style.top:   {{track_top_padding +  (trackheight * 0.35)}}
+								style.left:  {{track_left_padding + (trackwidth * 0.2)}}
 								style.width: {{trackwidth * 0.15}}
 							"
 							pv-class="factoid {{ !( time_value|compareTime: '25:52' : '2:00:52' ) && 'hidden'}}"
