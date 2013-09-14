@@ -101,19 +101,24 @@ provoda.View.extendTo(RunMapCtr, {
 		this.parent_view.c.append(this.c);
 		this.setVisState('con_appended', true);
 
+		this.wch(this, 'trackwidth', function(e) {
+			this.parent_view.parent_view.promiseStateUpdate('trackwidth', e.value);
+		});
+		this.wch(this, 'trackheight', function(e) {
+			this.parent_view.parent_view.promiseStateUpdate('trackheight', e.value);
+		});
+		this.wch(this, 'track_left_padding', function(e) {
+			this.parent_view.parent_view.promiseStateUpdate('track_left_padding', e.value);
+		});
+		this.wch(this, 'track_top_padding', function(e) {
+			this.parent_view.parent_view.promiseStateUpdate('track_top_padding', e.value);
+		});
 		this.wch(this, 'width', function(e) {
 			this.parent_view.parent_view.promiseStateUpdate('mapwidth', e.value);
 		});
 		this.wch(this, 'height', function(e) {
 			this.parent_view.parent_view.promiseStateUpdate('mapheight', e.value);
 		});
-		this.wch(this, 'left_track_padding', function(e) {
-			this.parent_view.parent_view.promiseStateUpdate('left_track_padding', e.value);
-		});
-		this.wch(this, 'top_track_padding', function(e) {
-			this.parent_view.parent_view.promiseStateUpdate('top_track_padding', e.value);
-		});
-
 		
 
 	},
@@ -285,7 +290,7 @@ provoda.View.extendTo(RunMapCtr, {
 			}
 		}
 	},
-	'compx-left_track_padding': {
+	'compx-track_left_padding': {
 		depends_on: ['trackbbox'],
 		fn: function(trackbbox) {
 			if (trackbbox){
@@ -293,7 +298,7 @@ provoda.View.extendTo(RunMapCtr, {
 			}
 		}
 	},
-	'compx-top_track_padding': {
+	'compx-track_top_padding': {
 		depends_on: ['trackbbox'],
 		fn: function( trackbbox) {
 			if ( trackbbox){
@@ -301,7 +306,24 @@ provoda.View.extendTo(RunMapCtr, {
 			}
 		}
 	},
-
+	'compx-trackwidth': {
+		depends_on: ['trackbbox'],
+		fn: function(trackbbox) {
+			if (trackbbox){
+				console.log(trackbbox.width);
+				return Math.round(trackbbox.width);
+			}
+		}
+	},
+	'compx-trackheight': {
+		depends_on: ['trackbbox'],
+		fn: function(trackbbox) {
+			if (trackbbox){
+				console.log(trackbbox.height);
+				return Math.round(trackbbox.height);
+			}
+		}
+	},
 	'stch-translate': function(state) {
 		var translate_str =  "translate(" + state + ")";
 		this.knodes.main_group.attr("transform", translate_str);
