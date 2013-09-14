@@ -95,10 +95,11 @@ var getRunners = function(array, d_ge, d_l) {
 
 
 
-
+var comma =',';
 
 var format  = function(p){
-	return p.x + ',' + p.y;
+
+	return String.prototype.concat(p.x, comma, p.y);
 };
 var formatCurve = function(prev_pcurv2, pcurv1, endp){
 	return format(prev_pcurv2) + ' ' + format(pcurv1) + ' ' + format(endp);

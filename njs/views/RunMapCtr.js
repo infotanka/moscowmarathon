@@ -13,13 +13,13 @@ provoda.View.extendTo(RunMapCtr, {
 		this.svg = d3.select(svg);
 
 
-		this.dot = this.svg.append('circle')
+		/*this.dot = this.svg.append('circle')
 			.attr("r", 5)
 			.style({
 				stroke: 'none',
 				"fill": 'red'
 			});
-
+		*/
 		this.knodes = {};
 		var knodes = this.knodes;
 
@@ -67,25 +67,35 @@ provoda.View.extendTo(RunMapCtr, {
 		});
 
 
-		this.projection = d3.geo.mercator().scale(1).translate([0, 0]);
-		this.path = d3.geo.path().projection(this.projection);
+		this.projection = this.parent_view.project;
+		this.parent_view.map.on('reset', function() {
+			_this.checkProjection();
+		});
+		
+		
+		this.checkProjection();
+
+		//this.projection = d3.geo.mercator().scale(1).translate([0, 0]);
+		this.path = d3.geo.path().projection(this.project);
 		this.behavior = d3.behavior.zoom();
 
 		this.behavior.on("zoom", function() {
 			if (d3.event) {
-				var result = {};
+			/*	var result = {};
 				var t = _this.projection.translate();
 				var t1 = t, t2 = d3.event.translate,
-					tval = [t2[0]-t1[0], t2[1]-t1[1]];
+					tval = [t2[0]-t1[0], t2[1]-t1[1]];*/
 
-				result.translate = tval;
-				result.scale = d3.event.scale;
+			//	result.translate = tval;
+				//result.scale = d3.event.scale;
 
 				_this.projection
 						//.translate(d3.event.translate)
-						.scale(d3.event.scale);
+						.scale(d3.event.scale).translate(d3.event.translate);
 
-				_this.updateManyStates(result);
+				_this.checkProjection();
+
+			//	_this.updateManyStates(result);
 			}
 
 
@@ -120,6 +130,7 @@ provoda.View.extendTo(RunMapCtr, {
 			this.parent_view.parent_view.promiseStateUpdate('mapheight', e.value);
 		});
 		
+
 
 	},
 	earth_radius: mh.earth_radius,
@@ -201,10 +212,15 @@ provoda.View.extendTo(RunMapCtr, {
 			return Date.now();
 		}
 	},
+	testpoint: [37.5485429, 55.7139477, 126.06994],
+	checkProjection: function() {
+		this.promiseStateUpdate('projection_test', this.projection(this.testpoint).join('-'));
+	},
 	'compx-basedet': {
 		depends_on: ['geodata', 'bd'],
 		fn: function(geodata, bd) {
 			if (geodata && bd){
+				/*
 				this.projection.scale(1).translate([0, 0]);
 				var b = this.path.bounds(geodata),
 					s = 0.95 / Math.max((b[1][0] - b[0][0]) / this.width, (b[1][1] - b[0][1]) / this.height),
@@ -212,20 +228,20 @@ provoda.View.extendTo(RunMapCtr, {
 
 				this.behavior.translate(t).scale(s);
 
-				this.projection.scale(s).translate(t);
-
+				this.projection.scale(s).translate(t);*/
+				this.checkProjection();
 				
 
-				var _this = this;
+				//var _this = this;
 
-				this.updateManyStates({
+				/*this.updateManyStates({
 					scale: 0,
 					translate: [0,0]
-				});
+				});*/
 
 				//this.redraw();
 
-				var _this = this;
+				/*var _this = this;
 				(function(){
 
 					var input = document.querySelector('input.dot');
@@ -240,7 +256,7 @@ provoda.View.extendTo(RunMapCtr, {
 					_this.setDot(geodata, input.value * 1);
 
 						
-				}).call(this);
+				}).call(this);*/
 
 				return Date.now();
 			}
@@ -256,6 +272,7 @@ provoda.View.extendTo(RunMapCtr, {
 			.attr("cy", pjr[1])
 			.attr("cx", pjr[0]);
 	},
+	/*
 	'compx-ddot': {
 		depends_on: ['geodata', 'basedet', 'scale'],
 		fn: function(geodata, basedet) {
@@ -263,17 +280,18 @@ provoda.View.extendTo(RunMapCtr, {
 				this.setDot(geodata, 15985);
 			}
 		}
-	},
+	},*/
 
 	'compx-draw': {
-		depends_on: ['basedet', 'cvs_data', 'time_value', 'scale'],
-		fn: function(basedet, cvs_data, time_value, scale) {
+		depends_on: ['basedet', 'cvs_data', 'time_value', 'projection_test'],
+		fn: function(basedet, cvs_data, time_value, projection) {
 			if (!basedet || !cvs_data || typeof time_value == 'undefined'){
 				return;
 			}
+			this.path.projection(this.projection);
 			
 			this.knodes.base.attr("d", this.path);
-			this.knodes.base.points_cache_key = this.projection.scale() + '_' + this.projection.translate();
+			this.knodes.base.points_cache_key = projection;
 			mh.getPoints(cvs_data, this.knodes, time_value, false, cvs_data.start_time, this.total_distance);
 			
 		//	xAxis.attr("x1", t[0]).attr("x2", t[0]);
@@ -310,7 +328,6 @@ provoda.View.extendTo(RunMapCtr, {
 		depends_on: ['trackbbox'],
 		fn: function(trackbbox) {
 			if (trackbbox){
-				console.log(trackbbox.width);
 				return Math.round(trackbbox.width);
 			}
 		}
@@ -319,7 +336,6 @@ provoda.View.extendTo(RunMapCtr, {
 		depends_on: ['trackbbox'],
 		fn: function(trackbbox) {
 			if (trackbbox){
-				console.log(trackbbox.height);
 				return Math.round(trackbbox.height);
 			}
 		}
@@ -327,13 +343,13 @@ provoda.View.extendTo(RunMapCtr, {
 	'stch-translate': function(state) {
 		var translate_str =  "translate(" + state + ")";
 		this.knodes.main_group.attr("transform", translate_str);
-		this.dot.attr("transform", translate_str);
+		//this.dot.attr("transform", translate_str);
 		this.knodes.bottom_group.attr("transform", "translate(" + [state[0], 0] + ")");
 		this.knodes.left_group.attr("transform", "translate(" + [0, state[1]] + ")");
 		
 	},
 	'compx-altit':{
-		depends_on: ['basedet', 'cvs_data', 'geodata', 'scale'],
+		depends_on: ['basedet', 'cvs_data', 'geodata', 'projection'],
 		fn: function(draw, cvs_data, geodata) {
 			if (!draw || !geodata){
 				return;

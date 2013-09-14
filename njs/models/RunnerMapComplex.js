@@ -41,6 +41,7 @@ provoda.HModel.extendTo(GeoMap, {
 			app: this.app,
 			map_parent: this
 		});
+		this.updateState('geodata', geodata);
 		this.updateNesting('run_map', run_map);
 	}
 });
