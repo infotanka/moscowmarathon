@@ -41,7 +41,7 @@ path {
 			}
 
 .big_block{
-	padding: 0 20px;
+	margin: 0 20px;
 	}
 .factoids{
 		position: absolute;
@@ -313,5 +313,6 @@ path {
 			}
 .big-wrap{
 	margin: 0 auto;
-	max-width: 1400px;
+	max-width: 1300px;
+	position: relative;
 }

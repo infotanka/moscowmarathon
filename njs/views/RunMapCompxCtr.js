@@ -52,8 +52,9 @@ provoda.View.extendTo(RunMapCompxCtr, {
 					$(document).off('mousemove', watchPos);
 				});
 			});
-		$(window).on('resize', spv.debounce(function() {
-			_this.checkSizes();
+		this.wch(this.root_view, 'maxwdith', spv.debounce(function() {
+			this.con_offset = null;
+			this.checkSizes();
 		},100));
 	},
 	checkSizes: function() {
@@ -65,7 +66,7 @@ provoda.View.extendTo(RunMapCompxCtr, {
 			if (!this.con_offset){
 				this.con_offset = this.tpl.ancs['timeline'].offset();
 			}
-			var start_pos = this.con_offset.left - this.half_width;
+			var start_pos =  - this.half_width;
 
 
 			var target_pos = start_pos + con_width * factor;

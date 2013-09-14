@@ -12,13 +12,13 @@ provoda.View.extendTo(RunMapCtr, {
 
 		this.svg = d3.select(svg);
 
-
+/*
 		this.dot = this.svg.append('circle')
 			.attr("r", 5)
 			.style({
 				stroke: 'none',
 				"fill": 'red'
-			});
+			});*/
 
 		this.knodes = {};
 		var knodes = this.knodes;
@@ -115,9 +115,12 @@ provoda.View.extendTo(RunMapCtr, {
 		});
 		this.wch(this, 'width', function(e) {
 			this.parent_view.parent_view.promiseStateUpdate('mapwidth', e.value);
+
 		});
 		this.wch(this, 'height', function(e) {
 			this.parent_view.parent_view.promiseStateUpdate('mapheight', e.value);
+			this.root_view.promiseStateUpdate('maxwdith', e.value * 1.6);
+			this.checkSizes();
 		});
 		
 
@@ -217,7 +220,7 @@ provoda.View.extendTo(RunMapCtr, {
 
 				
 
-				var _this = this;
+			//	var _this = this;
 
 				this.updateManyStates({
 					scale: 0,
@@ -226,7 +229,7 @@ provoda.View.extendTo(RunMapCtr, {
 
 				//this.redraw();
 
-				var _this = this;
+				/*var _this = this;
 				(function(){
 
 					var input = document.querySelector('input.dot');
@@ -241,7 +244,7 @@ provoda.View.extendTo(RunMapCtr, {
 					_this.setDot(geodata, input.value * 1);
 
 						
-				}).call(this);
+				}).call(this);*/
 
 				return Date.now();
 			}
@@ -257,14 +260,14 @@ provoda.View.extendTo(RunMapCtr, {
 			.attr("cy", pjr[1])
 			.attr("cx", pjr[0]);
 	},
-	'compx-ddot': {
+	/*'compx-ddot': {
 		depends_on: ['geodata', 'basedet', 'scale'],
 		fn: function(geodata, basedet) {
 			if (basedet && geodata){
 				this.setDot(geodata, 15985);
 			}
 		}
-	},
+	},*/
 
 	'compx-draw': {
 		depends_on: ['basedet', 'cvs_data', 'time_value', 'scale'],
@@ -328,7 +331,7 @@ provoda.View.extendTo(RunMapCtr, {
 	'stch-translate': function(state) {
 		var translate_str =  "translate(" + state + ")";
 		this.knodes.main_group.attr("transform", translate_str);
-		this.dot.attr("transform", translate_str);
+		//this.dot.attr("transform", translate_str);
 		this.knodes.bottom_group.attr("transform", "translate(" + [state[0], 0] + ")");
 		this.knodes.left_group.attr("transform", "translate(" + [0, state[1]] + ")");
 		

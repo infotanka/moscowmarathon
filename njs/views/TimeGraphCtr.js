@@ -8,10 +8,8 @@ provoda.View.extendTo(TimeGraphCtr, {
 		this.c = $(svg).css('display', 'none');
 		this.svg = d3.select(svg);
 
-		var _this = this;
-
-		$(window).on('resize', spv.debounce(function() {
-			_this.checkSizes();
+		this.wch(this.root_view, 'maxwdith', spv.debounce(function() {
+			this.checkSizes();
 		},100));
 		this.wch(this, 'vis_con_appended', function(e) {
 			if (e.value){

@@ -41,6 +41,7 @@ AppBaseView.extendTo(AppView, {
 		};
 		this.els.start_screen = $('#start-screen',d);
 		this.els.ui_samples = $(d.body).children('#dom-templates');
+		this.els.bwrap = $(d.body).children('.big-wrap');
 		this.els.runm_c = $('#runs_map_compx');
 	//	this.els.screens = $('#structure_map');
 		this.handleStartScreen(this.els.start_screen);
@@ -64,6 +65,9 @@ AppBaseView.extendTo(AppView, {
 			material: start_screen,
 			scroll_con: st_scr_scrl_con
 		};
+	},
+	'stch-maxwdith': function(state) {
+		this.els.bwrap.css('max-width', state + 'px');
 	},
 	noArgs: noArgs
 	
