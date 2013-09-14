@@ -56,6 +56,9 @@ path {
 	.factoid_d{
 		font-size: 12px;
 		}
+	.factoid_img{
+		margin-bottom:5px;
+	}
 
 .timemark{
 	margin-top: 5px;
@@ -111,7 +114,7 @@ path {
 		}
 
 	.we_bg_sun{
-		background-image: url(i/w-sun.png)
+		background-image: url(i/nosun.png)
 		}
 
 	.legend{
