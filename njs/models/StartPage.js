@@ -86,8 +86,15 @@ BrowseMap.Model.extendTo(StartPage, {
 		var states = {};
 		var _this = this;
 
-		var setFilterResult = function(result, name) {
+		var setFilterResult = function(result, name, no_flabel) {
 			_this.filters_cache[name] = result.index;
+			if (no_flabel){
+				result.items.unshift({
+					label: no_flabel,
+					novalue: true
+				});
+			}
+			
 			states['filter_' + name] = result.items;
 		};
 
@@ -106,16 +113,40 @@ BrowseMap.Model.extendTo(StartPage, {
 			no_flabel: 'Со всего мира'
 		}].forEach(function(el) {
 			var result = _this.getFilterData(runners, el.name, el.limit);
-			setFilterResult(result, el.name);
+			setFilterResult(result, el.name, el.no_flabel);
 			
 		});
 		
 		//var ages;
 		//spv.makeIndex()
-		var agesgroups = this.getAgesGroups(runners, cvsdata.age_ranges, cvsdata);
-		setFilterResult(agesgroups, 'ages');
+		setFilterResult(this.getAgesGroups(runners, cvsdata.age_ranges, cvsdata), 'ages', 'Все возрасты');
+		setFilterResult(this.getGenderGroups(runners), 'gender', 'Всех вместе');
 
 		this.updateManyStates(states);
+	},
+	getGenderGroups: function(runners) {
+		var result = [];
+		
+		var field = ['states', 'gender'];
+		var index = spv.makeIndexByField(runners, field, true);
+
+
+		result.push({
+			label: 'Мужчин',
+			counter: index[1].length
+		}, {
+			label: 'Женщин',
+			counter: index[0].length
+		});
+
+		index = {
+			'Мужчин': index[1],
+			'Женщин': index[0]
+		};
+		return {
+			index: index,
+			items: result
+		};
 	},
 	getAgesGroups: function(runners, age_ranges, cvsdata) {
 		var result = [];
@@ -143,6 +174,7 @@ BrowseMap.Model.extendTo(StartPage, {
 		} else {
 			this.filters[type] = name;
 		}
+		this.updateState('selected_filter_' + type, this.filters[type]);
 		this.checkFilters();
 	},
 	checkFilters: function() {
@@ -181,6 +213,9 @@ BrowseMap.Model.extendTo(StartPage, {
 	},
 	makeFiltersResult: function(filters, caches) {
 		var result = this.getNesting('runners');
+		if (result){
+			result = result.slice();
+		}
 		if (filters && filters.length){
 
 			result = _.intersection.apply(_, caches);
@@ -189,7 +224,7 @@ BrowseMap.Model.extendTo(StartPage, {
 		} else {
 			//return result;
 		}
-		var rules = [{field: ['states', 'pos']}];
+		var rules = [{field: ['states', 'pos']}, {field: ['states', 'num']}];
 		result.sort(function(a, b) {
 			return spv.sortByRules(a, b, rules);
 		});

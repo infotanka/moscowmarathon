@@ -101,32 +101,36 @@
 	<div id="start-screen" class="runners_block big_block">
 		<div>
 			<h2>Результаты  </h2>
-			<span class="sex_filter"><a>Мужчин</a> <a href="">Женщин</a> <a href="">Всех вместе</a></span>
+			<span class="sex_filter">
+				<a pv-repeat="filtr_item in filter_gender" pv-events="click:setFilterBy">
+					<span pv-text="{{filtr_item.label}}"></span>
+				</a>
+			</span>
 			<div class="filters">
 				<input class="firunr_search" placeholder="Имя или номер" type="search" pv-events="input:makeSearch keydown:makeSearch mousemove:makeSearch"/ > 
 				<div class="firunr_age filterr_menu">
-					<div class="filtrr" pv-events="click:switchMenu">Все возрасты</div>
+					<div class="filtrr" pv-text="{{selected_filter_ages || filter_ages.0.label}}"></div>
 					<div class="flrr_menu_list" >
 						<div class="flrr_menu_item" pv-repeat="filtr_item in filter_ages" pv-events="click:setFilterBy">
-							<span pv-text="{{filtr_item.label}}," class="filter_item_name"></span>
+							<span pv-text="{{filtr_item.label}}" class="filter_item_name"></span>
 							<span class="counter" pv-text="{{filtr_item.counter}}"></span>
 						</div>
 					</div>
 				</div>
 				<div class="firunr_teem filterr_menu">
-					<div class="filtrr" pv-events="click:switchMenu">Все команды</div>
+					<div class="filtrr" pv-text="{{selected_filter_team || filter_team.0.label}}"></div>
 					<div class="flrr_menu_list" >
 						<div class="flrr_menu_item" pv-repeat="filtr_item in filter_team" pv-events="click:setFilterBy">
-							<span pv-text="{{filtr_item.label}}," class="filter_item_name"></span>
+							<span pv-text="{{filtr_item.label}}" class="filter_item_name"></span>
 							<span class="counter" pv-text="{{filtr_item.counter}}"></span>
 						</div>
 					</div>
 				</div>
 				<div class="firunr_place filterr_menu">
-					<div class="filtrr" pv-events="click:switchMenu">Со всего мира</div>
+					<div class="filtrr" pv-text="{{selected_filter_city || filter_city.0.label}}">Со всего мира</div>
 					<div class="flrr_menu_list" >
 						<div class="flrr_menu_item" pv-repeat="filtr_item in filter_city" pv-events="click:setFilterBy">
-							<span pv-text="{{filtr_item.label}}," class="filter_item_name"></span>
+							<span pv-text="{{filtr_item.label}}" class="filter_item_name"></span>
 							<span class="counter" pv-text="{{filtr_item.counter}}"></span>
 						</div>
 					</div>

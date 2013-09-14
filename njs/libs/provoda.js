@@ -2964,12 +2964,18 @@ provoda.StatesEmitter.extendTo(provoda.View, {
 	checkCollchItemAgainstPvView: function(name, real_array, space_name, pv_view) {
 		if (!pv_view.original_node){
 			pv_view.original_node = pv_view.node.cloneNode(true);
+			
 		}
 		if (!pv_view.comment_anchor){
 			pv_view.comment_anchor = document.createComment('collch anchor for: ' + name + ", " + space_name);
 			$(pv_view.node).before(pv_view.comment_anchor);
 		}
 
+		if (pv_view.node){
+			$(pv_view.node).remove();
+			pv_view.node = null;
+		}
+		
 		var filtered = pv_view.filterFn ? pv_view.filterFn(real_array) : real_array;
 
 		var getFreeView = function(cur_md, node_to_use) {

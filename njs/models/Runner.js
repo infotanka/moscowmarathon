@@ -17,7 +17,8 @@ BrowseMap.Model.extendTo(Runner, {
 		country: '4',
 		region: '5',
 		city: '6',
-		team: '7'
+		team: '7',
+		gender: 'gender'
 	}
 
 	//Ctry✌✄✌Region✌✄✌City✌✄✌Club✌✄✌Result✌✄✄✌Group✌✄✌P.on g.✌✄✌Netto time✌✄✄
