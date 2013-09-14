@@ -267,7 +267,7 @@ var getPoints = function(cvs_data, knodes, seconds, animate, start_time, total_d
 
 
 	
-	var i, cur, step = 15;
+	var i, cur;
 
 	var boundrect = knodes.base.node().getBoundingClientRect();
 	var max_graph_height;
@@ -277,6 +277,7 @@ var getPoints = function(cvs_data, knodes, seconds, animate, start_time, total_d
 	} else {
 		max_graph_height = boundrect.width/10;
 	}
+	var step = boundrect.height/30;
 
 	var complects = getBasePoints(knodes.base, step, total_distance).complects;
 	
