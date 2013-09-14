@@ -15,8 +15,8 @@
 					<p class="bmap_desc"></p>
 
 					<div pv-props="
-								style.top:   {{track_top_padding +  (trackheight * 0.1)}}
-								style.left:  {{track_left_padding - (trackwidth * 0.2)}}
+								style.top:   {{track_top_padding +  (trackheight * 0.12)}}
+								style.left:  {{track_left_padding - (trackwidth * 0.12)}}
 								style.width: {{trackwidth * 1}}
 							"
 							pv-class="factoid {{ !( time_value|compareTime: '00:00' : '0:30:00' ) && 'hidden'}}" class="factoid">
@@ -25,7 +25,7 @@
 							<table class="factoid_d" >
 								<tr>
 									<td><img src="i/usa-flag.png" width=16 height=9 /></td>
-									<td width=70>Нью-Йорк</td>
+									<td width=60>Нью-Йорк</td>
 									<td>377&thinsp;$</td>
 								</tr>
 								<tr>
@@ -73,14 +73,15 @@
 						<div 
 							pv-props="
 								style.top:   {{track_top_padding +  (trackheight * 0.35)}}
-								style.left:  {{track_left_padding + (trackwidth * 0.2)}}
-								style.width: {{trackwidth * 0.15}}
+								style.left:  {{track_left_padding + (trackwidth * 0.1)}}
+								style.width: {{trackwidth * 0.25}}
 							"
 							pv-class="factoid {{ !( time_value|compareTime: '25:52' : '2:00:52' ) && 'hidden'}}"
 							class="factoid">
 
-							<h5 class="factoid_h">  Динамо бежит!</h5>
-							<div class="factoid_d">Во время уличных пробежек бегунов часто спрашивают, бежит ли Динамо. На этот раз ответ — да!</div>
+							<img class="factoid_img" src="i/dinamo.png" width=81 height=81 />
+							<h5 class="factoid_h">Динамо бежит!</h5>
+							<div class="factoid_d">Во время уличных пробежек бегунов часто спрашивают, бежит ли Динамо. <p style="margin-top:3px;">На этот раз ответ — да!</p></div>
 						</div>
 					</div>
 					
