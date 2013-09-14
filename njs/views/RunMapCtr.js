@@ -66,10 +66,12 @@ provoda.View.extendTo(RunMapCtr, {
 
 
 		this.projection = this.parent_view.project;
+		var checkPJ = spv.debounce(function() {
+			_this.checkProjection();
+		},100);
 		this.parent_view.map
-			.on('reset', function() {
-				_this.checkProjection();
-			});
+			.on('viewreset', checkPJ)
+			.on('resize', checkPJ);
 		
 		
 		this.checkProjection();

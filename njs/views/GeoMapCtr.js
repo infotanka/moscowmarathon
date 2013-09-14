@@ -26,7 +26,10 @@ provoda.View.extendTo(GeoMapCtr, {
 		});
 		//[51.505, -0.09]
 		//[37.5485429, 55.7139477]
-		var map = L.map(div, {zoomControl:false }).setView([55.7139477, 37.5485429], 5);
+		var map = L.map(div, {
+			zoomControl:false,
+			trackResize: false
+		}).setView([55.7139477, 37.5485429], 5);
 		this.map = map;
 		//$(div).css()
 
@@ -37,6 +40,7 @@ provoda.View.extendTo(GeoMapCtr, {
 		map.scrollWheelZoom.disable();
 		map.boxZoom.disable();
 		map.keyboard.disable();
+		window.map = map;
 		//this.map.zooming.disable();
 		//{trackResize: true}
 
@@ -84,8 +88,18 @@ provoda.View.extendTo(GeoMapCtr, {
 
 		result.height = Math.max(window.innerHeight - 70, 400);
 
+		var zopts = {animate: false};
 		
 		
+
+		var geobounds = this.state('geobounds');
+		if (geobounds){
+			this.map.fitBounds(geobounds, zopts);
+		}
+		var zooml = this.map.getZoom();
+		this.map.invalidateSize(zopts);
+		this.map.setZoom(zooml + 1, zopts);
+		this.map.setZoom(zooml, zopts);
 		this.updateManyStates(result);
 	},
 	updateManyStates: function(obj) {
@@ -95,12 +109,23 @@ provoda.View.extendTo(GeoMapCtr, {
 		}
 		this._updateProxy(changes_list);
 	},
-	'compx-center': {
+	'compx-geobounds': {
 		depends_on: ['geodata'],
 		fn: function(geodata) {
 			var lay = L.geoJson(geodata);//.addTo(this.map);
-			this.map.fitBounds(lay.getBounds());
-			console.log(lay.getBounds());
+			var geobounds = lay.getBounds();
+			this.map.fitBounds(geobounds, {animate: false});
+			return geobounds;
+			//console.log(lay.getBounds());
+		}
+	},
+	'comx-center': {
+		depends_on: 'geobounds',
+		fn: function(geobounds) {
+			if (geobounds){
+				this.map.fitBounds(geobounds);
+			}
+			
 		}
 	}
 
