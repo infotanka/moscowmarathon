@@ -130,9 +130,8 @@ provoda.View.extendTo(RunMapCtr, {
 		this.wch(this.parent_view, 'height', function(e) {
 			this.promiseStateUpdate('height', e.value);
 		});
-		
 
-		this.checkProjection();
+		//this.checkProjection();
 	},
 	earth_radius: mh.earth_radius,
 	updateManyStates: function(obj) {
