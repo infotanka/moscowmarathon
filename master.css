@@ -24,6 +24,7 @@ path {
 	position: absolute;
 	left:0;
 	right:0;
+	z-index: 4;
 }
 .controlls{
 	height: 345px;
