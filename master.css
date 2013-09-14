@@ -311,3 +311,7 @@ path {
 			padding: 2px 10px;
 			cursor: pointer; 
 			}
+.big-wrap{
+	margin: 0 auto;
+	max-width: 1400px;
+}

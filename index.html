@@ -7,6 +7,7 @@
 	<script data-main="njs/loader.js" src="njs/require-2.1.6.min.js"></script>
 </head>
 <body>
+<div class="big-wrap">
 	<div id="runs_map_compx">
 		<div class="bmap big_block">
 			<div class="mapoverlay big_block">
@@ -67,7 +68,7 @@
 								style.width: {{trackwidth * 0.25}}
 							"
 							pv-class="factoid {{ !( time_value|compareTime: '25:52' : '2:00:52' ) && 'hidden'}}"
-							class="factoid">
+							class="factoid hidden">
 
 							<img class="factoid_img" src="i/dinamo.png" width=81 height=81 />
 							<h5 class="factoid_h">Динамо бежит!</h5>
@@ -221,7 +222,8 @@
 	</div>
 
 	
-
+</div>
 <div id="dom-templates" style="display:none"></div>
+
 </body>
 </html>
