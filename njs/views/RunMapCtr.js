@@ -189,6 +189,7 @@ provoda.View.extendTo(RunMapCtr, {
 			}
 			var container = this.c.parent();
 			container.css('height', height);
+
 			this.width = width;
 			this.height = height;
 			this.c.css('display', '');
@@ -310,7 +311,7 @@ provoda.View.extendTo(RunMapCtr, {
 		depends_on: ['trackbbox'],
 		fn: function(trackbbox) {
 			if (trackbbox){
-				console.log(trackbbox.width);
+
 				return Math.round(trackbbox.width);
 			}
 		}
@@ -319,7 +320,7 @@ provoda.View.extendTo(RunMapCtr, {
 		depends_on: ['trackbbox'],
 		fn: function(trackbbox) {
 			if (trackbbox){
-				console.log(trackbbox.height);
+
 				return Math.round(trackbbox.height);
 			}
 		}

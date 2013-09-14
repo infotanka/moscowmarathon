@@ -21,6 +21,9 @@ provoda.View.extendTo(TimeGraphCtr, {
 			
 		});
 		this.areas_group = this.svg.append('g');
+
+		this.timemarksg1 = this.svg.append('g');
+		this.timemarksg2 = this.svg.append('g');
 	},
 	checkSizes: function() {
 		var result = {};
@@ -46,6 +49,78 @@ provoda.View.extendTo(TimeGraphCtr, {
 			if (cvs_data && typeof selected_time != 'undefined'){
 				return cvs_data.max_time * selected_time;
 			}
+		}
+	},
+
+	'compx-timesteps': {
+		depends_on: ['cvs_data'],
+		fn: function(cvs_data) {
+			var step = 20*60;
+
+			var items = [];
+			var cur = 0;
+			while (cur < cvs_data.max_time){
+				items.push(cur);
+				cur += step;
+				//cur = Math.min(cur, cvs_data.max_time);
+			}
+			items.pop();
+			items.push(cvs_data.max_time);
+			return items;
+
+		}
+	},
+	'compx-marks': {
+		depends_on: ['timesteps'],
+		fn: function(timesteps) {
+			if (timesteps){
+				var result = [];
+
+				var mheight = 4;
+				for (var i = 0; i < timesteps.length; i++) {
+					var line1 = this.timemarksg1.append('line');
+					line1.attr({
+						y1: 0,
+						y2: mheight,
+						'stroke':'#CBCBCB',
+						'stroke-width':1
+					});
+					var line2 = this.timemarksg1.append('line');
+					line2.attr({
+						y1: this.height,
+						y2: this.height - mheight,
+						'stroke':'#CBCBCB',
+						'stroke-width':1
+					});
+					result.push({
+						top: line1,
+						bottom: line2
+					});
+
+					//timesteps[i]
+				}
+				return result;
+			}
+
+		}
+	},
+	'compx-marks_done': {
+		depends_on: ['marks', 'bd', 'cvs_data', 'timesteps'],
+		fn: function(marks, bd, cvs_data, timesteps) {
+			if (marks && bd && cvs_data && timesteps){
+				var width_factor = this.width/cvs_data.max_time;
+				for (var i = 0; i < marks.length; i++) {
+					var val =  width_factor * timesteps[i];
+					var attrs = {
+						x1: val,
+						x2: val
+					};
+					marks[i].top.attr(attrs);
+					marks[i].bottom.attr(attrs);
+				}
+				return [];
+			}
+			
 		}
 	},
 	'compx-bd': {
