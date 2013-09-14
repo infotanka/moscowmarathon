@@ -17,8 +17,10 @@ provoda.View.extendTo(GeoMapCtr, {
 		this.c.append(div);
 
 		$(div).css({
-			height: '400px',
-			width: '400px',
+			left: 0,
+			right: 0,
+			top: 0,
+			bottom:0,
 			position: 'absolute',
 			'z-index': -1
 		});
@@ -55,9 +57,43 @@ provoda.View.extendTo(GeoMapCtr, {
 			var point = map.latLngToLayerPoint(new L.LatLng(p[1], p[0]));
 			return [point.x, point.y];
 		};
+		var _this = this;
+
+		$(window).on('resize', spv.debounce(function() {
+			_this.checkSizes();
+		},100));
+
+		this.wch(this, 'width', function(e) {
+			this.parent_view.promiseStateUpdate('mapwidth', e.value);
+		});
+		this.wch(this, 'height', function(e) {
+			this.parent_view.promiseStateUpdate('mapheight', e.value);
+		});
+		this.checkSizes();
 	},
 	createDD: function() {
 
+	},
+	checkSizes: function() {
+		var result = {};
+		var container = this.c.parent();
+		
+		if (container[0]){
+			result.width = container.width();
+		}
+
+		result.height = Math.max(window.innerHeight - 70, 400);
+
+		
+		
+		this.updateManyStates(result);
+	},
+	updateManyStates: function(obj) {
+		var changes_list = [];
+		for (var name in obj) {
+			changes_list.push(name, obj[name]);
+		}
+		this._updateProxy(changes_list);
 	},
 	'compx-center': {
 		depends_on: ['geodata'],

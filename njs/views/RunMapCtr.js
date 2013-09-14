@@ -59,18 +59,17 @@ provoda.View.extendTo(RunMapCtr, {
 		
 		
 		this.wch(this, 'vis_con_appended', function(e) {
-			if (e.value){
-				this.checkSizes();
-			}
+
 			this.setVisState('ready', e.value);
 			
 		});
 
 
 		this.projection = this.parent_view.project;
-		this.parent_view.map.on('reset', function() {
-			_this.checkProjection();
-		});
+		this.parent_view.map
+			.on('reset', function() {
+				_this.checkProjection();
+			});
 		
 		
 		this.checkProjection();
@@ -104,9 +103,7 @@ provoda.View.extendTo(RunMapCtr, {
 		//this.svg.call(this.behavior);
 		var _this = this;
 
-		$(window).on('resize', spv.debounce(function() {
-			_this.checkSizes();
-		},100));
+		
 
 		this.parent_view.c.append(this.c);
 		this.setVisState('con_appended', true);
@@ -123,28 +120,18 @@ provoda.View.extendTo(RunMapCtr, {
 		this.wch(this, 'track_top_padding', function(e) {
 			this.parent_view.parent_view.promiseStateUpdate('track_top_padding', e.value);
 		});
-		this.wch(this, 'width', function(e) {
-			this.parent_view.parent_view.promiseStateUpdate('mapwidth', e.value);
+
+		this.wch(this.parent_view, 'width', function(e) {
+			this.promiseStateUpdate('width', e.value);
 		});
-		this.wch(this, 'height', function(e) {
-			this.parent_view.parent_view.promiseStateUpdate('mapheight', e.value);
+		this.wch(this.parent_view, 'height', function(e) {
+			this.promiseStateUpdate('height', e.value);
 		});
 		
 
 
 	},
 	earth_radius: mh.earth_radius,
-	checkSizes: function() {
-		var result = {};
-		var container = this.c.parent();
-		
-		if (container[0]){
-			result.width = container.width();
-		}
-
-		result.height = Math.max(window.innerHeight - 70, 400);
-		this.updateManyStates(result);
-	},
 	updateManyStates: function(obj) {
 		var changes_list = [];
 		for (var name in obj) {

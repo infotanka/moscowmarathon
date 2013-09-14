@@ -15,6 +15,7 @@ path {
 }
 #map-con{
 	height: 400px;
+	position: relative;
 }
 .bmap{
 	font-size: 13px;
