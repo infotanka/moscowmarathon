@@ -27,9 +27,9 @@
 						</style>
 						<div 
 							pv-props="
-								style.left:  {{mapwidth * 0.3}}
-								style.top:   {{mapheight * 0.25}}
-								style.width: {{mapwidth * 0.1}}
+								style.top:   {{top_track_padding +  mapheight * 0.2}}
+								style.left:  {{left_track_padding + mapwidth * 0.1}}
+								style.width: {{mapwidth * 0.15}}
 							"
 							pv-class="factoid {{ !( time_value|compareTime: '25:52' : '2:00:52' ) && 'hidden'}}"
 							class="factoid">

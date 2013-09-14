@@ -107,6 +107,14 @@ provoda.View.extendTo(RunMapCtr, {
 		this.wch(this, 'height', function(e) {
 			this.parent_view.parent_view.promiseStateUpdate('mapheight', e.value);
 		});
+		this.wch(this, 'left_track_padding', function(e) {
+			this.parent_view.parent_view.promiseStateUpdate('left_track_padding', e.value);
+		});
+		this.wch(this, 'top_track_padding', function(e) {
+			this.parent_view.parent_view.promiseStateUpdate('top_track_padding', e.value);
+		});
+
+		
 
 	},
 	earth_radius: mh.earth_radius,
@@ -259,13 +267,9 @@ provoda.View.extendTo(RunMapCtr, {
 				return;
 			}
 			
-
 			this.knodes.base.attr("d", this.path);
 			this.knodes.base.points_cache_key = this.projection.scale() + '_' + this.projection.translate();
 			mh.getPoints(cvs_data, this.knodes, time_value, false, cvs_data.start_time, this.total_distance);
-
-			
-
 			
 		//	xAxis.attr("x1", t[0]).attr("x2", t[0]);
 			//yAxis.attr("y1", t[1]).attr("y2", t[1]);
@@ -273,6 +277,31 @@ provoda.View.extendTo(RunMapCtr, {
 			return {};
 		}
 	},
+	'compx-trackbbox': {
+		depends_on: ['draw'],
+		fn: function(draw) {
+			if (draw){
+				return this.knodes.base[0][0].getBBox();
+			}
+		}
+	},
+	'compx-left_track_padding': {
+		depends_on: ['trackbbox'],
+		fn: function(trackbbox) {
+			if (trackbbox){
+				return Math.round(trackbbox.x);
+			}
+		}
+	},
+	'compx-top_track_padding': {
+		depends_on: ['trackbbox'],
+		fn: function( trackbbox) {
+			if ( trackbbox){
+				return Math.round(trackbbox.y);
+			}
+		}
+	},
+
 	'stch-translate': function(state) {
 		var translate_str =  "translate(" + state + ")";
 		this.knodes.main_group.attr("transform", translate_str);
