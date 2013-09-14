@@ -35,8 +35,10 @@ var filters = {
 		}
 	},
 	compareTime: function(input, start, end) {
+		start = getTime(start);
+		end = getTime(end);
 
-		return (input > getTime(start) || input === 0) && input <= getTime(end);
+		return (input > getTime(start) || (start === input && input === 0)) && input <= end;
 	//	console.log(arguments);
 	},
 	timeToNum: function(input) {
