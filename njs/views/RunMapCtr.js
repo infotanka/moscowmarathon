@@ -101,12 +101,25 @@ provoda.View.extendTo(RunMapCtr, {
 		this.parent_view.c.append(this.c);
 		this.setVisState('con_appended', true);
 
+		this.wch(this, 'trackwidth', function(e) {
+			this.parent_view.parent_view.promiseStateUpdate('trackwidth', e.value);
+		});
+		this.wch(this, 'trackheight', function(e) {
+			this.parent_view.parent_view.promiseStateUpdate('trackheight', e.value);
+		});
+		this.wch(this, 'track_left_padding', function(e) {
+			this.parent_view.parent_view.promiseStateUpdate('track_left_padding', e.value);
+		});
+		this.wch(this, 'track_top_padding', function(e) {
+			this.parent_view.parent_view.promiseStateUpdate('track_top_padding', e.value);
+		});
 		this.wch(this, 'width', function(e) {
 			this.parent_view.parent_view.promiseStateUpdate('mapwidth', e.value);
 		});
 		this.wch(this, 'height', function(e) {
 			this.parent_view.parent_view.promiseStateUpdate('mapheight', e.value);
 		});
+		
 
 	},
 	earth_radius: mh.earth_radius,
@@ -259,18 +272,56 @@ provoda.View.extendTo(RunMapCtr, {
 				return;
 			}
 			
-
 			this.knodes.base.attr("d", this.path);
 			this.knodes.base.points_cache_key = this.projection.scale() + '_' + this.projection.translate();
 			mh.getPoints(cvs_data, this.knodes, time_value, false, cvs_data.start_time, this.total_distance);
-
-			
-
 			
 		//	xAxis.attr("x1", t[0]).attr("x2", t[0]);
 			//yAxis.attr("y1", t[1]).attr("y2", t[1]);
 		//
 			return {};
+		}
+	},
+	'compx-trackbbox': {
+		depends_on: ['draw'],
+		fn: function(draw) {
+			if (draw){
+				return this.knodes.base[0][0].getBBox();
+			}
+		}
+	},
+	'compx-track_left_padding': {
+		depends_on: ['trackbbox'],
+		fn: function(trackbbox) {
+			if (trackbbox){
+				return Math.round(trackbbox.x);
+			}
+		}
+	},
+	'compx-track_top_padding': {
+		depends_on: ['trackbbox'],
+		fn: function( trackbbox) {
+			if ( trackbbox){
+				return Math.round(trackbbox.y);
+			}
+		}
+	},
+	'compx-trackwidth': {
+		depends_on: ['trackbbox'],
+		fn: function(trackbbox) {
+			if (trackbbox){
+				console.log(trackbbox.width);
+				return Math.round(trackbbox.width);
+			}
+		}
+	},
+	'compx-trackheight': {
+		depends_on: ['trackbbox'],
+		fn: function(trackbbox) {
+			if (trackbbox){
+				console.log(trackbbox.height);
+				return Math.round(trackbbox.height);
+			}
 		}
 	},
 	'stch-translate': function(state) {
