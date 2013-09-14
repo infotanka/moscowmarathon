@@ -101,6 +101,13 @@ provoda.View.extendTo(RunMapCtr, {
 		this.parent_view.c.append(this.c);
 		this.setVisState('con_appended', true);
 
+		this.wch(this, 'width', function(e) {
+			this.parent_view.parent_view.promiseStateUpdate('mapwidth', e.value);
+		});
+		this.wch(this, 'height', function(e) {
+			this.parent_view.parent_view.promiseStateUpdate('mapheight', e.value);
+		});
+
 	},
 	earth_radius: mh.earth_radius,
 	checkSizes: function() {
