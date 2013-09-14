@@ -13,6 +13,49 @@
 				<div class="main_header">
 					<h1 class="bmap_header">Мы бежали <span class="marath-icon"><img src="i/marathon-logo.png"></span>марафон</h1>
 					<p class="bmap_desc"></p>
+
+					<div pv-props="
+								style.top:   {{track_top_padding +  (trackheight * 0.1)}}
+								style.left:  {{track_left_padding - (trackwidth * 0.2)}}
+								style.width: {{trackwidth * 1}}
+							"
+							pv-class="factoid {{ !( time_value|compareTime: '00:00' : '0:30:00' ) && 'hidden'}}" class="factoid">
+						<h5 class="factoid_h">Стартовый взнос</h5>
+						<div style="margin-left:-23px;">
+							<table class="factoid_d" >
+								<tr>
+									<td><img src="i/usa-flag.png" width=16 height=9 /></td>
+									<td width=70>Нью-Йорк</td>
+									<td>377&thinsp;$</td>
+								</tr>
+								<tr>
+									<td></td>
+									<td>Бостон</td>
+									<td>150…300&thinsp;$</td>
+								</tr>
+								<tr>
+									<td></td>
+									<td>Чикаго</td>
+									<td>175…200&thinsp;$</td>
+								</tr>
+								<tr>
+									<td height=20><img src="i/uk-flag.png" width=16 height=9 /></td>
+									<td>Лондон</td>
+									<td>100&thinsp;£</td>
+								</tr>
+								<tr>
+									<td height=15><img src="i/de-flag.png" width=16 height=9 /></td>
+									<td>Берлин</td>
+									<td>60…110&thinsp;€</td>
+								</tr>
+								<tr>
+									<td height=15><img src="i/ru-flag.png" width=16 height=9 /></td>
+									<td>Москва</td>
+									<td>1000…2000&thinsp;&#8399;</td>
+								</tr>
+							</table>
+						</div>
+					</div>
 					<div class="factoids">
 						<style>
 						.factoids{
