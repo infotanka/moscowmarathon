@@ -65,18 +65,19 @@ provoda.View.extendTo(RunMapCtr, {
 		});
 
 
-		this.projection = this.parent_view.project;
+		//this.projection = this.parent_view.project;
 		var checkPJ = spv.debounce(function() {
 			_this.checkProjection();
 		},100);
+		/*
 		this.parent_view.map
 			.on('viewreset', checkPJ)
-			.on('resize', checkPJ);
+			.on('resize', checkPJ);*/
 		
+		this.projection = d3.geo.mercator().scale(1).translate([0, 0]);
 		
-		this.checkProjection();
 
-		//this.projection = d3.geo.mercator().scale(1).translate([0, 0]);
+		
 		this.path = d3.geo.path().projection(this.project);
 		this.behavior = d3.behavior.zoom();
 
@@ -131,7 +132,7 @@ provoda.View.extendTo(RunMapCtr, {
 		});
 		
 
-
+		this.checkProjection();
 	},
 	earth_radius: mh.earth_radius,
 	updateManyStates: function(obj) {
@@ -209,7 +210,7 @@ provoda.View.extendTo(RunMapCtr, {
 		depends_on: ['geodata', 'bd'],
 		fn: function(geodata, bd) {
 			if (geodata && bd){
-				/*
+				
 				this.projection.scale(1).translate([0, 0]);
 				var b = this.path.bounds(geodata),
 					s = 0.95 / Math.max((b[1][0] - b[0][0]) / this.width, (b[1][1] - b[0][1]) / this.height),
@@ -217,7 +218,7 @@ provoda.View.extendTo(RunMapCtr, {
 
 				this.behavior.translate(t).scale(s);
 
-				this.projection.scale(s).translate(t);*/
+				this.projection.scale(s).translate(t);
 				this.checkProjection();
 				
 
