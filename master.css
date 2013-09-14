@@ -46,15 +46,15 @@ path {
 
 .factoid{
 	margin-top: 20px;
-	width:200px;
+	width:170px;
 	}
 	.factoid_h{
 		font-family: Arial Black;
-		font-size: 18px;
+		font-size: 16px;
 		font-weight: 700;
 		}
 	.factoid_d{
-		font-size: 13px;
+		font-size: 12px;
 		}
 
 .timemark{
