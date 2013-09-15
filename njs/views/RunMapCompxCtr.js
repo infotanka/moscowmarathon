@@ -109,9 +109,13 @@ provoda.View.extendTo(RunMapCompxCtr, {
 
 		var data = mh.formatPathPoints([p1, p2, p3]) + ' Z';
 
+		var style = {
+			fill: '#7FBFFF',
+			stroke: 'none'
+		};
 		this.legendcount.append('path')
-			.attr('data', data)
-			.style('fill', 'blue');
+			.attr('d', data)
+			.style(style);
 
 	},
 	'compx-legend_count':{
@@ -129,7 +133,8 @@ provoda.View.extendTo(RunMapCompxCtr, {
 
 
 			var maxcount = (runners_rate.height * runners_rate.runners)/width;
-			console.log(maxcount)
+			this.tpl.ancs['legendcounttext'].text(Math.round(maxcount));
+			//console.log(maxcount)
 
 		}
 	},

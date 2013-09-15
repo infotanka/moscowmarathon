@@ -137,6 +137,18 @@ path {
 			}
 			.legendcount_c .svgcon{
 				height: 100px;
+				position: relative;
+			}
+			.legendcount-text-c{
+				position: absolute;
+				right:0;
+				top:0;
+			}
+			.legendcount-text{
+				padding-left: 3px;
+				position: absolute;
+				top:-0.2em;
+				left:0;
 			}
 		.legendage_c .svgcon{
 			height: 100px;
