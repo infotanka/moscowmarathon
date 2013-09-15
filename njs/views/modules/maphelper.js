@@ -191,40 +191,49 @@ var getAreaByData = function(cvs, base_districts, prev_districts, seconds, step,
 };
 
 var base_points_cache = {};
+
+
+var getSteps = function(step, px_distance, node){
+	var steps = [],
+		pieces = [],
+		piece = 0, i;
+
+	while (piece <= px_distance){
+		pieces.push(piece);
+		if (piece == px_distance){
+			break;
+		}
+		piece = Math.min(px_distance, piece + step);
+	}
+	for (i = 0; i < pieces.length; i++) {
+		steps.push({
+			p: node.getPointAtLength(pieces[i]),
+			l: pieces[i]
+		});
+	}
+	return steps;
+};
+
+
 var getBasePoints = function(base, step, total_distance){
 	var points_key = base.points_cache_key;
 	if (base_points_cache[points_key]){
 		return base_points_cache[points_key];
 	} else {
-
-		var points = [],
-			pieces = [],
-			piece = 0,
-			d3path_node = base.node(),
+		var d3path_node = base.node(),
 			px_distance = d3path_node.getTotalLength(),
-			i, cur;
+			i;
 
-		while (piece <= px_distance){
-			pieces.push(piece);
-			if (piece == px_distance){
-				break;
-			}
-			piece = Math.min(px_distance, piece + step);
-		}
-		for (i = 0; i < pieces.length; i++) {
-			points.push({
-				p: d3path_node.getPointAtLength(pieces[i]),
-				l: pieces[i]
-			});
-		}
+		var steps = getSteps(step, px_distance, d3path_node);
+		
 
 		var complects = [],
 			px_in_m = px_distance/total_distance;
 
 		
-		for (i = 1; i < points.length; i++) {
-			var c1 = points[i-1],
-				c2 = points[i],
+		for (i = 1; i < steps.length; i++) {
+			var c1 = steps[i-1],
+				c2 = steps[i],
 				p1 = c1.p,
 				p2 = c2.p;
 
@@ -249,10 +258,11 @@ var getBasePoints = function(base, step, total_distance){
 			//console.log(getAngleBySegmentsPointsM(p1, p2, x_axis_points.p1, x_axis_points.p2)/(Math.PI/180));
 		}
 
-		return (base_points_cache[points_key] = {
+		base_points_cache[points_key] = {
 			complects: complects,
-			points: points
-		});
+			points: steps
+		};
+		return base_points_cache[points_key];
 	}
 };
 
@@ -266,7 +276,7 @@ var getPoints = function(cvs_data, knodes, seconds, animate, start_time, total_d
 
 
 	
-	var i, cur, step = 15;
+	var i, cur;
 
 	var boundrect = knodes.base.node().getBoundingClientRect();
 	var max_graph_height;
@@ -276,7 +286,7 @@ var getPoints = function(cvs_data, knodes, seconds, animate, start_time, total_d
 	} else {
 		max_graph_height = boundrect.width/10;
 	}
-
+	var step = boundrect.height/25;
 	var complects = getBasePoints(knodes.base, step, total_distance).complects;
 	
 
