@@ -76,16 +76,14 @@ provoda.View.extendTo(RunMapCompxCtr, {
 
 		var mth_counter = 0;
 		var mth_text = ['марафон', '42 км 195 м'];
-		this.tpl.ancs['mthswitch'].click(function() {
-			mth_counter++;
-			var text;
-			if (mth_counter % 2 == 0){
-				text =mth_text[0];
-			} else {
-				text =mth_text[1];
-			}
-			$(this).text(text);
-		});
+		this.tpl.ancs['mthswitch']
+			.on('mouseenter', function() {
+				$(this).text(mth_text[1]);
+			})
+			.on('mouseleave', function() {
+				$(this).text(mth_text[0]);
+			});
+
 	},
 	checkSizes: function() {
 		this.setVisState('con_width', this.tpl.ancs['timeline'].width());
