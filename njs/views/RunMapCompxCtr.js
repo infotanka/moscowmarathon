@@ -4,8 +4,8 @@ function(provoda, $, GeoMapCtr, TimeGraphCtr, colors, spv, d3, mh) {
 
 var RunMapCompxCtr = function() {};
 provoda.View.extendTo(RunMapCompxCtr, {
-	gender_grads: [colors.getRGBGradient(250, ['#FFCBD5', '#EE2046'].map(colors.parseHEXString)), colors.getRGBGradient(250, ['#B8E8FF', '#1D56DF'].map(colors.parseHEXString))],
-	grays: colors.getRGBGradient(250, ['#333333', '#EEEEEE'].map(colors.parseHEXString)),
+	gender_grads: [colors.getRGBGradient(255, ['#FFCBD5', '#EE2046'].map(colors.parseHEXString)), colors.getRGBGradient(255, ['#B8E8FF', '#1D56DF'].map(colors.parseHEXString))],
+	grays: colors.getRGBGradient(4, ['#333333', '#EEEEEE'].map(colors.parseHEXString)),
 	children_views:{
 		geo_map: GeoMapCtr,
 		time_graph: TimeGraphCtr
