@@ -4,8 +4,8 @@ function(provoda, $, GeoMapCtr, TimeGraphCtr, colors, spv, d3, mh) {
 
 var RunMapCompxCtr = function() {};
 provoda.View.extendTo(RunMapCompxCtr, {
-	gender_grads: [colors.getRGBGradient(250, ['#FFCBD5', '#EE2046'].map(colors.parseHEXString)), colors.getRGBGradient(250, ['#B8E8FF', '#1D56DF'].map(colors.parseHEXString))],
-	grays: colors.getRGBGradient(250, ['#333333', '#EEEEEE'].map(colors.parseHEXString)),
+	gender_grads: [colors.getRGBGradient(255, ['#FFCBD5', '#EE2046'].map(colors.parseHEXString)), colors.getRGBGradient(255, ['#B8E8FF', '#1D56DF'].map(colors.parseHEXString))],
+	grays: colors.getRGBGradient(4, ['#333333', '#EEEEEE'].map(colors.parseHEXString)),
 	children_views:{
 		geo_map: GeoMapCtr,
 		time_graph: TimeGraphCtr
@@ -72,6 +72,18 @@ provoda.View.extendTo(RunMapCompxCtr, {
 		this.wch(this.root_view, 'runners_rate', function(e) {
 			this.promiseStateUpdate('runners_rate', e.value);
 		});
+
+
+		var mth_counter = 0;
+		var mth_text = ['марафон', '42 км 195 м'];
+		this.tpl.ancs['mthswitch']
+			.on('mouseenter', function() {
+				$(this).text(mth_text[1]);
+			})
+			.on('mouseleave', function() {
+				$(this).text(mth_text[0]);
+			});
+
 	},
 	checkSizes: function() {
 		this.setVisState('con_width', this.tpl.ancs['timeline'].width());

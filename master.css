@@ -344,3 +344,7 @@ path {
 	padding: 0 20px;
 	margin: 0 -20px;
 }
+.mthswitch{
+	border-bottom: 1px dotted #333;
+	cursor: pointer;
+}
