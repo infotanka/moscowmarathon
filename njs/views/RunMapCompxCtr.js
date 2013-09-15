@@ -74,7 +74,6 @@ provoda.View.extendTo(RunMapCompxCtr, {
 		});
 
 
-		var mth_counter = 0;
 		var mth_text = ['марафон', '42 км 195 м'];
 		this.tpl.ancs['mthswitch']
 			.on('mouseenter', function() {
