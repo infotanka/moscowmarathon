@@ -25,8 +25,8 @@ provoda.View.extendTo(RunMapCompxCtr, {
 
 		svg = document.createElementNS(mh.SVGNS, 'svg');
 		$(svg).appendTo(this.tpl.ancs['legendcount']);
-		this.legendcount = svg;
-
+		this.legendcount =  d3.select(svg);
+		this.createLegendCount();
 
 
 		var scroll_marker = this.tpl.ancs['scroll_marker'];
@@ -68,6 +68,10 @@ provoda.View.extendTo(RunMapCompxCtr, {
 			this.con_offset = null;
 			this.checkSizes();
 		},100));
+
+		this.wch(this.root_view, 'runners_rate', function(e) {
+			this.promiseStateUpdate('runners_rate', e.value);
+		});
 	},
 	checkSizes: function() {
 		this.setVisState('con_width', this.tpl.ancs['timeline'].width());
@@ -91,6 +95,42 @@ provoda.View.extendTo(RunMapCompxCtr, {
 			if (cvs_data && typeof selected_time != 'undefined'){
 				return cvs_data.max_time * selected_time;
 			}
+		}
+	},
+	createLegendCount: function() {
+		var container = this.tpl.ancs['legendcount'];
+		var width = container.width();
+		var height= container.height();
+
+		var
+			p1 = {x:0, y:0},
+			p2 = {x: width, y:0},
+			p3 = {x: width/2, y: height};
+
+		var data = mh.formatPathPoints([p1, p2, p3]) + ' Z';
+
+		this.legendcount.append('path')
+			.attr('data', data)
+			.style('fill', 'blue');
+
+	},
+	'compx-legend_count':{
+		depends_on: ['runners_rate'],
+		fn: function(runners_rate) {
+			if (!runners_rate){
+				return;
+			}
+			var container = this.tpl.ancs['legendcount'];
+
+			var width = container.width();
+		//	var height= container.height();
+			//var svg = this.legendcount;
+			//svg.selectAll('*').remove();
+
+
+			var maxcount = (runners_rate.height * runners_rate.runners)/width;
+			console.log(maxcount)
+
 		}
 	},
 	'compx-legend_age':{

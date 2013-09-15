@@ -145,10 +145,14 @@ var setRunnersPoints = function(cur) {
 };
 */
 
-var getAreaByData = function(cvs, base_districts, prev_districts, seconds, step, start_time) {
+var getHeightByRunners = function(runners_count, step){
+	return (Math.pow(3, 2) * runners_count)/step;
+};
+
+var getAreaByData = function(runners_array, base_districts, prev_districts, seconds, step, start_time) {
 	var area = [];
 	var cur, prev_di;
-	var distances = getDistances(cvs, start_time +  seconds * 1000);
+	var distances = getDistances(runners_array, start_time +  seconds * 1000);
 	var i;
 	//var max_runners = 0;
 	
@@ -160,7 +164,7 @@ var getAreaByData = function(cvs, base_districts, prev_districts, seconds, step,
 		//max_runners = Math.max(max_runners, runners);
 		//var value = Math.random()*20 + 5;
 		//var value = runners_pxheight_factor * runners;
-		var value = ((Math.pow(3, 2) * runners)/step);
+		var value = getHeightByRunners(runners, step);
 		obj.height = value;
 		obj.runners = runners;
 
@@ -190,7 +194,7 @@ var getAreaByData = function(cvs, base_districts, prev_districts, seconds, step,
 	return area;
 };
 
-var base_points_cache = {};
+
 
 
 var getSteps = function(step, px_distance, node){
@@ -213,10 +217,36 @@ var getSteps = function(step, px_distance, node){
 	}
 	return steps;
 };
+var getStep = function(height){
+	return height/25;
+};
+//var step_height_cache = {};
+var getStepHeight = function(knodes, distance, seconds, runners_array, start_time, total_distance){
+	/*var cache_key = base.projection_key;
+	if (step_height_cache[cache_key]){
+		return step_height_cache[cache_key];
+	}*/
+	var base = knodes.base;
+	var d3path_node = base.node(),
+		px_distance = d3path_node.getTotalLength(),
+		px_in_m = px_distance/total_distance;
+
+	var step = getStep(d3path_node.getBoundingClientRect().height);
+	var step_start = distance;
+	var step_end = distance + step/px_in_m;
 
 
+	var distances = getDistances(runners_array, start_time +  seconds * 1000);
+	var runners = getRunners(distances, step_start, step_end);
+	var value = getHeightByRunners(runners, step);
+	return {
+		height: value,
+		runners: runners
+	};
+};
+var base_points_cache = {};
 var getBasePoints = function(base, step, total_distance){
-	var points_key = base.points_cache_key;
+	var points_key = base.projection_key;
 	if (base_points_cache[points_key]){
 		return base_points_cache[points_key];
 	} else {
@@ -269,24 +299,18 @@ var getBasePoints = function(base, step, total_distance){
 
 
 
-
 var getPoints = function(cvs_data, knodes, seconds, animate, start_time, total_distance) {
-
-	
-
-
-	
-	var i, cur;
+	var i;
 
 	var boundrect = knodes.base.node().getBoundingClientRect();
-	var max_graph_height;
+	//var max_graph_height;
 	if (boundrect.width <= 50 || boundrect.height <= 50) {
 		//knodes.vis.attr("d", '');
 		return;
 	} else {
-		max_graph_height = boundrect.width/10;
+		//max_graph_height = boundrect.width/10;
 	}
-	var step = boundrect.height/25;
+	var step = getStep(boundrect.height);
 	var complects = getBasePoints(knodes.base, step, total_distance).complects;
 	
 
@@ -533,7 +557,18 @@ return {
 	getPoints: getPoints,
 	getPointAtDistance: getPointAtDistance,
 	SVGNS: SVGNS,
-	format: format
+	format: format,
+	getStepHeight: getStepHeight,
+	formatPathPoints: function(array){
+		var result = 'M' + format(array[0]);
+		for (var i = 1; i < array.length; i++) {
+			result += ' L' + format(array[i]);
+		}
+
+
+		return result;
+
+	}
 };
 
 

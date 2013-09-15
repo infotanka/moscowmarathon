@@ -317,7 +317,7 @@ provoda.View.extendTo(TimeGraphCtr, {
 
 
 		//	this.knodes.base.attr("d", this.path);
-		//	this.knodes.base.points_cache_key = this.projection.scale() + '_' + this.projection.translate();
+		//	this.knodes.base.projection_key = this.projection.scale() + '_' + this.projection.translate();
 		//	mh.getPoints(cvs_data, this.knodes, time_value, false, cvs_data.start_time, this.total_distance);
 
 			

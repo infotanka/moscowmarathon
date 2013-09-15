@@ -124,7 +124,10 @@ provoda.View.extendTo(RunMapCtr, {
 			this.root_view.promiseStateUpdate('mapheight', e.value);
 		});
 		
-
+		
+		this.wch(this, 'runners_rate', function(e){
+			this.root_view.promiseStateUpdate('runners_rate', e.value);
+		});
 	},
 	earth_radius: mh.earth_radius,
 	checkSizes: function() {
@@ -275,25 +278,31 @@ provoda.View.extendTo(RunMapCtr, {
 		fn: function(basedet, basepath){
 			if (basedet && basepath){
 				this.knodes.base.attr("d", this.path);
-				this.knodes.base.points_cache_key = this.projection.scale() + '_' + this.projection.translate();
+				this.knodes.base.projection_key = this.projection.scale() + '_' + this.projection.translate();
 				return Date.now();
 			}
 		}
 	},
-
+	'compx-runners_rate':{
+		depends_on: ['basepathch', 'cvs_data'],
+		fn: function(basepathch, cvs_data){
+			if (!basepathch || !cvs_data){
+				return;
+			}
+			return mh.getStepHeight(this.knodes, 100, 30, cvs_data.items, cvs_data.start_time, this.total_distance);
+		}
+	},
 	'compx-draw': {
 		depends_on: ['basepathch', 'cvs_data', 'time_value'],
 		fn: function(basepathch, cvs_data, time_value) {
 			if (!basepathch || !cvs_data || typeof time_value == 'undefined'){
 				return;
 			}
-			
-			
 			mh.getPoints(cvs_data, this.knodes, time_value, false, cvs_data.start_time, this.total_distance);
-			
-		//	xAxis.attr("x1", t[0]).attr("x2", t[0]);
+			//console.log();
+			//	xAxis.attr("x1", t[0]).attr("x2", t[0]);
 			//yAxis.attr("y1", t[1]).attr("y2", t[1]);
-		//
+			//
 			return {};
 		}
 	},
