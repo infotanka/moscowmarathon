@@ -145,10 +145,14 @@ var setRunnersPoints = function(cur) {
 };
 */
 
-var getAreaByData = function(cvs, base_districts, prev_districts, seconds, step, start_time) {
+var getHeightByRunners = function(runners_count, step){
+	return (Math.pow(3, 2) * runners_count)/step;
+};
+
+var getAreaByData = function(runners_array, base_districts, prev_districts, seconds, step, start_time) {
 	var area = [];
 	var cur, prev_di;
-	var distances = getDistances(cvs, start_time +  seconds * 1000);
+	var distances = getDistances(runners_array, start_time +  seconds * 1000);
 	var i;
 	//var max_runners = 0;
 	
@@ -160,7 +164,7 @@ var getAreaByData = function(cvs, base_districts, prev_districts, seconds, step,
 		//max_runners = Math.max(max_runners, runners);
 		//var value = Math.random()*20 + 5;
 		//var value = runners_pxheight_factor * runners;
-		var value = ((Math.pow(3, 2) * runners)/step);
+		var value = getHeightByRunners(runners, step);
 		obj.height = value;
 		obj.runners = runners;
 
@@ -190,41 +194,76 @@ var getAreaByData = function(cvs, base_districts, prev_districts, seconds, step,
 	return area;
 };
 
+
+
+
+var getSteps = function(step, px_distance, node){
+	var steps = [],
+		pieces = [],
+		piece = 0, i;
+
+	while (piece <= px_distance){
+		pieces.push(piece);
+		if (piece == px_distance){
+			break;
+		}
+		piece = Math.min(px_distance, piece + step);
+	}
+	for (i = 0; i < pieces.length; i++) {
+		steps.push({
+			p: node.getPointAtLength(pieces[i]),
+			l: pieces[i]
+		});
+	}
+	return steps;
+};
+var getStep = function(height){
+	return height/25;
+};
+//var step_height_cache = {};
+var getStepHeight = function(knodes, distance, seconds, runners_array, start_time, total_distance){
+	/*var cache_key = base.projection_key;
+	if (step_height_cache[cache_key]){
+		return step_height_cache[cache_key];
+	}*/
+	var base = knodes.base;
+	var d3path_node = base.node(),
+		px_distance = d3path_node.getTotalLength(),
+		px_in_m = px_distance/total_distance;
+
+	var step = getStep(d3path_node.getBoundingClientRect().height);
+	var step_start = distance;
+	var step_end = distance + step/px_in_m;
+
+
+	var distances = getDistances(runners_array, start_time +  seconds * 1000);
+	var runners = getRunners(distances, step_start, step_end);
+	var value = getHeightByRunners(runners, step);
+	return {
+		height: value,
+		runners: runners
+	};
+};
 var base_points_cache = {};
 var getBasePoints = function(base, step, total_distance){
-	var points_key = base.points_cache_key;
+	var points_key = base.projection_key;
 	if (base_points_cache[points_key]){
 		return base_points_cache[points_key];
 	} else {
-
-		var points = [],
-			pieces = [],
-			piece = 0,
-			d3path_node = base.node(),
+		var d3path_node = base.node(),
 			px_distance = d3path_node.getTotalLength(),
-			i, cur;
+			i;
 
-		while (piece <= px_distance){
-			pieces.push(piece);
-			if (piece == px_distance){
-				break;
-			}
-			piece = Math.min(px_distance, piece + step);
-		}
-		for (i = 0; i < pieces.length; i++) {
-			points.push({
-				p: d3path_node.getPointAtLength(pieces[i]),
-				l: pieces[i]
-			});
-		}
+		var steps = getSteps(step, px_distance, d3path_node);
+		
 
 		var complects = [],
 			px_in_m = px_distance/total_distance;
 
 		
-		for (i = 1; i < points.length; i++) {
-			var c1 = points[i-1],
-				c2 = points[i],
+		for (i = 1; i < steps.length; i++) {
+			var c1 = steps[i-1],
+				c2 = steps[i],
 				p1 = c1.p,
 				p2 = c2.p;
 
@@ -249,34 +288,29 @@ var getBasePoints = function(base, step, total_distance){
 			//console.log(getAngleBySegmentsPointsM(p1, p2, x_axis_points.p1, x_axis_points.p2)/(Math.PI/180));
 		}
 
-		return (base_points_cache[points_key] = {
+		base_points_cache[points_key] = {
 			complects: complects,
-			points: points
-		});
+			points: steps
+		};
+		return base_points_cache[points_key];
 	}
 };
 
 
 
 
-
 var getPoints = function(cvs_data, knodes, seconds, animate, start_time, total_distance) {
-
-	
-
-
-	
-	var i, cur, step = 15;
+	var i;
 
 	var boundrect = knodes.base.node().getBoundingClientRect();
-	var max_graph_height;
+	//var max_graph_height;
 	if (boundrect.width <= 50 || boundrect.height <= 50) {
 		//knodes.vis.attr("d", '');
 		return;
 	} else {
-		max_graph_height = boundrect.width/10;
+		//max_graph_height = boundrect.width/10;
 	}
-
+	var step = getStep(boundrect.height);
 	var complects = getBasePoints(knodes.base, step, total_distance).complects;
 	
 
@@ -523,7 +557,18 @@ return {
 	getPoints: getPoints,
 	getPointAtDistance: getPointAtDistance,
 	SVGNS: SVGNS,
-	format: format
+	format: format,
+	getStepHeight: getStepHeight,
+	formatPathPoints: function(array){
+		var result = 'M' + format(array[0]);
+		for (var i = 1; i < array.length; i++) {
+			result += ' L' + format(array[i]);
+		}
+
+
+		return result;
+
+	}
 };
 
 

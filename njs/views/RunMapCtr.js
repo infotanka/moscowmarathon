@@ -124,7 +124,10 @@ provoda.View.extendTo(RunMapCtr, {
 			this.root_view.promiseStateUpdate('mapheight', e.value);
 		});
 		
-
+		
+		this.wch(this, 'runners_rate', function(e){
+			this.root_view.promiseStateUpdate('runners_rate', e.value);
+		});
 	},
 	earth_radius: mh.earth_radius,
 	checkSizes: function() {
@@ -183,6 +186,7 @@ provoda.View.extendTo(RunMapCtr, {
 			var rad_distance = d3.geo.length(geodata);
 			this.total_distance = rad_distance * this.earth_radius;
 			this.knodes.base.data([geodata]);
+			return true;
 		}
 	},
 	'compx-bd': {
@@ -269,28 +273,43 @@ provoda.View.extendTo(RunMapCtr, {
 			}
 		}
 	},*/
-
-	'compx-draw': {
-		depends_on: ['basedet', 'cvs_data', 'time_value', 'scale'],
-		fn: function(basedet, cvs_data, time_value, scale) {
-			if (!basedet || !cvs_data || typeof time_value == 'undefined'){
+	'compx-basepathch':{
+		depends_on: ['basedet', 'basepath', 'scale'],
+		fn: function(basedet, basepath){
+			if (basedet && basepath){
+				this.knodes.base.attr("d", this.path);
+				this.knodes.base.projection_key = this.projection.scale() + '_' + this.projection.translate();
+				return Date.now();
+			}
+		}
+	},
+	'compx-runners_rate':{
+		depends_on: ['basepathch', 'cvs_data'],
+		fn: function(basepathch, cvs_data){
+			if (!basepathch || !cvs_data){
 				return;
 			}
-			
-			this.knodes.base.attr("d", this.path);
-			this.knodes.base.points_cache_key = this.projection.scale() + '_' + this.projection.translate();
+			return mh.getStepHeight(this.knodes, 100, 30, cvs_data.items, cvs_data.start_time, this.total_distance);
+		}
+	},
+	'compx-draw': {
+		depends_on: ['basepathch', 'cvs_data', 'time_value'],
+		fn: function(basepathch, cvs_data, time_value) {
+			if (!basepathch || !cvs_data || typeof time_value == 'undefined'){
+				return;
+			}
 			mh.getPoints(cvs_data, this.knodes, time_value, false, cvs_data.start_time, this.total_distance);
-			
-		//	xAxis.attr("x1", t[0]).attr("x2", t[0]);
+			//console.log();
+			//	xAxis.attr("x1", t[0]).attr("x2", t[0]);
 			//yAxis.attr("y1", t[1]).attr("y2", t[1]);
-		//
+			//
 			return {};
 		}
 	},
 	'compx-trackbbox': {
-		depends_on: ['draw'],
-		fn: function(draw) {
-			if (draw){
+		depends_on: ['basepathch'],
+		fn: function(basepathch) {
+			if (basepathch){
 				return this.knodes.base[0][0].getBBox();
 			}
 		}
@@ -338,9 +357,9 @@ provoda.View.extendTo(RunMapCtr, {
 		
 	},
 	'compx-altit':{
-		depends_on: ['basedet', 'cvs_data', 'geodata', 'scale'],
-		fn: function(draw, cvs_data, geodata) {
-			if (!draw || !geodata){
+		depends_on: ['basepathch', 'cvs_data', 'geodata', 'scale'],
+		fn: function(basepathch, cvs_data, geodata) {
+			if (!basepathch || !geodata){
 				return;
 			}
 

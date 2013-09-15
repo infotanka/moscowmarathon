@@ -137,6 +137,18 @@ path {
 			}
 			.legendcount_c .svgcon{
 				height: 100px;
+				position: relative;
+			}
+			.legendcount-text-c{
+				position: absolute;
+				right:0;
+				top:0;
+			}
+			.legendcount-text{
+				padding-left: 3px;
+				position: absolute;
+				top:-0.2em;
+				left:0;
 			}
 		.legendage_c .svgcon{
 			height: 100px;
@@ -327,7 +339,8 @@ path {
 .runners_header.fixed_rheader{
 	position: fixed;
 	top: 0;
-	background: #eee;
+	background: #fff;
+	border-bottom: 1px solid #ccc;
 	padding: 0 20px;
 	margin: 0 -20px;
 }
