@@ -323,3 +323,11 @@ path {
 	max-width: 1300px;
 	position: relative;
 }
+
+.runners_header.fixed_rheader{
+	position: fixed;
+	top: 0;
+	background: #eee;
+	padding: 0 20px;
+	margin: 0 -20px;
+}

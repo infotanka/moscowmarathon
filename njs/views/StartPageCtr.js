@@ -26,8 +26,56 @@ provoda.View.extendTo(StartPageCtr, {
 			});
 			
 		});
-	},
+		this.header = this.tpl.ancs['runners_header'];
+		this.list = this.tpl.ancs['runners_list'];
 
+		var header_height = this.header.height();
+		this.checkListPos();
+
+
+
+		var _this = this;
+		$(window).on('resize', function() {
+
+		});
+
+		$(window).on('scroll', function() {
+			console.log('scroll');
+			_this.checkFixPos();
+		});
+		//
+		//
+	},
+	'after-collch-runners_filtered':function() {
+		this.nextTick(function() {
+			this.checkListPos();
+			this.checkFixPos();
+		});
+	},
+	checkFixPos: function() {
+		//header_fixed
+		
+		var list_top = this.state('list_top');
+		var list_bottom = this.state('list_bottom');
+		var header_height = this.state('header_height');
+		if (list_top && list_bottom){
+			var header_fixed = this.state('header_fixed');
+			var possible_top = header_fixed ? list_top - header_height : list_top;
+			var possible_bottom = header_fixed ? list_bottom - header_height : list_bottom;
+			var scroll_top = $(window).scrollTop();
+			var need_fix = scroll_top > possible_top && scroll_top < possible_bottom;
+			this.header.toggleClass('fixed_rheader', need_fix)
+			
+		}
+
+		//var possible_top = 
+	},
+	checkListPos: function() {
+		var top = this.list.offset().top;
+		this.promiseStateUpdate('list_top', top);
+		this.promiseStateUpdate('list_bottom', top + this.list.height());
+
+	},
 	tpl_events:{
 		makeSearch: spv.debounce(function(e, node) {
 			this.RPCLegacy('makeSearch', $(node).val());

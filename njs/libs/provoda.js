@@ -3070,6 +3070,9 @@ provoda.StatesEmitter.extendTo(provoda.View, {
 		if (collch){
 			this.callCollectionChangeDeclaration(collch, name, array, old_value, removed);
 		}
+		if (this['after-collch-' + name]){
+			this['after-collch-' + name].call(this, array);
+		}
 		return this;
 	},
 	removeViewsByMds: function(array, space) {

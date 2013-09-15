@@ -165,7 +165,7 @@
 	</div>
 	
 	<div id="start-screen" class="runners_block big_block">
-		<div>
+		<div class="runners_header" pv-anchor="runners_header">
 			<h2>Результаты  </h2>
 			<span class="sex_filter">
 				<a pv-repeat="filtr_item in filter_gender" pv-events="click:setFilterBy">
@@ -204,7 +204,7 @@
 			</div>
 			
 		</div>
-		<div class="runners_list">
+		<div class="runners_list" pv-anchor="runners_list">
 
 
 			<div pv-nest="runners_filtered|limitTo:50" class="runrs_item">
