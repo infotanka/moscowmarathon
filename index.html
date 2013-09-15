@@ -19,7 +19,7 @@
 
 						<div pv-props="
 									style.top:   {{track_top_padding +  (trackheight * 0.12)}}
-									style.left:  {{track_left_padding - (trackwidth * 0.12)}}
+									style.left:  {{track_left_padding - (trackwidth * 0.17)}}
 									style.width: {{trackwidth * 1}}
 								"
 								pv-class="factoid {{ !( time_value|compareTime: '00:00' : '0:30:00' ) && 'hidden'}}" class="factoid hidden">
@@ -59,6 +59,18 @@
 								</table>
 							</div>
 						</div>
+
+							<div pv-props="
+								style.top:   {{track_top_padding +  (trackheight * 0.65)}}
+								style.left:  {{track_left_padding + (trackwidth * 0.7)}}
+								style.width: {{trackwidth * 0.25}}
+							"
+							pv-class="factoid {{ !( time_value|compareTime: '00:00' : '0:20:00' ) && 'hidden'}}"
+							class="factoid hidden">
+								<img class="factoid_img" src="i/pasta.png" width=178 height=60 style="margin-left:-20px;"/>
+								<div class="factoid_d">За 2-3 дня до&nbsp;марафона спортсмены переходят на&nbsp;высокоуглеводную диету:</div>
+								<h5 class="factoid_h">пасту, крупы и&nbsp;фрукты</h5>
+							</div>
 
 
 						<div 
