@@ -154,9 +154,11 @@ path {
 			height: 100px;
 		}
 	.share{
-		width: 150px;
+		padding-top:20px;
+		width: 100px;
 		float: right;
 		font-size: 13px;
+		clear: both;
 
 	}
 
