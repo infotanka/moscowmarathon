@@ -47,7 +47,7 @@ provoda.View.extendTo(StartPageCtr, {
 		});
 
 		$(window).on('scroll', function() {
-			console.log('scroll');
+
 			_this.checkFixPos();
 		});
 		//
