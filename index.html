@@ -22,7 +22,7 @@
 									style.left:  {{track_left_padding - (trackwidth * 0.17)}}
 									style.width: {{trackwidth * 1}}
 								"
-								pv-class="factoid {{ !( time_value|compareTime: '00:00' : '0:30:00' ) && 'hidden'}}" class="factoid hidden">
+								pv-class="factoid {{ !( time_value|compareTime: '0:00:00' : '1:20:00' ) && 'hidden'}}" class="factoid hidden">
 							<h5 class="factoid_h">Стартовый взнос</h5>
 							<div style="margin-left:-23px;">
 								<table class="factoid_d" >
@@ -60,12 +60,24 @@
 							</div>
 						</div>
 
-							<div pv-props="
-								style.top:   {{track_top_padding +  (trackheight * 0.65)}}
-								style.left:  {{track_left_padding + (trackwidth * 0.7)}}
+						<div
+							pv-props="
+								style.top:   {{track_top_padding +  (trackheight * 0.45)}}
+								style.left:  {{track_left_padding + (trackwidth * 0.1)}}
 								style.width: {{trackwidth * 0.25}}
 							"
-							pv-class="factoid {{ !( time_value|compareTime: '00:00' : '0:20:00' ) && 'hidden'}}"
+							pv-class="factoid {{ !( time_value|compareTime: '5:00:00' : '7:00:00' ) && 'hidden'}}"
+							class="factoid hidden">
+							<h5 class="factoid_h">≈&thinsp;2000 ккал</h5>
+							<div class="factoid_d">сжигает марафонец за&nbsp;время&nbsp;забега</div>
+						</div>
+
+							<div pv-props="
+								style.top:   {{track_top_padding +  (trackheight * 0.55)}}
+								style.left:  {{track_left_padding + (trackwidth * 0.75)}}
+								style.width: {{trackwidth * 0.25}}
+							"
+							pv-class="factoid {{ !( time_value|compareTime: '00:00' : '1:00:00' ) && 'hidden'}}"
 							class="factoid hidden">
 								<img class="factoid_img" src="i/pasta.png" width=178 height=60 style="margin-left:-20px;"/>
 								<div class="factoid_d">За 2-3 дня до&nbsp;марафона спортсмены переходят на&nbsp;высокоуглеводную диету:</div>
@@ -75,11 +87,11 @@
 
 						<div 
 							pv-props="
-								style.top:   {{track_top_padding +  (trackheight * 0.35)}}
-								style.left:  {{track_left_padding + (trackwidth * 0.1)}}
+								style.top:   {{track_top_padding +  (trackheight * 0.55)}}
+								style.left:  {{track_left_padding + (trackwidth * 0.75)}}
 								style.width: {{trackwidth * 0.25}}
 							"
-							pv-class="factoid {{ !( time_value|compareTime: '25:52' : '2:00:52' ) && 'hidden'}}"
+							pv-class="factoid {{ !( time_value|compareTime: '1:00:00' : '3:00:00' ) && 'hidden'}}"
 							class="factoid hidden">
 
 							<img class="factoid_img" src="i/dinamo.png" width=81 height=81 />
@@ -87,6 +99,112 @@
 							<div class="factoid_d">Во время уличных пробежек бегунов часто спрашивают, бежит ли Динамо. <p style="margin-top:3px;">На этот раз ответ — да!</p></div>
 						</div>
 
+						<div
+							pv-props="
+								style.top:   {{track_top_padding +  (trackheight * 0.44)}}
+								style.left:  {{track_left_padding + (trackwidth * 0.1)}}
+								style.width: {{trackwidth * 0.25}}
+							"
+							pv-class="factoid {{ !( time_value|compareTime: '2:03:38' : '5:00:00' ) && 'hidden'}}"
+							class="factoid hidden">
+							<h5 class="factoid_h">2:03:38 <span><img src="i/record.png" width=30 height=25 /></span></h5>
+							<div class="factoid_d">мировой рекорд у мужчин, 2:15:25 — у женщин</div>
+						</div>	
+
+						<div
+							pv-props="
+								
+								style.top:   {{track_top_padding +  (trackheight * 0.15)}}
+								style.left:  {{track_left_padding - (trackwidth * 0.17)}}
+								style.width: {{trackwidth * 0.25}}
+							"
+							pv-class="factoid {{ !( time_value|compareTime: '3:30:00' : '5:30:00' ) && 'hidden'}}"
+							class="factoid hidden">
+							<img class="factoid_img" src="i/water.png" width=106 height=52 />
+							<h5 class="factoid_h">5000 л воды</h5>
+							<div class="factoid_d">выпили марафонцы на&nbsp;дистанции</div>
+						</div>
+
+						<div pv-props="
+								
+								style.top:   {{track_top_padding +  (trackheight * 0.12)}}
+								style.left:  {{track_left_padding - (trackwidth * 0.17)}}
+								style.width: {{trackwidth * 0.20}}
+							"
+							pv-class="factoid {{ !( time_value|compareTime: '5:30:00' : '7:30:00' ) && 'hidden'}}"
+							class="factoid hidden">
+							<img class="factoid_img" src="i/reward.png" width=91 height=102 style="margin-bottom:-5px;"/>
+							<h5 class="factoid_h">350&thinsp;000 &#8399;</h5>
+							<div class="factoid_d">в&nbsp;награду за&nbsp;первое место и&nbsp;медали всем финишировавшим</div>
+						</div>
+
+							<div
+							pv-props="
+								style.top:   {{track_top_padding +  (trackheight * 0.65)}}
+								style.left:  {{track_left_padding + (trackwidth * 0.75)}}
+								style.width: {{trackwidth * 0.25}}
+							"
+							pv-class="factoid {{ !( time_value|compareTime: '3:00:00' : '7:00:00' ) && 'hidden'}}"
+							class="factoid hidden">
+								<img class="factoid_img" src="i/photo.png" width=102 height=68/>
+								<h5 class="factoid_h">182 волонтёра</h5>
+								<div class="factoid_d">и сотни болельшиков поддерживали бегунов</div>
+							</div>
+
+						<div pv-props="
+									style.top:   {{track_top_padding +  (trackheight * 0.5)}}
+									style.left:  {{track_left_padding - (trackwidth * 0.17)}}
+									style.width: {{trackwidth * 0.25}}
+								"
+								pv-class="factoid {{ !( time_value|compareTime: '0:00:00' : '0:50:00' ) && 'hidden'}}" class="factoid hidden">
+							<img class="factoid_img" src="i/marathon.png" width=107 height=107 />
+							<h5 class="factoid_h">«νικῶμεν!»</h5>
+							<div class="factoid_d">или «Мы победили» — последние слова греческого воина Фидиппида, прибежавшего в&nbsp;Афины с&nbsp;поля боя близь Марафона и&nbsp;положившего начало марафонской традиции</div>
+						</div>
+
+						<div pv-props="
+									style.top:   {{track_top_padding +  (trackheight * 0.5)}}
+									style.left:  {{track_left_padding - (trackwidth * 0.17)}}
+									style.width: {{trackwidth * 1}}
+								"
+								pv-class="factoid {{ !( time_value|compareTime: '2:30:00' : '7:00:00' ) && 'hidden'}}" class="factoid hidden">
+							<h5 class="factoid_h" style="margin-left:-10px;">+230 м</h5>
+							<div class="factoid_d">суммарного подъема — <br>это&nbsp;77 этажей или <br>высота ГЗ&nbsp;МГУ со&nbsp;шпилем</div>
+						</div>
+
+						<img  pv-props="
+									style.top:   {{track_top_padding +  (trackheight * 0.67)}}
+									style.left:  {{track_left_padding - (trackwidth * 0.25)}}
+								"
+								pv-class="factoid {{ !( time_value|compareTime: '2:30:00' : '7:00:00' ) && 'hidden'}}" class="factoid hidden"
+
+								src="i/msu.png" width=224 height=224 />
+
+							<div  pv-props="
+								style.top:   {{track_top_padding +  (trackheight * 0.1)}}
+								style.left:  {{track_left_padding - (trackwidth * 0.17)}}
+								style.width: {{trackwidth * 0.25}}
+								
+								"
+								pv-class="factoid {{ !( time_value|compareTime: '1:20:00' : '3:30:00' ) && 'hidden'}}" class="factoid hidden">
+
+								<img class="factoid_img" src="i/slope.png" width=82 height=68/>
+								<h5 class="factoid_h">5,5 м на км</h5>
+								<div class="factoid_d">составил уклон на трассе, превысив олимпийский
+						максимум в&nbsp;1&nbsp;м на&nbsp;км</div>
+							</div>
+
+							<div  pv-props="
+									style.top:   {{track_top_padding +  (trackheight * 0.5)}}
+									style.left:  {{track_left_padding - (trackwidth * 0.17)}}
+									style.width: {{trackwidth * 0.25}}
+								
+								"
+								pv-class="factoid {{ !( time_value|compareTime: '0:50:00' : '2:25:00' ) && 'hidden'}}" class="factoid hidden">
+								<img class="factoid_img" src="i/time.png" width=83 height=83/>
+								<h5 class="factoid_h">На 40–60 с</h5>
+								<div class="factoid_d">ухудшаются результаты при&nbsp;повышении температуры воздуха на&nbsp;1°С</div>
+							</div>
 
 
 
