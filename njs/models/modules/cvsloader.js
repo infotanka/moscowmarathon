@@ -70,11 +70,13 @@ var checkData = function() {
 		}, {
 			start: 25,
 			end: 45,
-			label: '45'
+			label: '45',
+			full_label: '25-45'
 		},{
 			start: 45,
 			end: 60,
-			label: '60'
+			label: '60',
+			full_label: '45-60'
 		},{
 			start: 60,
 			end: Infinity,
@@ -88,7 +90,7 @@ var checkData = function() {
 		var getAgeGroups = function(array, ranges, field){
 			var age_groups = [];
 			var r = array;
-			
+			var max = 0;
 			for (var i = 0; i < ranges.length; i++) {
 
 				var age_range = ranges[i];
@@ -101,9 +103,10 @@ var checkData = function() {
 				});
 				age_groups.push(g);
 				r = g.not;
+				max = Math.max(max, g.length);
 				//console.log(g);
 			}
-
+			age_groups.max = max;
 
 			return age_groups;
 

@@ -111,7 +111,7 @@ path {
 		background: no-repeat 50% 50%;
 		}
 		.weather{
-			
+			margin-bottom: 30px;
 			}
 		.we_temperature{
 			font-size: 24px;
@@ -128,15 +128,22 @@ path {
 
 	.legend{
 		width: 75px;
-		float: left;
+		float: right;
 		font-size: 13px;
 		font-weight: 700;
-
-	}
-	
+		}
+		.legendcount_c{
+		
+			}
+			.legendcount_c .svgcon{
+				height: 100px;
+			}
+		.legendage_c .svgcon{
+			height: 100px;
+		}
 	.share{
 		width: 150px;
-		float: left;
+		float: right;
 		font-size: 13px;
 
 	}

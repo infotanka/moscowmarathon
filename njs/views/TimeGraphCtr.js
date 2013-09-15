@@ -69,11 +69,12 @@ provoda.View.extendTo(TimeGraphCtr, {
 		}
 	},
 	'compx-marks': {
-		depends_on: ['timesteps'],
-		fn: function(timesteps) {
-			if (timesteps){
+		depends_on: ['timesteps', 'bd'],
+		fn: function(timesteps, bd) {
+			if (timesteps && bd){
 				var result = [];
-
+				this.timemarksg1.selectAll('*').remove();
+				this.timemarksg2.selectAll('*').remove();
 				var mheight = 4;
 				for (var i = 0; i < timesteps.length; i++) {
 					var line1 = this.timemarksg1.append('line');

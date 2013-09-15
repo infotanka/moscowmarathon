@@ -1,5 +1,5 @@
-define(['provoda', 'jquery', './GeoMapCtr', './TimeGraphCtr', './modules/colors', 'spv'],
-function(provoda, $, GeoMapCtr, TimeGraphCtr, colors, spv) {
+define(['provoda', 'jquery', './GeoMapCtr', './TimeGraphCtr', './modules/colors', 'spv', 'd3', './modules/maphelper'],
+function(provoda, $, GeoMapCtr, TimeGraphCtr, colors, spv, d3, mh) {
 "use strict";
 
 var RunMapCompxCtr = function() {};
@@ -15,6 +15,18 @@ provoda.View.extendTo(RunMapCompxCtr, {
 		this.c = this.root_view.els.runm_c;
 		this.createTemplate();
 		
+
+		var svg;
+		svg = document.createElementNS(mh.SVGNS, 'svg');
+		//this.c = $(svg).css('display', 'none');
+		$(svg).appendTo(this.tpl.ancs['legendage']);
+		
+		this.legendage = d3.select(svg);
+
+		svg = document.createElementNS(mh.SVGNS, 'svg');
+		$(svg).appendTo(this.tpl.ancs['legendcount']);
+		this.legendcount = svg;
+
 
 
 		var scroll_marker = this.tpl.ancs['scroll_marker'];
@@ -81,7 +93,91 @@ provoda.View.extendTo(RunMapCompxCtr, {
 			}
 		}
 	},
+	'compx-legend_age':{
+		depends_on: ['cvs_data'],
+		fn: function(cvs_data) {
+			var container = this.tpl.ancs['legendage'];
+			var width = container.width();
+			var height= container.height();
+			var svg = this.legendage;
+			svg.selectAll('*').remove();
 
+			var space = 1;
+			var vert_space = 1;
+			var half_width = width/2;
+			//var _this = this;
+			
+			var max1 = cvs_data.genders_groups[1].age_groups.max;
+			var max2 = cvs_data.genders_groups[0].age_groups.max;
+
+			var width_factor = (width - space)/(max1 + max2);
+
+			
+
+
+			var _this = this;
+
+			(function(){
+				var array = cvs_data.genders_groups[1].age_groups;
+				var grad = _this.gender_grads[1];
+
+				var el_height = Math.round((height - vert_space * (array.length - 1))/array.length);
+				var limit = half_width - space/2;
+				
+
+				array.forEach(function(el, i) {
+					
+
+
+					var y = el_height * i + vert_space * i;
+					var rwidth = (el.length * width_factor);
+					var x = limit - rwidth;
+					var color = colors.getGradColor(i+1, 1, array.length, grad);
+
+					svg.append('rect').attr({
+						x: x,
+						y: y,
+						width: rwidth,
+						height: el_height,
+						fill: color
+					});
+				//	console.log(el);
+				});
+
+			})();
+
+			(function(){
+				var array = cvs_data.genders_groups[0].age_groups;
+				var grad = _this.gender_grads[0];
+
+				var el_height = Math.round((height - vert_space * (array.length - 1))/array.length);
+				var limit = half_width - space/2;
+				
+
+				array.forEach(function(el, i) {
+					
+
+
+					var y = el_height * i + vert_space * i;
+					var rwidth = (el.length * width_factor);
+					var x = (width - limit);
+					var color = colors.getGradColor(i+1, 1, array.length, grad);
+
+					svg.append('rect').attr({
+						x: x,
+						y: y,
+						width: rwidth,
+						height: el_height,
+						fill: color
+					});
+				//	console.log(el);
+				});
+
+			})();
+			
+			
+		}
+	},
 	/*'compx-bigdata': {
 		depends_on: ['geodata', 'cvs_data'],
 		fn: function(geodata, cvs_data) {
