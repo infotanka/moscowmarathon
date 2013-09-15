@@ -29,7 +29,7 @@ provoda.View.extendTo(StartPageCtr, {
 		this.header = this.tpl.ancs['runners_header'];
 		this.list = this.tpl.ancs['runners_list'];
 
-		var header_height = this.header.height();
+		this.promiseStateUpdate('header_height', this.header.height());
 		this.checkListPos();
 
 
@@ -37,6 +37,13 @@ provoda.View.extendTo(StartPageCtr, {
 		var _this = this;
 		$(window).on('resize', function() {
 
+		});
+		this.wch(this.root_view, 'mapheight', function(e) {
+			if (!e.value){
+				return;
+			}
+			this.checkListPos();
+			this.checkFixPos();
 		});
 
 		$(window).on('scroll', function() {
@@ -60,11 +67,12 @@ provoda.View.extendTo(StartPageCtr, {
 		var header_height = this.state('header_height');
 		if (list_top && list_bottom){
 			var header_fixed = this.state('header_fixed');
-			var possible_top = header_fixed ? list_top - header_height : list_top;
-			var possible_bottom = header_fixed ? list_bottom - header_height : list_bottom;
+			var possible_top = (header_fixed ? list_top - header_height : list_top) - header_height;
+			var possible_bottom = (header_fixed ? list_bottom - header_height : list_bottom);
 			var scroll_top = $(window).scrollTop();
 			var need_fix = scroll_top > possible_top && scroll_top < possible_bottom;
-			this.header.toggleClass('fixed_rheader', need_fix)
+			this.header.toggleClass('fixed_rheader', need_fix);
+			this.list.css('margin-top', need_fix ? (header_height + 'px') : '' );
 			
 		}
 

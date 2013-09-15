@@ -121,6 +121,7 @@ provoda.View.extendTo(RunMapCtr, {
 			this.parent_view.parent_view.promiseStateUpdate('mapheight', e.value);
 			this.root_view.promiseStateUpdate('maxwdith', e.value * 1.6);
 			this.checkSizes();
+			this.root_view.promiseStateUpdate('mapheight', e.value);
 		});
 		
 
