@@ -159,7 +159,7 @@ path {
 		float: right;
 		font-size: 13px;
 		clear: both;
-
+		overflow: hidden;
 	}
 
 .marath-icon{

@@ -478,7 +478,7 @@ provoda.View.extendTo(RunMapCtr, {
 
 
 			var points_bottom = [];
-			var bottom_range = [16998, Infinity];
+			var bottom_range = [16998, 41700];
 			var bottom_array = getPathPartByRange(coordinates, bottom_range);
 			bottom_array.forEach(function(el){
 				var point = getAltVPoints(el);
