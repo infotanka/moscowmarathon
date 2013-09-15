@@ -51,12 +51,14 @@ BrowseMap.Model.extendTo(StartPage, {
 	},
 	search_fields: [['states','pos'], ['states','full_name']],
 	getFilterData: function(runners, field, limit) {
+		var count = 0;
 		limit = limit || 0;
 		var full_field = ['states', field];
 		var index = spv.makeIndexByField(runners, full_field, true);
 
 		var result = [];
 		for (var name in index){
+			count++;
 			if (name == '#other' || index[name].length < limit){
 				continue;
 			}
@@ -79,7 +81,8 @@ BrowseMap.Model.extendTo(StartPage, {
 
 		return {
 			index: index,
-			items: result
+			items: result,
+			count: count
 		};
 	},
 	getIndexes: function(runners, cvsdata) {
@@ -91,7 +94,8 @@ BrowseMap.Model.extendTo(StartPage, {
 			if (no_flabel){
 				result.items.unshift({
 					label: no_flabel,
-					novalue: true
+					novalue: true,
+					counter: result.count
 				});
 			}
 			
