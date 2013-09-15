@@ -178,6 +178,12 @@ path {
 .filters{
 	padding: 22px 0;
 	}
+	.filters:after{
+		content: "";
+		height: 1px;
+		clear:both;
+		display: block;
+	}
 	.firunr_search{
 		border-radius: 9px;
 		padding-left: 10px;
@@ -209,26 +215,40 @@ path {
 		top:8px;
 		content: "";
 	}
-
+	.firunr_search_c{
+		box-sizing: border-box;
+		padding-right: 35px;
+		float:left;
+		width: 35%;
+	}
 	.firunr_search{
 		display: inline-block;
-		margin-left: 30px;
-		margin-right: 35px;
-		width: 360px;
+		width: 100%
 		}
-	.firunr_age{
-		display: inline-block;
-		width: 150px;
-		margin-right: 35px;
+	.firunr_age_c{
+		box-sizing: border-box;
+		float:left;
+		width: 18%;
+		padding-right: 35px;
+	}
+	.firunr_age_c{
+		float:left;
 		}
+	.firunr_teem_c{
+		float:left;
+		width: 20%;
+		box-sizing: border-box;
+		padding-right: 35px;
+	}
 	.firunr_teem{
-		display: inline-block;
-		width: 165px;
-		margin-right: 35px;
+		
 		}
+	.firunr_place_c{
+		float:left;
+		width: 21%;
+	}
 	.firunr_place{
-		display: inline-block;
-		width: 220px;
+		
 		}
 .runr_pos,
 .runr_name,
@@ -237,7 +257,11 @@ path {
 .runr_team,
 .runr_place,
 .runr_time{
-	display: inline-block;
+	float:left;
+	min-height: 1em;
+}
+.runrs_item{
+	overflow: hidden;
 }
 .runners_block{
 	
@@ -253,28 +277,34 @@ path {
 		padding-bottom: 100px;
 		}
 		.runr_pos{
-			width: 52px;
+			width: 5%;
+			min-width: 20px;
 		}
 
 		.runr_name{
-			width:170px;
+			width:16%;
+			min-width: 100px;
 			}
 		.runr_num{
-			width: 172px;
+			width: 16%;
+			min-width: 20px;
 			text-align: center;
 
 		}
 		.runr_age{
-			width: 140px;
-			margin-left: 48px;
+			width: 18%;
+			padding-left: 48px;
+			box-sizing:border-box;
 		}
 		.runr_team{
-			width: 165px;
-			margin-left: 20px;
+			width: 18%;
+			padding-left: 20px;
+			box-sizing:border-box;
 			}
 		.runr_place{
-			width: 200px;
-			margin-left: 47px;
+			width: 24%;
+			padding-left: 47px;
+			box-sizing:border-box;
 			}
 		.runr_time{
 			margin-left: 10px;
@@ -345,6 +375,7 @@ path {
 	border-bottom: 1px solid #ccc;
 	padding: 0 20px;
 	margin: 0 -20px;
+	width:100%;
 }
 .mthswitch{
 	border-bottom: 1px dotted #333;
