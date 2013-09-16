@@ -500,3 +500,11 @@ path {
 	border-left:1px dotted #999;
 	width:1px;
 }
+.map-cover{
+			position: relative;
+			z-index: -1;
+		}
+		.map-cover img{
+			position: absolute;
+
+			}

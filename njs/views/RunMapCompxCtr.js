@@ -87,6 +87,24 @@ provoda.View.extendTo(RunMapCompxCtr, {
 		this.wch(this.root_view, 'd3map_dets', function(e) {
 			this.promiseStateUpdate('d3map_dets', e.value);
 		});
+
+
+		var mpd = {};
+		this.mapcover_data = mpd;
+		['excesstop',
+		'excessright',
+		'excessbottom',
+		'excessleft',
+		'bigwidth',
+		'bigheight'].forEach(function(el) {
+			var value = _this.tpl.ancs['mapcover'].attr(el);
+			value = value * 1;
+			mpd[el] = isNaN(value) ? 0 : value;
+
+		});
+		mpd.clipped_height = mpd.bigheight - mpd.excesstop - mpd.excessbottom;
+		mpd.clipped_width = mpd.bigwidth - mpd.excessleft - mpd.excessright;
+
 	},
 	checkSizes: function() {
 		this.setVisState('con_width', this.tpl.ancs['timeline'].width());
@@ -302,6 +320,36 @@ provoda.View.extendTo(RunMapCompxCtr, {
 				var total_distance = d3.geo.length(geodata) * mh.earth_radius;
 				return this.getPointPxByDistance(geodata, total_distance);
 			}
+		}
+	},
+	'compx-mapcover-hor': {
+		depends_on: ['trackwidth', 'track_left_padding'],
+		fn: function(trackwidth, track_left_padding) {
+			if (trackwidth){
+				track_left_padding = track_left_padding || 0;
+				var mpd = this.mapcover_data;
+				var width_factor = trackwidth/mpd.clipped_width;
+				this.tpl.ancs['mapcover'].css({
+					width: width_factor * mpd.bigwidth,
+					left: track_left_padding -  mpd.excessleft * width_factor
+				});
+			}
+
+		}
+	},
+	'compx-mapcover-vert':{
+		depends_on: ['trackheight', 'track_top_padding'],
+		fn: function(trackheight, track_top_padding) {
+			if (trackheight){
+				track_top_padding = track_top_padding || 0;
+				var mpd = this.mapcover_data;
+				var height_factor = trackheight/mpd.clipped_height;
+				this.tpl.ancs['mapcover'].css({
+					height: height_factor * mpd.bigheight,
+					top: track_top_padding -  mpd.excesstop * height_factor
+				});
+			}
+
 		}
 	},
 	/*'stch-start_point': function(state) {

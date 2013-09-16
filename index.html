@@ -20,7 +20,29 @@
 
 <div class="big-wrap">
 	<div id="runs_map_compx">
+
+		
 		<div class="bmap big_block">
+			<div class="map-cover">
+				<img 
+					
+					excesstop="8"
+					excessright="121"
+					excessbottom="43"
+					excessleft="30"
+					bigwidth="1490"
+					bigheight="1343"
+
+
+
+					src="i/mapcover.png"
+					alt=""
+					class="hidden"
+					pv-class="{{!trackwidth && 'hidden'}}"
+					pv-anchor="mapcover"
+
+					>
+			</div>
 			<div class="mapoverlay big_block">
 				<div class="main_header">
 					<h1 class="bmap_header">Мы бежали <span class="marath-icon"><img src="i/marathon-logo.png"></span><span pv-anchor="mthswitch" class="mthswitch">марафон</span></h1>
@@ -479,7 +501,7 @@
 		<div class="runners_list" pv-anchor="runners_list">
 
 
-			<div pv-nest="runners_filtered" class="runrs_item">
+			<div pv-nest="runners_filtered|limitTo:25" class="runrs_item">
 				<div class="runr_pos" pv-text="{{pos}}"></div>
 				<div class="runr_name" pv-text="{{full_name}}"></div>
 				<div class="runr_num" pv-text="{{num}}"></div>
