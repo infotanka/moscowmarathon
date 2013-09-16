@@ -377,6 +377,7 @@ path {
 	margin: 0 auto;
 	max-width: 1300px;
 	position: relative;
+	min-width: 1000px;
 }
 
 .runners_header.fixed_rheader{
