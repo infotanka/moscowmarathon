@@ -67,7 +67,7 @@ AppBaseView.extendTo(AppView, {
 		};
 	},
 	'stch-maxwdith': function(state) {
-		this.els.bwrap.css('max-width', state + 'px');
+		this.els.bwrap.css('max-width', Math.round(state) + 'px');
 	},
 	noArgs: noArgs
 	

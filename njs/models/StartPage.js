@@ -2,6 +2,32 @@ define(['../libs/BrowseMap', 'spv', 'provoda', './Runner', './modules/cvsloader'
 function(BrowseMap, spv, provoda, Runner, cvsloader, _) {
 "use strict";
 
+
+var FilterItem = function() {};
+BrowseMap.Model.extendTo(FilterItem, {
+	init: function(opts, params, type) {
+		this._super(opts);
+		spv.cloneObj(this.init_states, params);
+		this.init_states.type = type;
+		this.initStates();
+		this.wch(this.map_parent, 'selected_filter_' + type, this.checkActiveState);
+
+	},
+	checkActiveState: function(e) {
+		var novalue = this.state('novalue');
+		if (novalue){
+			this.updateState('active', !e.value);
+		} else {
+			this.updateState('active', e.value && e.value == this.state('label'));
+		}
+	},
+	setFilter: function() {
+		//this.RPCLegacy('setFilterBy', type, !item.novalue && item.label);
+		this.map_parent.setFilterBy(this.state('type'), !this.state('novalue') && this.state('label'));
+	}
+});
+
+
 var StartPage = function() {};
 BrowseMap.Model.extendTo(StartPage, {
 	model_name: 'start_page',
@@ -89,7 +115,7 @@ BrowseMap.Model.extendTo(StartPage, {
 		var states = {};
 		var _this = this;
 
-		var setFilterResult = function(result, name, no_flabel) {
+		var setFilterResult = function(result, name, no_flabel, reverse) {
 			_this.filters_cache[name] = result.index;
 			if (no_flabel){
 				result.items.unshift({
@@ -98,6 +124,17 @@ BrowseMap.Model.extendTo(StartPage, {
 					counter: result.count
 				});
 			}
+			if (reverse){
+				result.items.reverse();
+			}
+
+			var array = [];
+			for (var i = 0; i < result.items.length; i++) {
+				var cur = new FilterItem();
+				cur.init(_this.common_sopts, result.items[i], name);
+				array.push(cur);
+			}
+			_this.updateNesting('filter_' + name, array);
 			
 			states['filter_' + name] = result.items;
 		};
@@ -124,7 +161,7 @@ BrowseMap.Model.extendTo(StartPage, {
 		//var ages;
 		//spv.makeIndex()
 		setFilterResult(this.getAgesGroups(runners, cvsdata.age_ranges, cvsdata), 'ages', 'Все возрасты');
-		setFilterResult(this.getGenderGroups(runners), 'gender', 'Всех вместе');
+		setFilterResult(this.getGenderGroups(runners), 'gender', 'Всех вместе', true);
 
 		this.updateManyStates(states);
 	},
@@ -136,11 +173,11 @@ BrowseMap.Model.extendTo(StartPage, {
 
 
 		result.push({
-			label: 'Мужчин',
-			counter: index[1].length
-		}, {
 			label: 'Женщин',
 			counter: index[0].length
+		},{
+			label: 'Мужчин',
+			counter: index[1].length
 		});
 
 		index = {

@@ -174,8 +174,14 @@ path {
 	margin-top: 15px;
 	font-size: 16px;
 }
+.runners_header{
 
+}
+.runners_header h2{
+	float:left;
+}
 .filters{
+	clear:both;
 	padding: 22px 0;
 	}
 	.filters:after{
@@ -272,6 +278,8 @@ path {
 		}
 		.sex_filter{
 			margin-left: 30px;
+			float:left;
+			padding-top: 5px;
 		}
 	.runners_list{
 		padding-bottom: 100px;
@@ -342,6 +350,9 @@ path {
 		.flrr_menu_item:hover{
 			background-color: #F5F5F5;
 			}
+		.flrr_menu_item.active{
+			background-color: #CCC;
+		}
 		.flrr_menu_list{
 			min-width: 120%;
 			max-height: 300px;
@@ -384,3 +395,73 @@ path {
 .legendage_c{
 	margin-top:20px;
 }
+.genbuttn_group{
+	display: inline-block;
+}
+	.genbuttn{
+		position: relative;
+		cursor: pointer;
+
+		background-image: -o-linear-gradient(#eeeeee,#d9d9d9);
+		background-image: -moz-linear-gradient(100% 0% 270deg, #eeeeee, #d9d9d9);
+		background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#eeeeee), to(#d9d9d9));
+		background-image: linear-gradient(#eeeeee,#d9d9d9);
+		float:left;
+
+		border: 1px solid #999;
+		border-top:1px solid #d7d7d7;
+		border-bottom: 1px solid #666;
+		margin-left:-1px;
+		padding: 3px 14px;
+
+		color:#000;
+		font-weight: 700;
+		text-shadow:0px 1px 0px #fff;
+		}
+		
+		.genbuttn:hover{
+			z-index: 3;
+			background-image: -o-linear-gradient(#eeeeee,#bbb);
+			background-image: -moz-linear-gradient(100% 0% 270deg, #eeeeee, #bbb);
+			background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#eeeeee), to(#bbb));
+			background-image: linear-gradient(#eeeeee,#bbb);
+			}
+		.genbuttn.active{
+			z-index: 2;
+		}
+		.genbuttn:active, .genbuttn.active{
+			background-image: -o-linear-gradient(#bbb, #ddd);
+			background-image: -moz-linear-gradient(100% 0% 270deg,#bbb , #ddd);
+			background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#bbb), to(#ddd));
+			background-image: linear-gradient(#bbb, #ddd);
+		}
+		.genbuttn_group .genbuttn:first-of-type{
+			margin-left: 0;
+		}
+		.genbuttn_group .genbuttn:first-of-type,.genbuttn-left{
+			border-radius: 1em 0 0 1em;
+		}
+		.genbuttn_group .genbuttn:last-of-type,.genbuttn-right{
+			border-radius:  0 1em 1em 0;
+		}
+		.genbuttn-male:active,.genbuttn-male.active{
+
+			background-image: -o-linear-gradient(#81aeec, #a8cff2);
+			background-image: -moz-linear-gradient(100% 0% 270deg,#81aeec , #a8cff2);
+			background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#81aeec), to(#a8cff2));
+			background-image: linear-gradient(#81aeec, #a8cff2);
+		}
+		.genbuttn-female:active,.genbuttn-female.active{
+
+			background-image: -o-linear-gradient(#fea4b4, #ffc8d2);
+			background-image: -moz-linear-gradient(100% 0% 270deg,#fea4b4 , #ffc8d2);
+			background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#fea4b4), to(#ffc8d2));
+			background-image: linear-gradient(#fea4b4, #ffc8d2);
+		}
+		.genbuttn-male-female:active,.genbuttn-male-female.active{
+
+			background-image: -o-linear-gradient(#a6b7e5, #f9c3d0);
+			background-image: -moz-linear-gradient(100% 0% 270deg,#a6b7e5 , #f9c3d0);
+			background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#a6b7e5), to(#f9c3d0));
+			background-image: linear-gradient(#a6b7e5, #f9c3d0);
+		}
