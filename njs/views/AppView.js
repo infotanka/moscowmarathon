@@ -1,5 +1,5 @@
-define(['./AppBaseView', 'jquery', 'spv', './StartPageCtr', './RunMapCompxCtr'],
-function(AppBaseView, $, spv, StartPageCtr, RunMapCompxCtr) {
+define(['./AppBaseView', 'jquery', 'spv', './StartPageCtr', './RunMapCompxCtr', './RunnerCtr'],
+function(AppBaseView, $, spv, StartPageCtr, RunMapCompxCtr, RunnerCtr) {
 "use strict";
 
 
@@ -14,6 +14,9 @@ AppBaseView.extendTo(AppView, {
 	children_views: {
 		start_page : {
 			main: StartPageCtr
+		},
+		runner:{
+			main: RunnerCtr
 		},
 		runs_map_compx: RunMapCompxCtr
 	},
@@ -39,6 +42,7 @@ AppBaseView.extendTo(AppView, {
 			node: $(d.body),
 			offset: true
 		};
+		this.els.screens = $('#screens', d);
 		this.els.start_screen = $('#start-screen',d);
 		this.els.ui_samples = $(d.body).children('#dom-templates');
 		this.els.bwrap = $(d.body).children('.big-wrap');
@@ -51,14 +55,14 @@ AppBaseView.extendTo(AppView, {
 	handleStartScreen: function(start_screen) {
 		var st_scr_scrl_con = start_screen.parent();
 		var start_page_wrap = st_scr_scrl_con.parent();
-		/*var tpl = this.buildTemplate();
+		var tpl = this.buildTemplate();
 		tpl.init({
 			node: start_page_wrap,
 			spec_states: {
 				'$lev_num': -1
 			}
 		});
-		this.tpls.push(tpl);*/
+		this.tpls.push(tpl);
 
 		this.lev_containers[-1] = {
 			c: start_page_wrap,

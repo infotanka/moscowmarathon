@@ -441,85 +441,125 @@
 
 		</div>
 	</div>
-	
-	<div id="start-screen" class="runners_block big_block">
-		<div class="runners_header" pv-anchor="runners_header">
-			<h2>Результаты  </h2>
-			<span class="sex_filter">
-				<div class="genbuttn_group ">
-					<div class="genbuttn" pv-nest="filter_gender" pv-class="
-						genbuttn
-						{{label == 'Мужчин' && 'genbuttn-male'}}
-						{{label == 'Женщин' && 'genbuttn-female'}}
-						{{novalue && 'genbuttn-male-female'}}
-						{{active && 'active'}}
-					" pv-text="{{label}}" pv-events="click::setFilter"></div>
-				</div>
+	<div id="screens">
+		<div 
+			id="root_level"
+			class="complex-page root_level full-page"
+			pv-class="
+				complex-page root_level
+				{{current_lev_num != $lev_num && 'inactive-page'}}
+				{{current_lev_num == $lev_num && 'full-page'}}
+				{{(current_lev_num - 1) == $lev_num && 'page-scheme'}}"
+			pv-anchor="con">
+			<div 
+				class="complex-page-scroll_con"
+				pv-anchor="scroll_con">
+				<div id="start-screen" class="runners_block big_block" pv-nest="scope">
+					<div class="runners_header" pv-anchor="runners_header">
+						<h2>Результаты  </h2>
+						<span class="sex_filter">
+							<div class="genbuttn_group ">
+								<div class="genbuttn" pv-nest="filter_gender" pv-class="
+									genbuttn
+									{{label == 'Мужчин' && 'genbuttn-male'}}
+									{{label == 'Женщин' && 'genbuttn-female'}}
+									{{novalue && 'genbuttn-male-female'}}
+									{{active && 'active'}}
+								" pv-text="{{label}}" pv-events="click::setFilter"></div>
+							</div>
 
-			</span>
-			<div class="filters">
-				<div class="firunr_search_c">
-					<input class="firunr_search" placeholder="Имя или номер" type="search" pv-events="input:makeSearch keydown:makeSearch mousemove:makeSearch"/ >
-				</div>
-				<div class="firunr_age_c">
-					<div class="firunr_age filterr_menu">
-						<div class="filtrr" pv-text="{{selected_filter_ages || filter_ages.0.label}}"></div>
-						<div class="flrr_menu_list" >
-							<div class="flrr_menu_item" pv-nest="filter_ages" pv-events="click::setFilter" pv-class="flrr_menu_item {{active && 'active'}}">
-								<span pv-text="{{label}}" class="filter_item_name"></span>
-								<span class="counter" pv-text="{{counter}}"></span>
+						</span>
+						<div class="filters">
+							<div class="firunr_search_c">
+								<input class="firunr_search" placeholder="Имя или номер" type="search" pv-events="input:makeSearch keydown:makeSearch mousemove:makeSearch"/ >
 							</div>
-						</div>
-					</div>
-				</div>
-				<div class="firunr_teem_c">
-					<div class="firunr_teem filterr_menu">
-						<div class="filtrr" pv-text="{{selected_filter_team || filter_team.0.label}}"></div>
-						<div class="flrr_menu_list" >
-							<div class="flrr_menu_item" pv-nest="filter_team" pv-events="click::setFilter" pv-class="flrr_menu_item {{active && 'active'}}">
-								<span pv-text="{{label}}" class="filter_item_name"></span>
-								<span class="counter" pv-text="{{counter}}"></span>
+							<div class="firunr_age_c">
+								<div class="firunr_age filterr_menu">
+									<div class="filtrr" pv-text="{{selected_filter_ages || filter_ages.0.label}}"></div>
+									<div class="flrr_menu_list" >
+										<div class="flrr_menu_item" pv-nest="filter_ages" pv-events="click::setFilter" pv-class="flrr_menu_item {{active && 'active'}}">
+											<span pv-text="{{label}}" class="filter_item_name"></span>
+											<span class="counter" pv-text="{{counter}}"></span>
+										</div>
+									</div>
+								</div>
 							</div>
-						</div>
-					</div>
-				</div>
-				<div class="firunr_place_c">
-					<div class="firunr_place filterr_menu">
-						<div class="filtrr" pv-text="{{selected_filter_city || filter_city.0.label}}" >Со всего мира</div>
-						<div class="flrr_menu_list" >
-							<div class="flrr_menu_item" pv-nest="filter_city" pv-events="click::setFilter" pv-class="flrr_menu_item {{active && 'active'}}">
-								<span pv-text="{{label}}" class="filter_item_name"></span>
-								<span class="counter" pv-text="{{counter}}"></span>
+							<div class="firunr_teem_c">
+								<div class="firunr_teem filterr_menu">
+									<div class="filtrr" pv-text="{{selected_filter_team || filter_team.0.label}}"></div>
+									<div class="flrr_menu_list" >
+										<div class="flrr_menu_item" pv-nest="filter_team" pv-events="click::setFilter" pv-class="flrr_menu_item {{active && 'active'}}">
+											<span pv-text="{{label}}" class="filter_item_name"></span>
+											<span class="counter" pv-text="{{counter}}"></span>
+										</div>
+									</div>
+								</div>
 							</div>
+							<div class="firunr_place_c">
+								<div class="firunr_place filterr_menu">
+									<div class="filtrr" pv-text="{{selected_filter_city || filter_city.0.label}}" >Со всего мира</div>
+									<div class="flrr_menu_list" >
+										<div class="flrr_menu_item" pv-nest="filter_city" pv-events="click::setFilter" pv-class="flrr_menu_item {{active && 'active'}}">
+											<span pv-text="{{label}}" class="filter_item_name"></span>
+											<span class="counter" pv-text="{{counter}}"></span>
+										</div>
+									</div>
+								</div>
+							</div>
+							
 						</div>
+						
 					</div>
-				</div>
+					<div class="runners_list" pv-anchor="runners_list">
+
+
+						<div pv-nest="runners_filtered|limitTo:25" class="runrs_item" pv-events="click::requestPage" >
+							<div class="runr_pos" pv-text="{{pos}}"></div>
+							<div class="runr_name" pv-text="{{full_name}}"></div>
+							<div class="runr_num" pv-text="{{num}}"></div>
+							<div class="runr_age" pv-text="{{2013 - birthyear}}"></div>
+							<div class="runr_team" pv-text="{{team}}"></div>
+							<div class="runr_place" pv-text="{{city || country}}"></div>
+							<div class="runr_time" pv-text="{{time}}"></div>
+						</div>
+						
+					</div>
 				
+					
+					
+				</div>
 			</div>
-			
 		</div>
-		<div class="runners_list" pv-anchor="runners_list">
-
-
-			<div pv-nest="runners_filtered|limitTo:25" class="runrs_item">
-				<div class="runr_pos" pv-text="{{pos}}"></div>
-				<div class="runr_name" pv-text="{{full_name}}"></div>
-				<div class="runr_num" pv-text="{{num}}"></div>
-				<div class="runr_age" pv-text="{{2013 - birthyear}}"></div>
-				<div class="runr_team" pv-text="{{team}}"></div>
-				<div class="runr_place" pv-text="{{city || country}}"></div>
-				<div class="runr_time" pv-text="{{time}}"></div>
-			</div>
-			
-		</div>
-	
-		
-		
 	</div>
 
 	
+	
+
+	
 </div>
-<div id="dom-templates" style="display:none"></div>
+<div id="dom-templates" style="display:none">
+	<div 
+		class="complex-page inactive-page"
+		pv-class="
+			complex-page 
+			{{'index-of-cp-is-' + $lev_num}}
+			{{current_lev_num != $lev_num && 'inactive-page'}}
+			{{current_lev_num == $lev_num && 'full-page'}}
+			{{(current_lev_num - 1) == $lev_num && 'page-scheme'}}"
+		pv-anchor="con">
+		<div 
+			class="complex-page-scroll_con"
+			pv-anchor="scroll_con">
+			<div 
+				class="complex-page_material"
+				pv-anchor="material">
+			</div>
+		</div>
+	</div>
+	<div class="runner_page big_block">
+		<span pv-text="{{full_name}}"></span>
+	</div>
+</div>
 
 </body>
 </html>

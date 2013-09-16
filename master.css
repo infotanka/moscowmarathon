@@ -13,6 +13,17 @@ path {
   stroke: #999;
   stroke-width: 1px;
 }
+
+.complex-page{
+
+	}
+	.inactive-page{
+		display: none;
+		}
+	.full-page{
+		display: block;
+	}
+
 #map-con{
 	height: 400px;
 }
@@ -268,7 +279,11 @@ path {
 }
 .runrs_item{
 	overflow: hidden;
-}
+	}
+	.runrs_item:hover{
+		cursor: pointer;
+		background-color: #f3f3f3;
+		}
 .runners_block{
 	
 	}
