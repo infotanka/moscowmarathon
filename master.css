@@ -465,3 +465,20 @@ path {
 			background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#a6b7e5), to(#f9c3d0));
 			background-image: linear-gradient(#a6b7e5, #f9c3d0);
 		}
+.marker{
+	width: 14px;
+	height: 19px;
+	background: no-repeat;
+	background-size: 14px 19px;
+	background-image:url(i/mark-red.png);
+	margin-left: -7px;
+	}
+.marker_yel{
+	background-image:url(i/mark-yel.png);
+}
+.marker, .marker_c{
+	position: absolute;
+	}
+.marker_c .marker{
+	bottom:0;
+}

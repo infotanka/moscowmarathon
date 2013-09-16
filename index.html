@@ -222,7 +222,79 @@
 
 
 					</div>
-					
+					<div>
+						<div>
+							<!-- start -->
+							<div 
+								class="marker_c hidden"
+								pv-class="marker_c {{!start_point && 'hidden'}}"
+								pv-props="
+									style.left: {{start_point.0}}
+									style.top: {{start_point.1}}
+									
+								">
+
+								<span class="marker marker_yel"></span>
+							</div>
+							<div 
+								class="marker_c hidden"
+								pv-class="marker_c {{!start_point && 'hidden'}}"
+								style="left:15px"
+								pv-props="
+									style.top: {{start_point.1}}
+									
+								">
+
+								<span class="marker marker_yel"></span>
+							</div>
+							<div 
+								class="marker_c hidden"
+								pv-class="marker_c {{!start_point && 'hidden'}}"
+								style="left:15px;height:1px;border-top:1px dotted #ffcb00"
+								pv-props="
+									style.top: {{start_point.1}}
+									style.width:  {{start_point.0 - 15}}
+								"></div>
+
+						</div>
+						
+
+						<div>
+							<!-- finish-->
+							<div 
+								class="marker_c hidden"
+								pv-class="marker_c {{!end_point && 'hidden'}}"
+								pv-props="
+									style.left: {{end_point.0}}
+									style.top: {{end_point.1}}
+									
+								">
+
+								<span class="marker"></span>
+							</div>
+							<div 
+								class="marker_c hidden"
+								pv-class="marker_c {{!end_point && 'hidden'}}"
+								pv-props="
+									style.left: {{end_point.0}}
+									style.top: {{mapheight - 5}}
+									
+								">
+
+								<span class="marker"></span>
+							</div>
+							<div 
+								class="marker_c hidden"
+								pv-class="marker_c {{!end_point && 'hidden'}}"
+								style="width:1px;border-left:1px dotted #f31f4a"
+								pv-props="
+									style.top: {{end_point.1}}
+									style.left: {{end_point.0}}
+									style.height:  {{(mapheight - 5 - 19) - end_point.1}}
+								"></div>
+						</div>
+						
+					</div>
 
 				</div>
 				<div class="bmap_etc">
