@@ -254,17 +254,44 @@ provoda.View.extendTo(RunMapCompxCtr, {
 	/*
 	var 
 		var pjr = this.projection(pp.target);*/
+	//point_left_edge
+	//point_bottom_edge
+	//point_bottom_middle
+	getPointPxByDistance: function(geodata, distance) {
+		var pp = mh.getPointAtDistance(geodata.geometry.coordinates, distance);
 
+		var point = this.root_view.projection(pp.target);
+		return point.map(Math.round);
+	},
+	'compx-point_bottom_middle':{
+		depends_on: ['d3map_dets', 'geodata'],
+		fn: function(d3map_dets, geodata) {
+			if (d3map_dets && geodata){
+				return this.getPointPxByDistance(geodata, 28070);
+			}
+		}
+	},
+	'compx-point_bottom_edge':{
+		depends_on: ['d3map_dets', 'geodata'],
+		fn: function(d3map_dets, geodata) {
+			if (d3map_dets && geodata){
+				return this.getPointPxByDistance(geodata, 22188);
+			}
+		}
+	},
+	'compx-point_left_edge':{
+		depends_on: ['d3map_dets', 'geodata'],
+		fn: function(d3map_dets, geodata) {
+			if (d3map_dets && geodata){
+				return this.getPointPxByDistance(geodata, 11116);
+			}
+		}
+	},
 	'compx-start_point':{
 		depends_on: ['d3map_dets', 'geodata'],
 		fn: function(d3map_dets, geodata) {
 			if (d3map_dets && geodata){
-				var pp = mh.getPointAtDistance(geodata.geometry.coordinates, 0);
-
-				var point = this.root_view.projection(pp.target);
-
-				return point.map(Math.round);
-
+				return this.getPointPxByDistance(geodata, 0);
 			}
 		}
 	},
@@ -273,11 +300,7 @@ provoda.View.extendTo(RunMapCompxCtr, {
 		fn: function(d3map_dets, geodata) {
 			if (d3map_dets && geodata){
 				var total_distance = d3.geo.length(geodata) * mh.earth_radius;
-				var pp = mh.getPointAtDistance(geodata.geometry.coordinates, total_distance);
-				var point = this.root_view.projection(pp.target);
-
-				return point.map(Math.round);
-
+				return this.getPointPxByDistance(geodata, total_distance);
 			}
 		}
 	},

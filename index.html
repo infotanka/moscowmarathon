@@ -248,9 +248,9 @@
 								<span class="marker marker_yel"></span>
 							</div>
 							<div 
-								class="marker_c hidden"
-								pv-class="marker_c {{!start_point && 'hidden'}}"
-								style="left:15px;height:1px;border-top:1px dotted #ffcb00"
+								class="marker_c hidden horline"
+								pv-class="marker_c horline {{!start_point && 'hidden'}}"
+								style="border-top-color:#ffcb00"
 								pv-props="
 									style.top: {{start_point.1}}
 									style.width:  {{start_point.0 - 15}}
@@ -292,13 +292,43 @@
 								</div>
 							</div>
 							<div 
-								class="marker_c hidden"
-								pv-class="marker_c {{!end_point && 'hidden'}}"
-								style="width:1px;border-left:1px dotted #f31f4a"
+								class="marker_c hidden vertline"
+								pv-class="marker_c vertline {{!end_point && 'hidden'}}"
+								style="border-left-color:#f31f4a"
 								pv-props="
 									style.top: {{end_point.1}}
 									style.left: {{end_point.0}}
 									style.height:  {{(mapheight - 5 - 19) - end_point.1}}
+								"></div>
+						</div>
+
+						<div>
+							<!-- help points lines -->
+							<div 
+								class="marker_c hidden horline"
+								pv-class="marker_c horline {{!point_left_edge && 'hidden'}}"
+								pv-props="
+									style.top: {{point_left_edge.1}}
+									style.width:  {{point_left_edge.0 - 15}}
+								">
+							</div>
+
+
+							<div 
+								class="marker_c hidden vertline"
+								pv-class="marker_c vertline {{!point_bottom_middle && 'hidden'}}"
+								pv-props="
+									style.top: {{point_bottom_middle.1}}
+									style.left: {{point_bottom_middle.0}}
+									style.height:  {{(mapheight - 5 - 19) - point_bottom_middle.1}}
+								"></div>
+							<div 
+								class="marker_c hidden vertline"
+								pv-class="marker_c vertline {{!point_bottom_edge && 'hidden'}}"
+								pv-props="
+									style.top: {{point_bottom_edge.1}}
+									style.left: {{point_bottom_edge.0}}
+									style.height:  {{(mapheight - 5 - 19) - point_bottom_edge.1}}
 								"></div>
 						</div>
 						
