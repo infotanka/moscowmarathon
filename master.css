@@ -476,9 +476,16 @@ path {
 .marker_yel{
 	background-image:url(i/mark-yel.png);
 }
+
 .marker, .marker_c{
 	position: absolute;
 	}
 .marker_c .marker{
 	bottom:0;
+}
+.marker_c .marker_text{
+	position: absolute;
+	bottom:0;
+	text-shadow:0 1px 0px #fff;
+	min-width: 200px;
 }
