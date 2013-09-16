@@ -68,6 +68,15 @@ provoda.View.extendTo(RunMapCtr, {
 
 
 		this.projection = d3.geo.mercator().scale(1).translate([0, 0]);
+		this.root_view.projection = this.projection;
+
+		this.wch(this, 'basedet', function(e) {
+			if (e.value){
+				this.root_view.promiseStateUpdate('d3map_dets', e.value);
+			}
+		});
+
+
 		this.path = d3.geo.path().projection(this.projection);
 		this.behavior = d3.behavior.zoom();
 

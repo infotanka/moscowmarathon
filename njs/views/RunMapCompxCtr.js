@@ -83,6 +83,10 @@ provoda.View.extendTo(RunMapCompxCtr, {
 				$(this).text(mth_text[0]);
 			});
 
+
+		this.wch(this.root_view, 'd3map_dets', function(e) {
+			this.promiseStateUpdate('d3map_dets', e.value);
+		});
 	},
 	checkSizes: function() {
 		this.setVisState('con_width', this.tpl.ancs['timeline'].width());
@@ -245,6 +249,43 @@ provoda.View.extendTo(RunMapCompxCtr, {
 				};
 			}
 		}
+	},*/
+
+	/*
+	var 
+		var pjr = this.projection(pp.target);*/
+
+	'compx-start_point':{
+		depends_on: ['d3map_dets', 'geodata'],
+		fn: function(d3map_dets, geodata) {
+			if (d3map_dets && geodata){
+				var pp = mh.getPointAtDistance(geodata.geometry.coordinates, 0);
+
+				var point = this.root_view.projection(pp.target);
+
+				return point.map(Math.round);
+
+			}
+		}
+	},
+	'compx-end_point':{
+		depends_on: ['d3map_dets', 'geodata'],
+		fn: function(d3map_dets, geodata) {
+			if (d3map_dets && geodata){
+				var total_distance = d3.geo.length(geodata) * mh.earth_radius;
+				var pp = mh.getPointAtDistance(geodata.geometry.coordinates, total_distance);
+				var point = this.root_view.projection(pp.target);
+
+				return point.map(Math.round);
+
+			}
+		}
+	},
+	/*'stch-start_point': function(state) {
+		//this.start_point.toggleClass('')
+	},
+	'stch-end_point': function(state) {
+
 	},*/
 
 	tpl_events:{
