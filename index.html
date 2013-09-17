@@ -53,6 +53,14 @@
 						<span pv-text="{{current_runner_data.gender == 1 && 'пробежал'}} {{current_runner_data.gender == 0 && 'пробежала'}}"></span> марафон за
 						<span pv-text="{{current_runner_data.full_time_string}}"></span>
 					</h1>
+
+					<div pv-class="{{!current_runner_data && 'hidden'}}">
+						<div class="">
+							<span pv-text="{{current_runner_data.pos}}"></span> место
+						</div>
+						
+						
+					</div>
 					
 					<div class="factoids" pv-class="factoids {{current_runner_data && 'hidden'}}">
 						<!-- Фатоиды -->
