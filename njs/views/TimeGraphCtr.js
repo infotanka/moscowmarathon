@@ -49,7 +49,35 @@ provoda.View.extendTo(TimeGraphCtr, {
 			}
 		}
 	},
+	'compx-hours_steps':{
+		depends_on: ['cvs_data'],
+		fn: function(cvs_data) {
+			if (!cvs_data){
+				return;
+			}
+			var step = 60*60;
 
+			var items = [];
+			var cur = 0;
+			while (cur < cvs_data.run_gap){
+				items.push({
+					relative_to_start: cur * 1000,
+					relative_to_day: cvs_data.start_time + cur * 1000,
+					value: cur
+				});
+				cur += step;
+				//cur = Math.min(cur, cvs_data.run_gap);
+			}
+			//items.pop();
+			items.push({
+				relative_to_start: cvs_data.run_gap * 1000,
+				relative_to_day: cvs_data.start_time + cvs_data.run_gap * 1000,
+				value: cvs_data.run_gap
+			});
+			return items;
+
+		}
+	},
 	'compx-timesteps': {
 		depends_on: ['cvs_data'],
 		fn: function(cvs_data) {
@@ -62,7 +90,7 @@ provoda.View.extendTo(TimeGraphCtr, {
 				cur += step;
 				//cur = Math.min(cur, cvs_data.run_gap);
 			}
-			items.pop();
+			//items.pop();
 			items.push(cvs_data.run_gap);
 			return items;
 
