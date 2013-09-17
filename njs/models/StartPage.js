@@ -160,7 +160,7 @@ BrowseMap.Model.extendTo(StartPage, {
 		
 		//var ages;
 		//spv.makeIndex()
-		setFilterResult(this.getAgesGroups(runners, cvsdata.age_ranges, cvsdata), 'ages', 'Все возрасты');
+		setFilterResult(this.getAgesGroups(runners, cvsdata.big_ages_ranges, cvsdata), 'ages', 'Все возрасты');
 		setFilterResult(this.getGenderGroups(runners), 'gender', 'Всех вместе', true);
 
 		this.updateManyStates(states);

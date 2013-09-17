@@ -185,8 +185,8 @@ provoda.View.extendTo(RunMapCompxCtr, {
 			var half_width = width/2;
 			//var _this = this;
 			
-			var max1 = cvs_data.genders_groups[1].age_groups.max;
-			var max2 = cvs_data.genders_groups[0].age_groups.max;
+			var max1 = cvs_data.big_genders_groups[1].age_groups.max;
+			var max2 = cvs_data.big_genders_groups[0].age_groups.max;
 
 			var width_factor = (width - space)/(max1 + max2);
 
@@ -196,7 +196,7 @@ provoda.View.extendTo(RunMapCompxCtr, {
 			var _this = this;
 
 			(function(){
-				var array = cvs_data.genders_groups[1].age_groups;
+				var array = cvs_data.big_genders_groups[1].age_groups;
 				var grad = _this.gender_grads[1];
 
 				var el_height = Math.round((height - vert_space * (array.length - 1))/array.length);
@@ -225,7 +225,7 @@ provoda.View.extendTo(RunMapCompxCtr, {
 			})();
 
 			(function(){
-				var array = cvs_data.genders_groups[0].age_groups;
+				var array = cvs_data.big_genders_groups[0].age_groups;
 				var grad = _this.gender_grads[0];
 
 				var el_height = Math.round((height - vert_space * (array.length - 1))/array.length);

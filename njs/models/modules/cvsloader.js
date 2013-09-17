@@ -46,7 +46,49 @@ var checkData = function() {
 
 		*/
 
-		var big_ages_group
+		var big_ages_group = [
+			{
+				start: 18,
+				end: 19,
+				label: '18-19'
+			},{
+				start: 20,
+				end: 22,
+				label: '20-22'
+			},{
+				start: 23,
+				end: 34,
+				label: '23-34'
+			},{
+				start: 35,
+				end: 39,
+				label: '35-39'
+			},{
+				start: 40,
+				end: 44,
+				label: '40-44'
+			},{
+				start: 45,
+				end: 49,
+				label: '45-49'
+			},{
+				start: 50,
+				end: 54,
+				label: '50-54'
+			},{
+				start: 55,
+				end: 59,
+				label: '55-59'
+			},{
+				start: 60,
+				end: 64,
+				label: '60-64'
+			},{
+				start: 65,
+				end: Infinity,
+				label: '65+'
+			}
+		];
 
 		var small_ages_group = [
 			{
@@ -102,14 +144,14 @@ var checkData = function() {
 
 		};
 
-		var genders_groups = [{
-			raw: []
-		}, {
-			raw: []
-		}];
-		var runners_groups = [];
+		var getGenderAgesGroups = function(age_ranges_to_use) {
+			var genders_groups = [{
+				raw: []
+			}, {
+				raw: []
+			}];
+			var runners_groups = [];
 
-		(function(){
 			var i;
 			for ( i = 0; i < cvs.length; i++) {
 				
@@ -139,14 +181,24 @@ var checkData = function() {
 			runners_groups.reverse();
 
 
-		})();
+			return {
+				genders_groups: genders_groups,
+				runners_groups: runners_groups
+			};
+		};
+
+		var ga_groups = getGenderAgesGroups(age_ranges_to_use);
+		var big_ga_groups = getGenderAgesGroups(big_ages_group);
+
 		cvs_data.getAgeGroups = getAgeGroups;
-		cvs_data.genders_groups = genders_groups;
-		cvs_data.runners_groups = runners_groups;
+		cvs_data.genders_groups = ga_groups.genders_groups;
+		cvs_data.runners_groups = ga_groups.runners_groups;
+		cvs_data.big_genders_groups = big_ga_groups.genders_groups;
 
 		cvs_data.last_finish_time = last_finish_time;
 		cvs_data.run_gap = (last_finish_time - cvs_data.start_time)/1000;
 		cvs_data.age_ranges = age_ranges_to_use;
+		cvs_data.big_ages_ranges = big_ages_group;
 		eventor.trigger('load', cvs_data);
 	}
 };
