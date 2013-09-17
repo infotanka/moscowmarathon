@@ -147,7 +147,7 @@ provoda.View.extendTo(RunMapCtr, {
 			result.width = container.width();
 		}
 
-		result.height = Math.max(window.innerHeight - 70, 400);
+		result.height = Math.max(window.innerHeight - 70, 630);
 		this.updateManyStates(result);
 	},
 	updateManyStates: function(obj) {
@@ -298,7 +298,7 @@ provoda.View.extendTo(RunMapCtr, {
 			if (!basepathch || !cvs_data){
 				return;
 			}
-			return mh.getStepHeight(this.knodes, 100, 30, cvs_data.items, cvs_data.start_time, this.total_distance);
+			return mh.getStepHeight(this.knodes, 735, 300, cvs_data.items, cvs_data.start_time, this.total_distance);
 		}
 	},
 	'compx-draw': {
