@@ -174,10 +174,10 @@ BrowseMap.Model.extendTo(StartPage, {
 
 		result.push({
 			label: 'Женщин',
-			counter: index[0].length
+			counter: index[0] && index[0].length
 		},{
 			label: 'Мужчин',
-			counter: index[1].length
+			counter: index[1] && index[1].length
 		});
 
 		index = {

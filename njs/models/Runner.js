@@ -10,16 +10,17 @@ BrowseMap.Model.extendTo(Runner, {
 		this.initStates();
 	},
 	raw_map_st: {
-		pos: '0',
-		num: '1',
-		full_name: '2',
+		pos: 'pos',
+		num: 'num',
+		full_name: 'full_name',
 		birthyear: '3',
 		country: '4',
 		region: '5',
 		city: '6',
 		team: '7',
+
 		gender: 'gender',
-		full_time_string: '20'
+		full_time_string: 'result_time_string'
 	}
 
 	//Ctry✌✄✌Region✌✄✌City✌✄✌Club✌✄✌Result✌✄✄✌Group✌✄✌P.on g.✌✄✌Netto time✌✄✄

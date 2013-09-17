@@ -163,9 +163,9 @@ provoda.View.extendTo(RunMapCompxCtr, {
 		//	var height= container.height();
 			//var svg = this.legendcount;
 			//svg.selectAll('*').remove();
+			
 
-
-			var maxcount = (runners_rate.height * runners_rate.runners)/width;
+			var maxcount = (width * runners_rate.runners)/runners_rate.height;
 			this.tpl.ancs['legendcounttext'].text(Math.round(maxcount));
 			//console.log(maxcount)
 

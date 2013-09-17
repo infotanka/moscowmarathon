@@ -9,45 +9,27 @@ eventor.onRegistration('load', function(cb) {
 	}
 });
 
-var getResultSteps = function(el) {
-	var result = [];
-	result.push({
-		distance:0,
-		time: el.start_time
-	}, {
-		distance: 42100,
-		time: el.end_time
-	});
-	return result;
-};
 
 var checkData = function() {
 	if (cvs_data){
 		var cvs = cvs_data.items;
 		cvs.sort(function(a, b){
 			return spv.sortByRules(a, b, [{
-				field: [8],
+				field: ['result_time'],
 				reverse: false
 			}]);
 		});
 
-		var start_time = new Date(2013, 6, 30, 9) * 1;
+		
 
 
-		var group_num = 20;
-		var groups_count = Math.ceil(cvs.length/group_num);
-
-		var normlz_maxtime = cvs_data.max_time /4;
-		var start_diff = (normlz_maxtime / groups_count) * 1000;
+		
 
 		var last_finish_time = 0;
 
 		for (var i = 0; i < cvs.length; i++) {
 
-			cvs[i].start_time = start_time + (Math.ceil((i+1)/groups_count) - 1) * start_diff;
-			cvs[i].end_time = start_time + cvs[i][8] * 1000;
 			last_finish_time = Math.max(last_finish_time, cvs[i].end_time);
-			cvs[i].result_steps = getResultSteps(cvs[i]);
 		}
 
 		var age_ranges = [
@@ -98,7 +80,7 @@ var checkData = function() {
 		var age_ranges_to_use = compact_age_ranges;
 		var age_field = [3];
 
-		var start_year = (new Date(start_time)).getFullYear();
+		var start_year = (new Date(cvs_data.start_time)).getFullYear();
 
 		var getAgeGroups = function(array, ranges, field){
 			var age_groups = [];
@@ -135,9 +117,8 @@ var checkData = function() {
 		(function(){
 			var i;
 			for ( i = 0; i < cvs.length; i++) {
-				var gender = Math.random() > 0.66 ? 0 : 1;
-				cvs[i].gender = gender;
-				genders_groups[gender].raw.push(cvs[i]);
+				
+				genders_groups[cvs[i].gender].raw.push(cvs[i]);
 			}
 			genders_groups.forEach(function(el) {
 				el.age_groups = getAgeGroups(el.raw, age_ranges_to_use, age_field);
@@ -167,8 +148,9 @@ var checkData = function() {
 		cvs_data.getAgeGroups = getAgeGroups;
 		cvs_data.genders_groups = genders_groups;
 		cvs_data.runners_groups = runners_groups;
-		cvs_data.start_time = start_time;
+
 		cvs_data.last_finish_time = last_finish_time;
+		cvs_data.run_gap = last_finish_time - cvs_data.start_time;
 		cvs_data.age_ranges = age_ranges_to_use;
 		eventor.trigger('load', cvs_data);
 	}
@@ -195,7 +177,7 @@ $(frame)
 		top: 0,
 		left: '-1000px'
 	})
-	.attr('src', 'data.html')
+	.attr('src', 'data/data2.html')
 	.on('load', function() {
 		frame.contentWindow.postMessage('send_data','*');
 	})
