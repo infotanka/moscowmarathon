@@ -67,12 +67,45 @@ var getDistance = function(x1, y1, x2, y2, x) {
 	return ((x - x1) * (y2 - y1)) / (x2 - x1) + y1;
 };
 
+var getRangeByTime = function(el, time) {
+	var result;
+	for (var i = 0; i < el.result_steps.length; i++) {
+		var cur = el.result_steps[i];
+		var next = el.result_steps[i+1];
+		if (!cur || !next){
+			break;
+		}
+		if (cur.time <= time && next.time >= time){
+			result = {
+				start: cur,
+				end: next
+			};
+			break;
+		}
+
+		
+	}
+	if (!result){
+		result = {
+			start: el.result_steps[0],
+			end: el.result_steps[el.result_steps.length -1]
+		};
+	}
+
+	return result;
+};
+
 
 var getDistances = function(cvs, miliseconds) {
 	var result = [];
 	for (var i = 0; i < cvs.length; i++) {
 		var cur = cvs[i];
-		var time = getDistance(cur.start_time,0,   cur.end_time,42000,   miliseconds);
+		var range = getRangeByTime(cur, miliseconds);
+
+		var time = getDistance(
+			range.start.time, range.start.distance,
+			range.end.time,  range.end.distance,
+			miliseconds);
 		if (typeof time == 'number' && !isNaN(time)){
 			result.push(time);
 		}

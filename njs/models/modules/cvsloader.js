@@ -9,6 +9,18 @@ eventor.onRegistration('load', function(cb) {
 	}
 });
 
+var getResultSteps = function(el) {
+	var result = [];
+	result.push({
+		distance:0,
+		time: el.start_time
+	}, {
+		distance: 42100,
+		time: el.end_time
+	});
+	return result;
+};
+
 var checkData = function() {
 	if (cvs_data){
 		var cvs = cvs_data.items;
@@ -35,6 +47,7 @@ var checkData = function() {
 			cvs[i].start_time = start_time + (Math.ceil((i+1)/groups_count) - 1) * start_diff;
 			cvs[i].end_time = start_time + cvs[i][8] * 1000;
 			last_finish_time = Math.max(last_finish_time, cvs[i].end_time);
+			cvs[i].result_steps = getResultSteps(cvs[i]);
 		}
 
 		var age_ranges = [
