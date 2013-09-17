@@ -234,7 +234,7 @@ path {
 	}
 	.firunr_search_c{
 		box-sizing: border-box;
-		padding-right: 35px;
+		padding-right: 15px;
 		float:left;
 		width: 35%;
 	}
@@ -245,24 +245,24 @@ path {
 	.firunr_age_c{
 		box-sizing: border-box;
 		float:left;
-		width: 18%;
-		padding-right: 35px;
+		width: 16%;
+		padding-right: 15px;
 	}
 	.firunr_age_c{
 		float:left;
 		}
 	.firunr_teem_c{
 		float:left;
-		width: 20%;
+		width: 18%;
 		box-sizing: border-box;
-		padding-right: 35px;
+		padding-right: 15px;
 	}
 	.firunr_teem{
 		
 		}
 	.firunr_place_c{
 		float:left;
-		width: 21%;
+		width: 18%;
 	}
 	.firunr_place{
 		
@@ -309,14 +309,14 @@ path {
 			min-width: 100px;
 			}
 		.runr_num{
-			width: 16%;
+			width: 13%;
 			min-width: 20px;
 			text-align: center;
 
 		}
 		.runr_age{
-			width: 18%;
-			padding-left: 48px;
+			width: 15%;
+			padding-left: 38px;
 			box-sizing:border-box;
 		}
 		.runr_team{
@@ -325,8 +325,8 @@ path {
 			box-sizing:border-box;
 			}
 		.runr_place{
-			width: 24%;
-			padding-left: 47px;
+			width: 21%;
+			padding-left: 23px;
 			box-sizing:border-box;
 			}
 		.runr_time{
