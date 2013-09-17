@@ -487,7 +487,7 @@ provoda.View.extendTo(RunMapCtr, {
 
 
 			var points_bottom = [];
-			var bottom_range = [16998, 41700];
+			var bottom_range = [19700, 41700];
 			var bottom_array = getPathPartByRange(coordinates, bottom_range);
 			bottom_array.forEach(function(el){
 				var point = getAltVPoints(el);
@@ -505,7 +505,7 @@ provoda.View.extendTo(RunMapCtr, {
 				_this.knodes.bottom_lines.append('path').style({
 					stroke: 'none',
 					fill: colors.getGradColor(el.mid_dist, complects_bo.min_dist, complects_bo.max_dist, grays),
-					opacity: 0.8
+					opacity: 0.2
 				}).attr('d',
 					'M' + el.start.x + ',' + _this.height +
 					' L ' + formatForPath(el.start) +
@@ -514,7 +514,7 @@ provoda.View.extendTo(RunMapCtr, {
 					'Z');
 
 				_this.knodes.bottom_lines.append('line').style({
-					stroke: '#666',
+					stroke: '#888',
 					fill: 'none'
 				}).attr({
 					x1: el.start.x,
@@ -533,7 +533,7 @@ provoda.View.extendTo(RunMapCtr, {
 			
 
 			var points_left = [];
-			var left_range = [0, 16998];
+			var left_range = [0, 17300];
 			var left_array = getPathPartByRange(coordinates, left_range);
 			left_array.forEach(function(el){
 				var point = getAltVPoints(el);
@@ -549,7 +549,7 @@ provoda.View.extendTo(RunMapCtr, {
 				_this.knodes.left_lines.append('path').style({
 					stroke: 'none',
 					fill: colors.getGradColor(el.mid_dist, complects_left.min_dist, complects_left.max_dist, grays),
-					opacity: 0.8
+					opacity: 0.2
 				}).attr('d',
 					'M' + 0 + ',' + el.start.y +
 					' L ' + formatForPath(el.start) +
@@ -558,7 +558,7 @@ provoda.View.extendTo(RunMapCtr, {
 					'Z');
 
 				_this.knodes.left_lines.append('line').style({
-					stroke: '#666',
+					stroke: '#777',
 					fill: 'none'
 				}).attr({
 					x1: el.start.x,
