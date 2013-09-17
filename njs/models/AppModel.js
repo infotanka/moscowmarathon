@@ -1,4 +1,4 @@
-define(['./AppModelBase', './StartPage', 'provoda', './RunnerMapComplex'], function(AppModelBase, StartPage, provoda, RunnerMapComplex) {
+define(['./AppModelBase', './StartPage', 'provoda', './RunnerMapComplex', 'spv'], function(AppModelBase, StartPage, provoda, RunnerMapComplex, spv) {
 "use strict";
 
 
@@ -34,10 +34,16 @@ AppModelBase.extendTo(AppModel, {
 		var runs_map_compx = new RunnerMapComplex();
 		runs_map_compx.init({
 			map_parent: this,
-			app: this.app
+			app: this
 		});
 		this.runs_map_compx = runs_map_compx;
 		this.updateNesting('runs_map_compx', runs_map_compx);
+	},
+	matchNav: function() {
+		var runner = spv.filter(this.nav_tree, 'model_name', 'runner')[0];
+		var runner_data = runner && runner.states;
+		this.updateState('current_runner_data', runner_data);
+
 	}
 });
 return AppModel;

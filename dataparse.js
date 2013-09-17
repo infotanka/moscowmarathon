@@ -18,6 +18,7 @@ var stringToNum = function(obj, space) {
 };
 var cvs = document.getElementById('cvs').textContent.replace(/✌/gi, '').split(/\n/gi).map(function(el){
 	var pa = el.split('✄');
+	pa[20] = pa[8];
 	stringToTime(pa, 15);
 	stringToTime(pa, 8);
 	stringToNum(pa, 0);

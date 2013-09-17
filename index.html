@@ -45,9 +45,16 @@
 			</div>
 			<div class="mapoverlay big_block">
 				<div class="main_header">
-					<h1 class="bmap_header">Мы бежали <span class="marath-icon"><img src="i/marathon-logo.png"></span><span pv-anchor="mthswitch" class="mthswitch">марафон</span></h1>
-					<p class="bmap_desc"></p>
-					<div class="factoids">
+					<h1 class="bmap_header" pv-class="bmap_header {{current_runner_data && 'hidden'}}">Мы бежали <span class="marath-icon"><img src="i/marathon-logo.png"></span><span pv-anchor="mthswitch" class="mthswitch">марафон</span></h1>
+					
+
+					<h1 class="bmap_header hidden" pv-class="bmap_header {{!current_runner_data && 'hidden'}}">
+						<span pv-text="{{current_runner_data.full_name}}"></span> 
+						<span pv-text="{{current_runner_data.gender == 1 && 'пробежал'}} {{current_runner_data.gender == 0 && 'пробежала'}}"></span> марафон за
+						<span pv-text="{{current_runner_data.full_time_string}}"></span>
+					</h1>
+					
+					<div class="factoids" pv-class="factoids {{current_runner_data && 'hidden'}}">
 						<!-- Фатоиды -->
 
 						<div pv-props="

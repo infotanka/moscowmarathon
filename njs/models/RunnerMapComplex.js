@@ -70,6 +70,7 @@ provoda.HModel.extendTo(RunnerMapComplex, {
 
 
 		this.setTime(0.2);
+		this.wch(this.app, 'current_runner_data');
 	},
 	setTime: function(factor) {
 		this.updateState('selected_time', factor);
