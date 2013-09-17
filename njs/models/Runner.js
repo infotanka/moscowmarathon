@@ -13,11 +13,11 @@ BrowseMap.Model.extendTo(Runner, {
 		pos: 'pos',
 		num: 'num',
 		full_name: 'full_name',
-		birthyear: '3',
-		country: '4',
-		region: '5',
-		city: '6',
-		team: '7',
+		birthyear: 'birthyear',
+	//	country: '4',
+	//	region: '5',
+	//	city: '6',
+	//	team: '7',
 
 		gender: 'gender',
 		full_time_string: 'result_time_string'
