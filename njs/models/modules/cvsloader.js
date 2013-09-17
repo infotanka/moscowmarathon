@@ -150,7 +150,7 @@ var checkData = function() {
 		cvs_data.runners_groups = runners_groups;
 
 		cvs_data.last_finish_time = last_finish_time;
-		cvs_data.run_gap = last_finish_time - cvs_data.start_time;
+		cvs_data.run_gap = (last_finish_time - cvs_data.start_time)/1000;
 		cvs_data.age_ranges = age_ranges_to_use;
 		eventor.trigger('load', cvs_data);
 	}

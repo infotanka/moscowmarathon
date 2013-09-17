@@ -163,7 +163,7 @@ provoda.View.extendTo(RunMapCtr, {
 		depends_on: ['selected_time', 'cvs_data'],
 		fn: function(selected_time, cvs_data) {
 			if (cvs_data && typeof selected_time != 'undefined'){
-				return cvs_data.max_time * selected_time;
+				return cvs_data.run_gap * selected_time;
 			}
 		}
 	},

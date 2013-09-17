@@ -45,7 +45,7 @@ provoda.View.extendTo(TimeGraphCtr, {
 		depends_on: ['selected_time', 'cvs_data'],
 		fn: function(selected_time, cvs_data) {
 			if (cvs_data && typeof selected_time != 'undefined'){
-				return cvs_data.max_time * selected_time;
+				return cvs_data.run_gap * selected_time;
 			}
 		}
 	},
@@ -57,13 +57,13 @@ provoda.View.extendTo(TimeGraphCtr, {
 
 			var items = [];
 			var cur = 0;
-			while (cur < cvs_data.max_time){
+			while (cur < cvs_data.run_gap){
 				items.push(cur);
 				cur += step;
-				//cur = Math.min(cur, cvs_data.max_time);
+				//cur = Math.min(cur, cvs_data.run_gap);
 			}
 			items.pop();
-			items.push(cvs_data.max_time);
+			items.push(cvs_data.run_gap);
 			return items;
 
 		}
@@ -107,7 +107,7 @@ provoda.View.extendTo(TimeGraphCtr, {
 		depends_on: ['marks', 'bd', 'cvs_data', 'timesteps'],
 		fn: function(marks, bd, cvs_data, timesteps) {
 			if (marks && bd && cvs_data && timesteps){
-				var width_factor = this.width/cvs_data.max_time;
+				var width_factor = this.width/cvs_data.run_gap;
 				for (var i = 0; i < marks.length; i++) {
 					var val =  width_factor * timesteps[i];
 					var attrs = {
