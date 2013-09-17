@@ -32,52 +32,47 @@ var checkData = function() {
 			last_finish_time = Math.max(last_finish_time, cvs[i].end_time);
 		}
 
-		var age_ranges = [
-		{
-			start: 0,
-			end: 18,
-			label: '<18'
-		},
-		{
-			start: 18,
-			end: 33,
-			label: 33
-		},{
-			start: 33,
-			end: 48,
-			label: 48
-		},{
-			start: 48,
-			end: 65,
-			label: 65
-		}, {
-			start: 65,
-			end: Infinity,
-			label: '>65'
-		}
+		/*
+		18-19, 20-22, 23-34, 35-39, 40-44, 45-49, 50-54, 55-59, 60-64, 65+
+
+18-22
+23-34
+35-49
+50-65
+65+
+
+		v
+
+
+		*/
+
+		var big_ages_group
+
+		var small_ages_group = [
+			{
+				start: 18,
+				end: 22,
+				label: '18-22'
+			},{
+				start: 23,
+				end: 34,
+				label: '23-34'
+			},{
+				start: 35,
+				end: 49,
+				label: '35-49'
+			},{
+				start: 50,
+				end: 65,
+				label: '50-65'
+			},{
+				start: 65,
+				end: Infinity,
+				label: '65+'
+			}
 		];
 
-		var compact_age_ranges = [
-		{
-			start: 0,
-			end: 25,
-			label: '<25'
-		}, {
-			start: 25,
-			end: 45,
-			label: '45',
-			full_label: '25-45'
-		},{
-			start: 45,
-			end: 60,
-			label: '60',
-			full_label: '45-60'
-		},{
-			start: 60,
-			end: Infinity,
-			label: '>60'
-		}];
-		var age_ranges_to_use = compact_age_ranges;
+		var age_ranges_to_use = small_ages_group;
 		var age_field = [3];
 
 		var start_year = (new Date(cvs_data.start_time)).getFullYear();
@@ -91,7 +86,7 @@ var checkData = function() {
 				var age_range = ranges[i];
 				var g = spv.filter(r, field, function(value) {
 					var date = start_year - value;
-					if (date > age_range.start && date <= age_range.end){
+					if (date >= age_range.start && date <= age_range.end){
 						return true;
 					}
 
@@ -177,7 +172,7 @@ $(frame)
 		top: 0,
 		left: '-1000px'
 	})
-	.attr('src', 'data/data2.html')
+	.attr('src', 'data/data.html')
 	.on('load', function() {
 		frame.contentWindow.postMessage('send_data','*');
 	})

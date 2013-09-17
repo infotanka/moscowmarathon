@@ -98,7 +98,12 @@ var props_map = {
 	result_time: '8',
 	result_time_string: '20',
 	pos: '0',
-	num: '1'
+	num: '1',
+
+	country: '4',
+	region: '5',
+	city: '6',
+	team: '7'
 };
 
 var ncvs = [];
