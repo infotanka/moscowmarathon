@@ -179,7 +179,7 @@ var setRunnersPoints = function(cur) {
 */
 
 var getHeightByRunners = function(runners_count, step){
-	return (Math.pow(3, 2) * runners_count)/step;
+	return (2 * Math.pow(3, 2) * runners_count)/step;
 };
 
 var getAreaByData = function(runners_array, base_districts, prev_districts, seconds, step, start_time) {
