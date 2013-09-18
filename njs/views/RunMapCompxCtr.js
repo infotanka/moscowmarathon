@@ -190,7 +190,9 @@ provoda.View.extendTo(RunMapCompxCtr, {
 			var width_factor = (width - space)/(max1 + max2);
 
 			
-
+			var result_data = {
+				text_desc:[]
+			};
 
 			var _this = this;
 
@@ -238,6 +240,8 @@ provoda.View.extendTo(RunMapCompxCtr, {
 					var y = el_height * i + vert_space * i;
 					var rwidth = (el.length * width_factor);
 					var x = (width - limit);
+
+					
 					var color = colors.getGradColor(i+1, 1, array.length, grad);
 
 					svg.append('rect').attr({
@@ -247,12 +251,40 @@ provoda.View.extendTo(RunMapCompxCtr, {
 						height: el_height,
 						fill: color
 					});
+
+
+					result_data.text_desc[i] = {
+						x: x + rwidth,
+						y: y
+					};
 				//	console.log(el);
 				});
 
 			})();
 			
-			
+			return result_data;
+		}
+	},
+	'compx-legend_age_text':{
+		depends_on: ['legend_age', 'cvs_data'],
+		fn: function(legend_age, cvs_data) {
+			if (!legend_age){
+				return;
+			}
+			var con = this.tpl.ancs['legendage_textc'];
+			con.empty();
+			var dfrg = document.createDocumentFragment();
+
+			for (var i = 0; i < cvs_data.big_ages_ranges.length; i++) {
+				var cur = cvs_data.big_ages_ranges[i];
+				$('<span class="textblock"></span>').appendTo(dfrg).css({
+					top: Math.round(legend_age.text_desc[i].y),
+					left: Math.round(legend_age.text_desc[i].x),
+				}).text(cur.label);
+				//cvs_data.big_ages_ranges[i]
+			}
+			con.append(dfrg);
+
 		}
 	},
 	/*'compx-bigdata': {

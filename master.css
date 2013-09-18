@@ -561,6 +561,16 @@ path {
 		top:0;
 		bottom:0;
 		}
+	.graph_has_text .graph_text_block .textblock{
+		position: absolute;
+		}
+.legendage_c .textblock{
+	font-size: 8px;
+	line-height: 1;
+	width: 50px;
+	margin-left: 6px;
+	color:#666; 
+}
 .timeline_select_desc{
 	
 	position: absolute; 
