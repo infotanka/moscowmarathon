@@ -279,12 +279,10 @@ path {
 	.firunr_age_c{
 		box-sizing: border-box;
 		float:left;
-		width: 16%;
+		width: 15%;
 		padding-right: 15px;
 	}
-	.firunr_age_c{
-		float:left;
-		}
+
 	.firunr_teem_c{
 		float:left;
 		width: 18%;
@@ -339,27 +337,27 @@ path {
 		}
 
 		.runr_name{
-			width:16%;
+			width:20%;
 			min-width: 100px;
 			}
 		.runr_num{
-			width: 13%;
+			width: 10%;
 			min-width: 20px;
 
 		}
 		.runr_age{
 			width: 15%;
-			padding-left: 38px;
+			padding-left: 10px;
 			box-sizing:border-box;
 		}
 		.runr_team{
 			width: 18%;
-			padding-left: 20px;
+			padding-left: 10px;
 			box-sizing:border-box;
 			}
 		.runr_place{
-			width: 21%;
-			padding-left: 23px;
+			width: 18%;
+			padding-left: 10px;
 			box-sizing:border-box;
 			}
 		.runr_time{
