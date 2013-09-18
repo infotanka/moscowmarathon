@@ -50,8 +50,8 @@ provoda.View.extendTo(TimeGraphCtr, {
 		if (container[0]){
 			result.width = container.width();
 		}
-
-		result.height = container.height();
+		this.original_height = container.height();
+//		result.height = ;
 		this.updateManyStates(result);
 	},
 	updateManyStates: function(obj) {
@@ -169,9 +169,9 @@ provoda.View.extendTo(TimeGraphCtr, {
 		}
 	},
 	'compx-marks': {
-		depends_on: ['timesteps', 'bd'],
-		fn: function(timesteps, bd) {
-			if (timesteps && bd){
+		depends_on: ['timesteps', 'base_graph_data'],
+		fn: function(timesteps, base_graph_data) {
+			if (timesteps && base_graph_data){
 				var result = [];
 				this.timemarksg1.selectAll('*').remove();
 				this.timemarksg2.selectAll('*').remove();
@@ -223,19 +223,19 @@ provoda.View.extendTo(TimeGraphCtr, {
 		}
 	},
 	'compx-bd': {
-		depends_on: ['height', 'width', 'vis_ready'],
-		fn: function(height, width, vis_ready) {
-			if (!height || !width || !vis_ready){
+		depends_on: ['width', 'vis_ready'],
+		fn: function(width, vis_ready) {
+			if ( !width || !vis_ready){
 				return;
 			}
 			//var container = this.c.parent();
 			//container.css('height', height);
 			this.width = width;
-			this.height = height;
+			//this.height = height;
 			this.c.css('display', '');
 			this.svg.attr({
-				width: this.width,
-				height: this.height
+				width: this.width
+				//height: this.height
 			});
 
 	
@@ -287,22 +287,23 @@ provoda.View.extendTo(TimeGraphCtr, {
 		}
 	},
 	px_step: 3,
-	'compx-draw': {
-		depends_on: ['basedet', 'cvs_data', 'age_areas'],
-		fn: function(basedet, cvs_data, age_areas) {
-			if (!basedet || !cvs_data ||!age_areas){
+	y_scale: 1.2,
+	'compx-base_graph_data': {
+		depends_on: ['basedet', 'cvs_data'],
+		fn: function(basedet, cvs_data) {
+			if (!basedet || !cvs_data){
 				return;
 			}
-			var y_scale = 1.2;
-			var _this = this;
+
+			
 			var px_step = this.px_step;
 			var steps = this.width/px_step;
 
-
+			steps = Math.floor(steps);
 
 			var time_step = (cvs_data.last_finish_time - cvs_data.start_time)/steps;
 
-			steps = Math.ceil(steps);
+			
 
 			var makeStep = function(step_num, runners) {
 				var result = [];
@@ -360,12 +361,41 @@ provoda.View.extendTo(TimeGraphCtr, {
 			for (var i = 0; i < steps; i++) {
 				max_runners_in_step = Math.max(max_runners_in_step, getMaxInStep(i));
 			}
+			
+			this.height = Math.max(this.original_height, max_runners_in_step * this.y_scale);
 
 
 
+			var height_factor = this.height/ (max_runners_in_step * this.y_scale);
+			this.c.parent().css('height', this.height);
+//			this.height/();
+
+			return {
+				steps: steps,
+				px_step: px_step,
+				height_factor: height_factor,
+				runners_byd: runners_byd
+			};
+
+
+		}
+	},
+	'compx-draw': {
+		depends_on: ['base_graph_data', 'cvs_data', 'age_areas'],
+		fn: function(base_graph_data, cvs_data, age_areas) {
+			if (!base_graph_data || !cvs_data ||!age_areas){
+				return;
+			}
+			var _this = this;
+
+			var reversed_groups = cvs_data.runners_groups.slice();
+			reversed_groups.reverse();
 			var points_byd = {};
 
-			var height_factor = this.height/(max_runners_in_step * y_scale);
+			var steps = base_graph_data.steps;
+			var px_step = this.px_step;
+			var height_factor = base_graph_data.height_factor;
+			var runners_byd = base_graph_data.runners_byd;
 
 			var getRunByDPoints = function(array, prev_array) {
 
@@ -427,7 +457,6 @@ provoda.View.extendTo(TimeGraphCtr, {
 				runners_byd: runners_byd,
 				points_byd: points_byd,
 				areas_data: areas_data,
-				y_scale: y_scale,
 				height_factor: height_factor
 			};
 		}
