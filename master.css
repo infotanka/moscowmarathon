@@ -387,6 +387,7 @@ path {
 			}
 			.flrr_menu_item  .counter{
 				float: right;
+				font-size: 12px;
 			}
 			.flrr_item_col1{
 				display: inline-block;
