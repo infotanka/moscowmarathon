@@ -298,7 +298,7 @@ provoda.View.extendTo(TimeGraphCtr, {
 			var px_step = this.px_step;
 			var steps = this.width/px_step;
 
-			var max_runners = 0;
+
 
 			var time_step = (cvs_data.last_finish_time - cvs_data.start_time)/steps;
 
@@ -322,20 +322,23 @@ provoda.View.extendTo(TimeGraphCtr, {
 			var getRunnersByTime = function(runners) {
 				//var has_data = {};
 				var runners_by_time = [];
+				//var max_runners;
 				
 				for (var i = 0; i < steps; i++) {
 					var array = makeStep(i, runners);
 					runners_by_time.push(array);
-					max_runners = Math.max(max_runners, array.length);
+				//	max_runners = Math.max(max_runners, array.length);
 					if (array.length){
 					//	has_data[i] = array.length;
 					}
 
 				}
+			//	runners_by_time.max_runners = max_runners;
 				return runners_by_time;
 			};
 
-			
+			var reversed_groups = cvs_data.runners_groups.slice();
+			reversed_groups.reverse();
 
 			var runners_byd = {};
 
@@ -343,16 +346,42 @@ provoda.View.extendTo(TimeGraphCtr, {
 				runners_byd[el.key] = getRunnersByTime(el.runners);
 			});
 
+			var getMaxInStep = function(step_num) {
+				var summ = 0;
+				reversed_groups.forEach(function(el) {
+					summ += runners_byd[el.key][step_num].length;
+				});
+				return summ;
+			};
+
+
+
+			var max_runners_in_step = 0;
+			for (var i = 0; i < steps; i++) {
+				max_runners_in_step = Math.max(max_runners_in_step, getMaxInStep(i));
+			}
+
+
+
 			var points_byd = {};
 
-			var height_factor = this.height/(max_runners * y_scale);
+			var height_factor = this.height/(max_runners_in_step * y_scale);
 
-			var getRunByDPoints = function(array) {
+			var getRunByDPoints = function(array, prev_array) {
+
 				var result = [];
 				for (var i = 0; i < steps; i++) {
 					var x1 = i * px_step;
 					var x2 = x1 + px_step;
 					var y = _this.height - height_factor * array[i].length;
+					if (prev_array){
+						var prev_v = prev_array[i *2];
+						y = y - (_this.height - prev_v.y);
+					}
+					
+
+
+
 					result.push({
 						x: x1,
 						y: y
@@ -363,8 +392,11 @@ provoda.View.extendTo(TimeGraphCtr, {
 				}
 				return result;
 			};
-			cvs_data.runners_groups.forEach(function(el) {
-				points_byd[el.key] = getRunByDPoints(runners_byd[el.key]);
+			
+			reversed_groups.forEach(function(el, i) {
+				var prev = reversed_groups[i-1];
+				prev = prev && points_byd[prev.key];
+				points_byd[el.key] = getRunByDPoints(runners_byd[el.key], prev);
 			});
 
 
@@ -382,6 +414,7 @@ provoda.View.extendTo(TimeGraphCtr, {
 				return result;
 			};
 			cvs_data.runners_groups.forEach(function(el) {
+				
 				areas_data[el.key] = getRunByDPathData(points_byd[el.key]);
 			});
 
@@ -410,8 +443,13 @@ provoda.View.extendTo(TimeGraphCtr, {
 			this.promiseStateUpdate('selector', false);
 			return;
 		}
+		var draw = this.state('draw');
+		if (!draw){
+			this.promiseStateUpdate('selector', false);
+			return;
+		}
 
-		var pos_y = Math.floor((this.height - (e.pageY - this.coffset.top))/this.state('draw').height_factor);
+		var pos_y = Math.floor((this.height - (e.pageY - this.coffset.top))/draw.height_factor);
 		if (pos_y < 0){
 			this.promiseStateUpdate('selector', false);
 			return;
