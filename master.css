@@ -279,7 +279,7 @@ path {
 	.firunr_age_c{
 		box-sizing: border-box;
 		float:left;
-		width: 13%;
+		width: 16%;
 		padding-right: 15px;
 	}
 
@@ -346,7 +346,7 @@ path {
 
 		}
 		.runr_age{
-			width: 13%;
+			width: 16%;
 			padding-left: 10px;
 			box-sizing:border-box;
 		}
