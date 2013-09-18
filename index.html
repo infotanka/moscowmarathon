@@ -422,18 +422,26 @@
 			<div class="scroll_marker" pv-anchor="scroll_marker"><img src="i/scroll-marker.png" alt=""></div>
 			<div class="timeline graph_has_text" pv-nest="time_graph">
 				<div class="graph_text_block">
+					<div class="selector_box hidden" pv-class="selector_box {{!selector_matching && 'hidden'}}"
+						pv-props="
+							style.left: {{selector_matching && ((selector_matching.selector.pos_x * px_step) || '0')}}
+							style.bottom: {{selector_matching && ((selector_matching.selector.pos_y * height_factor) || '0')}}
+							style.width: {{px_step}}
+							style.height: {{height_factor}}
+						"
+					></div>
 					<div 
 						class="timeline_select_desc hidden"
-						pv-class="timeline_select_desc {{!selected_runner.full_name && 'hidden'}} {{selector.pos_x_factor > 0.66 && 'right_stack_fix'}}"
+						pv-class="timeline_select_desc {{!selector_matching.runner.full_name && 'hidden'}} {{selector_matching.selector.pos_x_factor > 0.66 && 'right_stack_fix'}}"
 						pv-props="
-							style.left: {{selected_runner && ((selector.pos_x * px_step) || '0')}}
-							style.bottom: {{selected_runner && ((selector.pos_y * height_factor) || '0')}}
+							style.left: {{selector_matching && ((selector_matching.selector.pos_x * px_step) || '0')}}
+							style.bottom: {{selector_matching && ((selector_matching.selector.pos_y * height_factor) || '0')}}
 						"
 
 						>
 						<div class="timeline_select_desc-text" >
-							<div pv-text="{{selected_runner.full_name}}"></div>
-							<div pv-text="{{selected_runner.result_time_string}}"></div>
+							<div pv-text="{{selector_matching.runner.full_name}}"></div>
+							<div pv-text="{{selector_matching.runner.result_time_string}}"></div>
 						</div>
 					</div>					
 				</div>

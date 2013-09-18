@@ -568,11 +568,17 @@ path {
 .timeline_select_desc-text{
 	display: block;
 	border-radius: 3px;
-	padding: 4px 5px;
+	padding: 6px 7px;
 	background: #ddd;
-	opacity: 0.2;
+	opacity: 0.8;
 	width: 150px;
 	position: absolute;
-	right:0;
-	bottom:0;
+	right:5px;
+	bottom:5px;
+}
+.selector_box{
+	border: 1px solid red;
+	margin-left:-1;
+	margin-bottom: -1px;
+	position: absolute;
 }

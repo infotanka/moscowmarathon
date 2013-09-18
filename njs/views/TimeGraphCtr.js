@@ -424,13 +424,16 @@ provoda.View.extendTo(TimeGraphCtr, {
 			pos_y: pos_y
 		});
 	},
-	'compx-selected_runner': {
+	'compx-selector_matching': {
 		depends_on: ['selector', 'base_graph_data'],
 		fn: function(sel, base_graph_data) {
 			if (!sel || !base_graph_data){
 				return;
 			}
+			var used_selector = {};
 			var getByS = function(pos_x, pos_y) {
+				used_selector.pos_x = pos_x;
+				used_selector.pos_y = pos_y;
 				return spv.getTargetField(base_graph_data.steps_data, [pos_x, pos_y]);
 
 			};
@@ -455,7 +458,14 @@ provoda.View.extendTo(TimeGraphCtr, {
 			} else {
 				console.log(sel.pos_x, sel.pos_y);
 			}*/
-			return matched;
+			if (!matched){
+				return;
+			} else {
+				return {
+					runner: matched,
+					selector: used_selector
+				};
+			}
 			
 		}
 	},
