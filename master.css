@@ -147,7 +147,7 @@ path {
 	.weather{
 		text-align: center;
 		width: 160px;
-		padding-top: 100px;
+		padding-top: 10px;
 		background: no-repeat 50% 50%;
 		}
 		.weather{
@@ -163,7 +163,7 @@ path {
 		}
 
 	.we_bg_sun{
-		background-image: url(i/nosun.png)
+		
 		}
 
 	.legend{
@@ -604,4 +604,11 @@ path {
 	margin-left:-1;
 	margin-bottom: -1px;
 	position: absolute;
+}
+.weather_images{
+	height: 90px;
+}
+.weather_images img{
+	max-width: 100%;
+	max-height: 100%;
 }

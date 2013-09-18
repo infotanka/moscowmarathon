@@ -375,6 +375,26 @@
 				</div>
 				<div class="bmap_etc">
 					<div class="weather we_bg_sun">
+						<div class="weather_images">
+							<div
+
+								pv-class=" {{ !( time_value|compareTime: '00:00' : '0:30:00' ) && 'hidden'}}"
+								class="hidden">
+								<img src="i/nosun.png" alt="">
+							</div>
+							<div
+
+								pv-class=" {{ !( time_value|compareTime: '0:30:00' : '3:30:00' ) && 'hidden'}}"
+								class="hidden">
+								<img src="i/small-rain.gif" alt="">
+							</div>
+							<div
+
+								pv-class=" {{ !( time_value|compareTime: '3:30:00' : '7:00:00' ) && 'hidden'}}"
+								class="hidden">
+								<img src="i/rain.gif" alt="">
+							</div>
+						</div>
 						<div>
 							<div class="we_temperature">+11° <span class="we_wind">← 6 м/c </span>
 							</div>
