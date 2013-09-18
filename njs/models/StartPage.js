@@ -180,7 +180,16 @@ BrowseMap.Model.extendTo(StartPage, {
 		//spv.makeIndex()
 
 
-		setFilterResult(this.getAgesGroups(runners, cvsdata.big_ages_ranges, cvsdata), 'ages', 'Все от 18 до 70');
+		var max_age = 0;
+		for (var i = 0; i < runners.length; i++) {
+			if (!runners[i].states.birthyear){
+				continue;
+			}
+			max_age = Math.max((new Date(cvsdata.start_time)).getFullYear() - runners[i].states.birthyear, max_age);
+		}
+
+		
+		setFilterResult(this.getAgesGroups(runners, cvsdata.big_ages_ranges, cvsdata), 'ages', 'Все от 18 до ' + max_age);
 		setFilterResult(this.getGenderGroups(runners), 'gender', 'Всех вместе', true);
 
 		this.updateManyStates(states);
