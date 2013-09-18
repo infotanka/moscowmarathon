@@ -162,6 +162,7 @@ path {
 		.we_temperature{
 			font-size: 24px;
 			font-weight: 700;
+			margin-top: -30px;
 		}
 		.we_wind{
 			font-size: 13px;
