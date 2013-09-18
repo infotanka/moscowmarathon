@@ -147,7 +147,7 @@ provoda.View.extendTo(RunMapCtr, {
 			result.width = container.width();
 		}
 
-		result.height = Math.max(window.innerHeight - 110, 580);
+		result.height = Math.max(window.innerHeight - 90, 580);
 		this.updateManyStates(result);
 	},
 	updateManyStates: function(obj) {

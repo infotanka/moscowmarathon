@@ -208,10 +208,11 @@ $(window).on('message', function(e) {
 	var message = e.originalEvent.data;
 	if (message && message.cvs_data){
 		cvs_data = message.data;
+		$(frame).remove();
+		//console.log(e.originalEvent.data);
+		checkData();
 	}
-	$(frame).remove();
-	//console.log(e.originalEvent.data);
-	checkData();
+	
 });
 
 $(function() {
