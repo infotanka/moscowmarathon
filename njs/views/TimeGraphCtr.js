@@ -376,6 +376,7 @@ provoda.View.extendTo(TimeGraphCtr, {
 
 			var height_factor = this.height/ (max_runners_in_step * this.y_scale);
 			this.c.css('height', this.height);
+			this.svgc.css('height', this.height);
 //			this.height/();
 
 			return {
