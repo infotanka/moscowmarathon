@@ -50,6 +50,7 @@ path {
 			position: absolute;
 			margin-top: -33px;
 			z-index: 3;
+			top:0;
 			}
 	.timeline .tl_text_mark{
 		position: absolute;

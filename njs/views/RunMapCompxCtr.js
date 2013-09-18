@@ -143,7 +143,9 @@ provoda.View.extendTo(RunMapCompxCtr, {
 		var lines = [];
 
 		for (var i = 1; i < 4; i++) {
-			lines.push(i * part_height);
+			lines.push({
+				y: Math.round(i * part_height) + 0.5
+			});
 		}
 
 
@@ -157,23 +159,26 @@ provoda.View.extendTo(RunMapCompxCtr, {
 			.attr('d', data)
 			.style(style);
 
+		
 
 
 
 		for (var i = 0; i < lines.length; i++) {
+			var cur = lines[i];
+			cur.x = mh.getDistance(0, width,  height, width/2, cur.y);
 			this.legendcount.append('line')
 				.attr({
 					x1: 0,
-					y1: lines[i],
+					y1: cur.y,
 					x2: width,
-					y2: lines[i]
+					y2: cur.y
 				})
 				.style({
-					fill: '#fff',
-					'stroke-width': 1
+					stroke: '#fff',
+					'stroke-width': 0.5
 				});
-			
-		};
+		}
+		this.countlines = lines;
 
 	},
 	'compx-legend_count':{
