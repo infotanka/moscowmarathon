@@ -134,7 +134,7 @@ BrowseMap.Model.extendTo(StartPage, {
 					});
 				} else {
 					result.items.unshift({
-						label: 'Все' + selectByNum(result.count, no_flabel),
+						label: 'Все ' + selectByNum(result.count, no_flabel),
 						novalue: true,
 						counter: result.count
 					});
