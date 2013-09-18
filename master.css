@@ -567,9 +567,8 @@ path {
 	}
 .timeline_select_desc-text{
 	display: block;
-	border-radius: 3px;
 	padding: 6px 7px;
-	background: #ddd;
+	background: #fff;
 	opacity: 0.8;
 	width: 150px;
 	position: absolute;
