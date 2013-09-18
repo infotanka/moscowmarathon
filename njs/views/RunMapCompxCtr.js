@@ -139,6 +139,14 @@ provoda.View.extendTo(RunMapCompxCtr, {
 			p2 = {x: width, y:0},
 			p3 = {x: width/2, y: height};
 
+		var part_height = height/4;
+		var lines = [];
+
+		for (var i = 1; i < 4; i++) {
+			lines.push(i * part_height);
+		}
+
+
 		var data = mh.formatPathPoints([p1, p2, p3]) + ' Z';
 
 		var style = {
@@ -148,6 +156,24 @@ provoda.View.extendTo(RunMapCompxCtr, {
 		this.legendcount.append('path')
 			.attr('d', data)
 			.style(style);
+
+
+
+
+		for (var i = 0; i < lines.length; i++) {
+			this.legendcount.append('line')
+				.attr({
+					x1: 0,
+					y1: lines[i],
+					x2: width,
+					y2: lines[i]
+				})
+				.style({
+					fill: '#fff',
+					'stroke-width': 1
+				});
+			
+		};
 
 	},
 	'compx-legend_count':{
