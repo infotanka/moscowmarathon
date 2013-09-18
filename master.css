@@ -36,7 +36,7 @@ path {
 	right:0;
 }
 .controlls{
-	height: 345px;
+	height: 295px;
 	border-radius: 2rem;
 	position: relative;
 }
@@ -77,7 +77,7 @@ path {
 		}
 
 	.big_timemarks{
-		margin-top: 15px;
+		margin-top: 20px;
 		position: relative;
 	}
 .big_block{
