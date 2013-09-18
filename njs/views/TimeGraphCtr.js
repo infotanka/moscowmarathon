@@ -20,6 +20,26 @@ provoda.View.extendTo(TimeGraphCtr, {
 		});
 		this.areas_group = this.svg.append('g');
 
+
+		var _this = this;
+
+		var checkPointerMove = function(e) {
+			_this.checkPointerMove(e);
+		};
+
+		var tmcon = this.parent_view.tpl.ancs['timeline'];
+
+		tmcon
+		.on('mouseenter', function() {
+			_this.coffset = tmcon.offset();
+			$(window.document).on('mousemove', checkPointerMove);
+		})
+		.on('mouseleave', function() {
+
+			$(window.document).off('mousemove', checkPointerMove);
+			_this.promiseStateUpdate('selector', false);
+		});
+
 		this.timemarksg1 = this.svg.append('g');
 		this.timemarksg2 = this.svg.append('g');
 	},
@@ -92,10 +112,15 @@ provoda.View.extendTo(TimeGraphCtr, {
 
 			
 			var createText = function(cur, from_start) {
-				var tstr = moment(cvs_data.start_time)
-					.startOf('day')
-					.add(from_start ? cur.relative_to_start:  cur.relative_to_day)
+				var tstr;
+				if (from_start) {
+					tstr = moment(cvs_data.start_time).startOf('day')
+					.add( cur.relative_to_start)
 					.format(cur.last ? 'HH:mm:ss' : 'HH:mm');
+				} else {
+					tstr = moment(cur.relative_to_day)
+					.format(cur.last ? 'HH:mm:ss' : 'HH:mm');
+				}
 				var span_top = $('<span class="tl_text_mark"></span>').appendTo(dfrg);
 				if (from_start){
 					span_top.addClass('mark_bottom');
@@ -212,6 +237,7 @@ provoda.View.extendTo(TimeGraphCtr, {
 				width: this.width,
 				height: this.height
 			});
+
 	
 				
 			return Date.now();
@@ -260,6 +286,7 @@ provoda.View.extendTo(TimeGraphCtr, {
 			return age_areas;
 		}
 	},
+	px_step: 3,
 	'compx-draw': {
 		depends_on: ['basedet', 'cvs_data', 'age_areas'],
 		fn: function(basedet, cvs_data, age_areas) {
@@ -268,7 +295,7 @@ provoda.View.extendTo(TimeGraphCtr, {
 			}
 			var y_scale = 1.2;
 			var _this = this;
-			var px_step = 3;
+			var px_step = this.px_step;
 			var steps = this.width/px_step;
 
 			var max_runners = 0;
@@ -298,7 +325,7 @@ provoda.View.extendTo(TimeGraphCtr, {
 				
 				for (var i = 0; i < steps; i++) {
 					var array = makeStep(i, runners);
-					runners_by_time.push(array.length);
+					runners_by_time.push(array);
 					max_runners = Math.max(max_runners, array.length);
 					if (array.length){
 					//	has_data[i] = array.length;
@@ -309,7 +336,7 @@ provoda.View.extendTo(TimeGraphCtr, {
 			};
 
 			
-			
+
 			var runners_byd = {};
 
 			cvs_data.runners_groups.forEach(function(el) {
@@ -325,7 +352,7 @@ provoda.View.extendTo(TimeGraphCtr, {
 				for (var i = 0; i < steps; i++) {
 					var x1 = i * px_step;
 					var x2 = x1 + px_step;
-					var y = _this.height - height_factor * array[i];
+					var y = _this.height - height_factor * array[i].length;
 					result.push({
 						x: x1,
 						y: y
@@ -363,47 +390,60 @@ provoda.View.extendTo(TimeGraphCtr, {
 				age_areas[el.key].attr("d", areas_data[el.key]);
 			});
 
-		//	console.log(runners_byd);
-
-
-/*			_this = this;
-
-			var 
-		
-
-			var areas_data = {};
-			var areas = {};
-			//areas.push(getAreaPathData(getAreaByData(cvs, complects, complects), complects));
-			var prev;
-			cvs_data.runners_groups.forEach(function(el, i) {
-				var prev_districts = (i === 0) ? complects : prev;
-				areas_data[el.key] = getAreaByData(el.runners, complects, prev_districts, seconds, step, start_time);
-				prev = areas_data[el.key];
-			});
-			cvs_data.runners_groups.forEach(function(el) {
-				areas[el.key] = getAreaPathData(areas_data[el.key], complects, complects);
-			});
-			cvs_data.runners_groups.forEach(function(el) {
-				
-				_this.age_areas[el.key].attr("d", areas[el.key]);
-				
-			});
-*/
-
-
-		//	this.knodes.base.attr("d", this.path);
-		//	this.knodes.base.projection_key = this.projection.scale() + '_' + this.projection.translate();
-		//	mh.getPoints(cvs_data, this.knodes, time_value, false, cvs_data.start_time, this.total_distance);
-
-			
-
-			
-		//	xAxis.attr("x1", t[0]).attr("x2", t[0]);
-			//yAxis.attr("y1", t[1]).attr("y2", t[1]);
-		//
-			return {};
+			return {
+				runners_byd: runners_byd,
+				points_byd: points_byd,
+				areas_data: areas_data,
+				y_scale: y_scale,
+				height_factor: height_factor
+			};
 		}
+		
 	},
+	checkPointerMove: function(e) {
+			//this.coffset
+		var pos = e.pageX - this.coffset.left;
+
+
+		var pos_x = Math.round(pos/this.px_step);
+		if (pos_x < 0){
+			this.promiseStateUpdate('selector', false);
+			return;
+		}
+
+		var pos_y = Math.floor((this.height - (e.pageY - this.coffset.top))/this.state('draw').height_factor);
+		if (pos_y < 0){
+			this.promiseStateUpdate('selector', false);
+			return;
+		}
+		this.promiseStateUpdate('selector', {
+			pos_x: pos_x,
+			pos_y: pos_y
+		});
+	},
+	'compx-selected_runners': {
+		depends_on: ['selector', 'draw', 'cvs_data'],
+		fn: function(selector, draw, cvs_data) {
+			if (!selector || !draw){
+				return;
+			}
+			var matched = [];
+			cvs_data.runners_groups.forEach(function(el) {
+				var array = draw.runners_byd[el.key];
+				//console.log(array);
+				var runner = array[selector.pos_x][selector.pos_y];
+				if (runner){
+					matched.push(runner);
+				}
+				
+				//age_areas[el.key].attr("d", areas_data[el.key]);
+			});
+			if (matched.length){
+				console.log(matched[0].full_name);
+			}
+			
+		}
+	}
 });
 
 return TimeGraphCtr;
