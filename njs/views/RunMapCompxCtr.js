@@ -134,6 +134,8 @@ provoda.View.extendTo(RunMapCompxCtr, {
 		var width = container.width();
 		var height= container.height();
 
+		$(this.legendcount.node()).css('width', width);
+
 		var
 			p1 = {x:0, y:0},
 			p2 = {x: width, y:0},
@@ -210,6 +212,7 @@ provoda.View.extendTo(RunMapCompxCtr, {
 			var height= container.height();
 			var svg = this.legendage;
 			svg.selectAll('*').remove();
+			$(svg.node()).css('width', width);
 
 			var space = 1;
 			var vert_space = 1;

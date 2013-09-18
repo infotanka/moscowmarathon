@@ -194,6 +194,10 @@ path {
 		.legendage_c .svgcon{
 			height: 100px;
 		}
+		.svgcon svg{
+			max-width: 100%;
+			max-height:100%;
+		}
 	.share{
 		padding-top:20px;
 		width: 100px;
