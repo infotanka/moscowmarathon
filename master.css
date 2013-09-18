@@ -270,7 +270,7 @@ path {
 		box-sizing: border-box;
 		padding-right: 15px;
 		float:left;
-		width: 35%;
+		width: 38%;
 	}
 	.firunr_search{
 		display: inline-block;
@@ -279,7 +279,7 @@ path {
 	.firunr_age_c{
 		box-sizing: border-box;
 		float:left;
-		width: 15%;
+		width: 13%;
 		padding-right: 15px;
 	}
 
@@ -337,16 +337,16 @@ path {
 		}
 
 		.runr_name{
-			width:20%;
+			width:25%;
 			min-width: 100px;
 			}
 		.runr_num{
-			width: 10%;
+			width: 8%;
 			min-width: 20px;
 
 		}
 		.runr_age{
-			width: 15%;
+			width: 13%;
 			padding-left: 10px;
 			box-sizing:border-box;
 		}
