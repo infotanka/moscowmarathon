@@ -164,6 +164,7 @@ provoda.View.extendTo(RunMapCompxCtr, {
 
 
 		for (var i = 0; i < lines.length; i++) {
+			break;
 			var cur = lines[i];
 			cur.x = mh.getDistance(0, width,  height, width/2, cur.y);
 			this.legendcount.append('line')

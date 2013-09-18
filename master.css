@@ -142,7 +142,7 @@ path {
 	}
 .bmap_etc{
 	float:right;
-	width: 130px;
+	width: 160px;
 	}
 	.weather{
 		text-align: center;
@@ -171,6 +171,7 @@ path {
 		float: right;
 		font-size: 13px;
 		font-weight: 700;
+		margin-right: 25px;
 		}
 		.legendcount_c{
 		
@@ -340,7 +341,6 @@ path {
 		.runr_num{
 			width: 13%;
 			min-width: 20px;
-			text-align: center;
 
 		}
 		.runr_age{
