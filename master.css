@@ -144,8 +144,13 @@ path {
 .bmap_etc{
 	float:right;
 	width: 160px;
+	padding-top: 190px;
 	}
 	.weather{
+		position: absolute;
+		z-index: -1;
+		right:0;
+		top:10px;
 		text-align: center;
 		width: 160px;
 		padding-top: 10px;
