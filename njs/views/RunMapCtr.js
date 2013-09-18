@@ -147,7 +147,7 @@ provoda.View.extendTo(RunMapCtr, {
 			result.width = container.width();
 		}
 
-		result.height = Math.max(window.innerHeight - 90, 580);
+		result.height = Math.max(window.innerHeight - 80, 580);
 		this.updateManyStates(result);
 	},
 	updateManyStates: function(obj) {
@@ -225,7 +225,7 @@ provoda.View.extendTo(RunMapCtr, {
 			if (geodata && bd){
 				this.projection.scale(1).translate([0, 0]);
 				var b = this.path.bounds(geodata),
-					s = 0.95 / Math.max((b[1][0] - b[0][0]) / this.width, (b[1][1] - b[0][1]) / this.height),
+					s = 0.90 / Math.max((b[1][0] - b[0][0]) / this.width, (b[1][1] - b[0][1]) / this.height),
 					t = [(this.width - s * (b[1][0] + b[0][0])) / 2, (this.height - s * (b[1][1] + b[0][1])) / 2];
 
 				this.behavior.translate(t).scale(s);
