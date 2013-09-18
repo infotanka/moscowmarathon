@@ -115,14 +115,32 @@ BrowseMap.Model.extendTo(StartPage, {
 		var states = {};
 		var _this = this;
 
+		var teams_header =['команда', 'команды', 'команд'];
+		var city_header = ['город', 'города', 'городов'];
+
+		var selectByNum = function(num, array) {
+			return num + ' ' + array[spv.getUnitBaseNum(num)];
+		};
+
+
 		var setFilterResult = function(result, name, no_flabel, reverse) {
 			_this.filters_cache[name] = result.index;
 			if (no_flabel){
-				result.items.unshift({
-					label: no_flabel,
-					novalue: true,
-					counter: result.count
-				});
+				if (typeof no_flabel == 'string'){
+					result.items.unshift({
+						label: no_flabel,
+						novalue: true,
+						counter: result.count
+					});
+				} else {
+					result.items.unshift({
+						label: selectByNum(result.count, no_flabel),
+						novalue: true,
+						counter: result.count
+					});
+					
+				}
+				
 			}
 			if (reverse){
 				result.items.reverse();
@@ -143,11 +161,11 @@ BrowseMap.Model.extendTo(StartPage, {
 		[{
 			name: 'team',
 			limit: 3,
-			no_flabel: 'Все команды'
+			no_flabel: teams_header
 		}, {
 			name: 'city',
 			limit: 3,
-			no_flabel: 'Со всего мира'
+			no_flabel: city_header
 		}, {
 			name: 'country',
 			limit: 3,
@@ -160,7 +178,9 @@ BrowseMap.Model.extendTo(StartPage, {
 		
 		//var ages;
 		//spv.makeIndex()
-		setFilterResult(this.getAgesGroups(runners, cvsdata.big_ages_ranges, cvsdata), 'ages', 'Все возрасты');
+
+
+		setFilterResult(this.getAgesGroups(runners, cvsdata.big_ages_ranges, cvsdata), 'ages', 'от 18 до 70');
 		setFilterResult(this.getGenderGroups(runners), 'gender', 'Всех вместе', true);
 
 		this.updateManyStates(states);

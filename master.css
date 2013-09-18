@@ -376,8 +376,17 @@ path {
 		.menu_opened .filtrr:after{
 			display: none;
 		}	
+			.flrr_menu_item{
+				overflow: hidden;
+			}
 			.filter_item_name{
 				font-weight: 700;
+			}
+			.flrr_menu_item  .filter_item_name{
+				float:left;
+			}
+			.flrr_menu_item  .counter{
+				float: right;
 			}
 			.flrr_item_col1{
 				display: inline-block;

@@ -497,7 +497,7 @@ getUnitBaseNum = function(_c){
 		return 2;
 	}
 };
-
+spv.getUnitBaseNum = getUnitBaseNum;
 
 stringifyParams = spv.stringifyParams = function(params, ignore_params, splitter, joiner, opts){
 	opts = opts || {};
