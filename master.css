@@ -550,7 +550,7 @@ path {
 }
 
 .horline{
-	border-top:1px dotted #999;
+	border-top:1px dotted #ccc;
 	height:1px;
 	left:15px;
 }

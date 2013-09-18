@@ -351,7 +351,7 @@ provoda.View.extendTo(RunMapCompxCtr, {
 		depends_on: ['d3map_dets', 'geodata'],
 		fn: function(d3map_dets, geodata) {
 			if (d3map_dets && geodata){
-				return this.getPointPxByDistance(geodata, 28070);
+				return this.getPointPxByDistance(geodata, 28200);
 			}
 		}
 	},
@@ -359,7 +359,7 @@ provoda.View.extendTo(RunMapCompxCtr, {
 		depends_on: ['d3map_dets', 'geodata'],
 		fn: function(d3map_dets, geodata) {
 			if (d3map_dets && geodata){
-				return this.getPointPxByDistance(geodata, 22188);
+				return this.getPointPxByDistance(geodata, 22288);
 			}
 		}
 	},
