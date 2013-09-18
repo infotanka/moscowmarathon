@@ -10,7 +10,6 @@ provoda.View.extendTo(RunMapCompxCtr, {
 		geo_map: GeoMapCtr,
 		time_graph: TimeGraphCtr
 	},
-	'collch-time_graph': 'tpl.ancs.timeline',
 	createDetails: function() {
 		this.c = this.root_view.els.runm_c;
 		this.createTemplate();
@@ -33,7 +32,7 @@ provoda.View.extendTo(RunMapCompxCtr, {
 		this.marker_width = scroll_marker.width();
 		this.half_width = this.marker_width/2;
 
-		var relative_con = this.tpl.ancs['timeline'];
+		var relative_con = this.tpl.ancs['controlls'];
 
 		var _this = this;
 
@@ -107,13 +106,13 @@ provoda.View.extendTo(RunMapCompxCtr, {
 
 	},
 	checkSizes: function() {
-		this.setVisState('con_width', this.tpl.ancs['timeline'].width());
+		this.setVisState('con_width', this.tpl.ancs['controlls'].width());
 	},
 	'compx-curpos':{
 		depends_on: ['selected_time', 'vis_con_width'],
 		fn: function(factor, con_width) {
 			if (!this.con_offset){
-				this.con_offset = this.tpl.ancs['timeline'].offset();
+				this.con_offset = this.tpl.ancs['controlls'].offset();
 			}
 			var start_pos =  - this.half_width;
 

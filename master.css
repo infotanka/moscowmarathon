@@ -561,3 +561,16 @@ path {
 		top:0;
 		bottom:0;
 		}
+.timeline_select_desc{
+	border-radius: 3px;
+	padding: 4px 5px;
+	background: #ddd;
+	opacity: 0.85;
+	position: absolute; 
+	}
+.right_stack_fix .timeline_select_desc-text{
+	position: absolute;
+	right:0;
+	bottom:0;
+
+}

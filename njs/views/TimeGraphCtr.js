@@ -3,9 +3,10 @@ define(['d3', 'provoda', 'spv', './modules/maphelper', 'jquery', './modules/colo
 
 var TimeGraphCtr = function() {};
 provoda.View.extendTo(TimeGraphCtr, {
-	createBase: function() {
+	bindBase: function() {
+
 		var svg = document.createElementNS(mh.SVGNS, 'svg');
-		this.c = $(svg).css('display', 'none');
+		this.svgc = $(svg).css('display', 'none');
 		this.svg = d3.select(svg);
 
 		this.wch(this.root_view, 'maxwdith', spv.debounce(function() {
@@ -27,11 +28,11 @@ provoda.View.extendTo(TimeGraphCtr, {
 			_this.checkPointerMove(e);
 		};
 
-		var tmcon = this.parent_view.tpl.ancs['timeline'];
 
-		tmcon
+
+		this.c
 		.on('mouseenter', function() {
-			_this.coffset = tmcon.offset();
+			_this.coffset = _this.c.offset();
 			$(window.document).on('mousemove', checkPointerMove);
 		})
 		.on('mouseleave', function() {
@@ -39,13 +40,15 @@ provoda.View.extendTo(TimeGraphCtr, {
 			$(window.document).off('mousemove', checkPointerMove);
 			_this.promiseStateUpdate('selector', false);
 		});
+		this.promiseStateUpdate('px_step', this.px_step);
 
 		this.timemarksg1 = this.svg.append('g');
 		this.timemarksg2 = this.svg.append('g');
+		this.c.append(svg);
 	},
 	checkSizes: function() {
 		var result = {};
-		var container = this.c.parent();
+		var container = this.c;
 		
 		if (container[0]){
 			result.width = container.width();
@@ -105,7 +108,7 @@ provoda.View.extendTo(TimeGraphCtr, {
 			if (!hours_steps || !cvs_data || !width){
 				return;
 			}
-			var node  = this.parent_view.tpl.ancs['timeline_textc'];
+			var node  = this.tpl.ancs['timeline_textc'];
 			node.empty();
 			var width_factor = width/cvs_data.run_gap;
 			var dfrg = document.createDocumentFragment();
@@ -232,7 +235,7 @@ provoda.View.extendTo(TimeGraphCtr, {
 			//container.css('height', height);
 			this.width = width;
 			//this.height = height;
-			this.c.css('display', '');
+			this.svgc.css('display', '');
 			this.svg.attr({
 				width: this.width
 				//height: this.height
@@ -372,7 +375,7 @@ provoda.View.extendTo(TimeGraphCtr, {
 
 
 			var height_factor = this.height/ (max_runners_in_step * this.y_scale);
-			this.c.parent().css('height', this.height);
+			this.c.css('height', this.height);
 //			this.height/();
 
 			return {
@@ -384,6 +387,76 @@ provoda.View.extendTo(TimeGraphCtr, {
 			};
 
 
+		}
+	},
+	'compx-height_factor': {
+		depends_on: ['base_graph_data'],
+		fn: function(base_graph_data) {
+			return base_graph_data && base_graph_data.height_factor;
+		}
+	},
+	checkPointerMove: function(e) {
+			//this.coffset
+		var pos = e.pageX - this.coffset.left;
+
+
+		var pos_x = Math.floor(pos/this.px_step);
+		if (pos_x < 0){
+			this.promiseStateUpdate('selector', false);
+			return;
+		}
+		var base_graph_data = this.state('base_graph_data');
+		if (!base_graph_data){
+			this.promiseStateUpdate('selector', false);
+			return;
+		}
+
+		var pos_y = Math.floor((this.height - (e.pageY - this.coffset.top))/base_graph_data.height_factor);
+
+		if (pos_y < 0){
+			this.promiseStateUpdate('selector', false);
+			return;
+		}
+
+		this.promiseStateUpdate('selector', {
+			pos_x_factor: this.width/pos,
+			pos_x: pos_x,
+			pos_y: pos_y
+		});
+	},
+	'compx-selected_runner': {
+		depends_on: ['selector', 'base_graph_data'],
+		fn: function(sel, base_graph_data) {
+			if (!sel || !base_graph_data){
+				return;
+			}
+			var getByS = function(pos_x, pos_y) {
+				return spv.getTargetField(base_graph_data.steps_data, [pos_x, pos_y]);
+
+			};
+			var matched = getByS(sel.pos_x, sel.pos_y);
+			if (!matched){
+				matched = getByS(sel.pos_x +1, sel.pos_y);
+			}
+			if (!matched){
+				matched = getByS(sel.pos_x -1, sel.pos_y);
+			}
+			if (!matched){
+				matched = getByS(sel.pos_x, sel.pos_y + 1);
+			}
+			if (!matched){
+				matched = getByS(sel.pos_x, sel.pos_y - 1);
+			}
+
+			/*
+			
+			if (matched){
+				console.log(matched.full_name);
+			} else {
+				console.log(sel.pos_x, sel.pos_y);
+			}*/
+			return matched;
+			
 		}
 	},
 	'compx-draw': {
@@ -467,58 +540,6 @@ provoda.View.extendTo(TimeGraphCtr, {
 			};
 		}
 		
-	},
-	checkPointerMove: function(e) {
-			//this.coffset
-		var pos = e.pageX - this.coffset.left;
-
-
-		var pos_x = Math.round(pos/this.px_step);
-		if (pos_x < 0){
-			this.promiseStateUpdate('selector', false);
-			return;
-		}
-		var base_graph_data = this.state('base_graph_data');
-		if (!base_graph_data){
-			this.promiseStateUpdate('selector', false);
-			return;
-		}
-
-		var pos_y = Math.floor((this.height - (e.pageY - this.coffset.top))/base_graph_data.height_factor);
-		if (pos_y < 0){
-			this.promiseStateUpdate('selector', false);
-			return;
-		}
-		this.promiseStateUpdate('selector', {
-			pos_x: pos_x,
-			pos_y: pos_y
-		});
-	},
-	'compx-selected_runners': {
-		depends_on: ['selector', 'base_graph_data', 'cvs_data'],
-		fn: function(selector, base_graph_data, cvs_data) {
-			if (!selector || !base_graph_data){
-				return;
-			}
-
-			var matched = base_graph_data.steps_data[selector.pos_x][selector.pos_y];
-			/*
-			var matched = [];
-			cvs_data.runners_groups.forEach(function(el) {
-				var array = base_graph_data.runners_byd[el.key];
-				//console.log(array);
-				var runner = array[selector.pos_x][selector.pos_y];
-				if (runner){
-					matched.push(runner);
-				}
-				
-				//age_areas[el.key].attr("d", areas_data[el.key]);
-			});*/
-			if (matched){
-				console.log(matched.full_name);
-			}
-			
-		}
 	}
 });
 
