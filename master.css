@@ -57,13 +57,14 @@ path {
 	}
 	.timeline .just_text_of_mark{
 		margin-left: -2px;
+		font-size: 12px;
 	}
 	.timeline .mark_top{
-		top: -27px;
+		top: -22px;
 		}
 
 	.timeline .mark_bottom{
-		bottom: -27px;
+		bottom: -22px;
 		}
 
 	.timeline .last_mark .just_text_of_mark{
@@ -554,7 +555,7 @@ path {
 	left:15px;
 }
 .vertline{
-	border-left:1px dotted #999;
+	border-left:1px dotted #ccc;
 	width:1px;
 }
 .map-cover{
