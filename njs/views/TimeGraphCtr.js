@@ -301,6 +301,7 @@ provoda.View.extendTo(TimeGraphCtr, {
 
 			steps = Math.floor(steps);
 
+
 			var time_step = (cvs_data.last_finish_time - cvs_data.start_time)/steps;
 
 			
@@ -346,12 +347,16 @@ provoda.View.extendTo(TimeGraphCtr, {
 			cvs_data.runners_groups.forEach(function(el) {
 				runners_byd[el.key] = getRunnersByTime(el.runners);
 			});
-
+			var steps_data = [];
 			var getMaxInStep = function(step_num) {
 				var summ = 0;
+				var all_runners_in_step = [];
 				reversed_groups.forEach(function(el) {
 					summ += runners_byd[el.key][step_num].length;
+					all_runners_in_step.push.apply(all_runners_in_step, runners_byd[el.key][step_num]);
 				});
+
+				steps_data.push(all_runners_in_step);
 				return summ;
 			};
 
@@ -374,7 +379,8 @@ provoda.View.extendTo(TimeGraphCtr, {
 				steps: steps,
 				px_step: px_step,
 				height_factor: height_factor,
-				runners_byd: runners_byd
+				runners_byd: runners_byd,
+				steps_data: steps_data
 			};
 
 
@@ -472,13 +478,13 @@ provoda.View.extendTo(TimeGraphCtr, {
 			this.promiseStateUpdate('selector', false);
 			return;
 		}
-		var draw = this.state('draw');
-		if (!draw){
+		var base_graph_data = this.state('base_graph_data');
+		if (!base_graph_data){
 			this.promiseStateUpdate('selector', false);
 			return;
 		}
 
-		var pos_y = Math.floor((this.height - (e.pageY - this.coffset.top))/draw.height_factor);
+		var pos_y = Math.floor((this.height - (e.pageY - this.coffset.top))/base_graph_data.height_factor);
 		if (pos_y < 0){
 			this.promiseStateUpdate('selector', false);
 			return;
@@ -489,14 +495,17 @@ provoda.View.extendTo(TimeGraphCtr, {
 		});
 	},
 	'compx-selected_runners': {
-		depends_on: ['selector', 'draw', 'cvs_data'],
-		fn: function(selector, draw, cvs_data) {
-			if (!selector || !draw){
+		depends_on: ['selector', 'base_graph_data', 'cvs_data'],
+		fn: function(selector, base_graph_data, cvs_data) {
+			if (!selector || !base_graph_data){
 				return;
 			}
+
+			var matched = base_graph_data.steps_data[selector.pos_x][selector.pos_y];
+			/*
 			var matched = [];
 			cvs_data.runners_groups.forEach(function(el) {
-				var array = draw.runners_byd[el.key];
+				var array = base_graph_data.runners_byd[el.key];
 				//console.log(array);
 				var runner = array[selector.pos_x][selector.pos_y];
 				if (runner){
@@ -504,9 +513,9 @@ provoda.View.extendTo(TimeGraphCtr, {
 				}
 				
 				//age_areas[el.key].attr("d", areas_data[el.key]);
-			});
-			if (matched.length){
-				console.log(matched[0].full_name);
+			});*/
+			if (matched){
+				console.log(matched.full_name);
 			}
 			
 		}
