@@ -379,7 +379,8 @@ path {
 			.flrr_menu_item{
 				overflow: hidden;
 			}
-			.filter_item_name{
+
+			.no_filtering_item .filter_item_name{
 				font-weight: 700;
 			}
 			.flrr_menu_item  .filter_item_name{
