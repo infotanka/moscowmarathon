@@ -51,20 +51,34 @@ path {
 			margin-top: -33px;
 			z-index: 3;
 			}
-	.timeline .mark_top{
+	.timeline .tl_text_mark{
 		position: absolute;
+	}
+	.timeline .just_text_of_mark{
+		margin-left: -2px;
+	}
+	.timeline .mark_top{
 		top: -27px;
-		
 		}
-		.mark_top .just_text_of_mark{
-			margin-left: -2px;
 
+	.timeline .mark_bottom{
+		bottom: -27px;
 		}
-		.last_mark .just_text_of_mark{
-			position: absolute;
-			right:0;
-			margin-left: 0;
-			}
+
+	.timeline .last_mark .just_text_of_mark{
+		position: absolute;
+		right:0;
+		margin-left: 0;
+		}
+		.timeline .mark_bottom.last_mark .just_text_of_mark{
+			bottom:0;
+			
+		}
+
+	.big_timemarks{
+		margin-top: 15px;
+		position: relative;
+	}
 .big_block{
 	margin: 0 20px;
 	}

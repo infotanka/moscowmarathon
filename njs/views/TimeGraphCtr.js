@@ -91,14 +91,17 @@ provoda.View.extendTo(TimeGraphCtr, {
 			var dfrg = document.createDocumentFragment();
 
 			
-			
-
-			for (var i = 0; i < hours_steps.length; i++) {
-				var cur = hours_steps[i];
-//				var full_format = 
-				
-				var tstr = moment(cvs_data.start_time).startOf('day').add(cur.relative_to_start).format(cur.last ? 'HH:mm:ss' : 'HH:mm');
-				var span_top = $('<span class="mark_top"></span>').appendTo(dfrg);
+			var createText = function(cur, from_start) {
+				var tstr = moment(cvs_data.start_time)
+					.startOf('day')
+					.add(from_start ? cur.relative_to_start:  cur.relative_to_day)
+					.format(cur.last ? 'HH:mm:ss' : 'HH:mm');
+				var span_top = $('<span class="tl_text_mark"></span>').appendTo(dfrg);
+				if (from_start){
+					span_top.addClass('mark_bottom');
+				} else {
+					span_top.addClass('mark_top');
+				}
 
 				$('<span class="just_text_of_mark"></span>').text(tstr).appendTo(span_top);
 
@@ -107,6 +110,14 @@ provoda.View.extendTo(TimeGraphCtr, {
 				if (cur.last){
 					span_top.addClass('last_mark');
 				}
+			};
+
+			for (var i = 0; i < hours_steps.length; i++) {
+				var cur = hours_steps[i];
+//				var full_format = 
+				createText(cur);
+				createText(cur, true);
+				
 				
 			}
 
