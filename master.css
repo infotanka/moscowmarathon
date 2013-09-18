@@ -41,7 +41,7 @@ path {
 	position: relative;
 }
 	.timeline{
-		margin-top: 40px;
+		margin-top: 80px;
 		height: 205px;
 		border: 1px solid #ccc;
 		border-width: 1px 0;
@@ -49,8 +49,22 @@ path {
 		.scroll_marker{
 			position: absolute;
 			margin-top: -33px;
+			z-index: 3;
 			}
+	.timeline .mark_top{
+		position: absolute;
+		top: -27px;
+		
+		}
+		.mark_top .just_text_of_mark{
+			margin-left: -2px;
 
+		}
+		.last_mark .just_text_of_mark{
+			position: absolute;
+			right:0;
+			margin-left: 0;
+			}
 .big_block{
 	margin: 0 20px;
 	}
@@ -523,3 +537,13 @@ path {
 			position: absolute;
 
 			}
+.graph_has_text{
+	position: relative;
+	}
+	.graph_has_text .graph_text_block{
+		position: absolute;
+		left:0;
+		right:0;
+		top:0;
+		bottom:0;
+		}

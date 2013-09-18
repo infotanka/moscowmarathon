@@ -8,7 +8,8 @@ requirejs.config({
 		jquery: 'libs/jquery-2.0.2.min',
 		d3: 'libs/d3.v3.min',
 		leaflet: 'libs/leaflet',
-		lodash: 'libs/lodash.min'
+		lodash: 'libs/lodash.min',
+		moment: 'libs/moment+langs.min'
 	},
 	shim: {
 		"jquery-ui": {

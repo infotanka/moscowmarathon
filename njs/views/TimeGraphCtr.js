@@ -1,4 +1,4 @@
-define(['d3', 'provoda', 'spv', './modules/maphelper', 'jquery', './modules/colors'], function(d3, provoda, spv, mh, $, colors) {
+define(['d3', 'provoda', 'spv', './modules/maphelper', 'jquery', './modules/colors', 'moment'], function(d3, provoda, spv, mh, $, colors, moment) {
 "use strict";
 
 var TimeGraphCtr = function() {};
@@ -68,13 +68,49 @@ provoda.View.extendTo(TimeGraphCtr, {
 				cur += step;
 				//cur = Math.min(cur, cvs_data.run_gap);
 			}
-			//items.pop();
+			items.pop();
 			items.push({
 				relative_to_start: cvs_data.run_gap * 1000,
 				relative_to_day: cvs_data.start_time + cvs_data.run_gap * 1000,
-				value: cvs_data.run_gap
+				value: cvs_data.run_gap,
+				last: true
 			});
 			return items;
+
+		}
+	},
+	'compx-hours_marks':{
+		depends_on: ['hours_steps', 'cvs_data', 'width'],
+		fn: function(hours_steps,cvs_data, width) {
+			if (!hours_steps || !cvs_data || !width){
+				return;
+			}
+			var node  = this.parent_view.tpl.ancs['timeline_textc'];
+			node.empty();
+			var width_factor = width/cvs_data.run_gap;
+			var dfrg = document.createDocumentFragment();
+
+			
+			
+
+			for (var i = 0; i < hours_steps.length; i++) {
+				var cur = hours_steps[i];
+//				var full_format = 
+				
+				var tstr = moment(cvs_data.start_time).startOf('day').add(cur.relative_to_start).format(cur.last ? 'HH:mm:ss' : 'HH:mm');
+				var span_top = $('<span class="mark_top"></span>').appendTo(dfrg);
+
+				$('<span class="just_text_of_mark"></span>').text(tstr).appendTo(span_top);
+
+
+				span_top.css('left', width_factor * cur.value);
+				if (cur.last){
+					span_top.addClass('last_mark');
+				}
+				
+			}
+
+			$(dfrg).appendTo(node);
 
 		}
 	},
