@@ -562,15 +562,17 @@ path {
 		bottom:0;
 		}
 .timeline_select_desc{
+	
+	position: absolute; 
+	}
+.timeline_select_desc-text{
+	display: block;
 	border-radius: 3px;
 	padding: 4px 5px;
 	background: #ddd;
-	opacity: 0.85;
-	position: absolute; 
-	}
-.right_stack_fix .timeline_select_desc-text{
+	opacity: 0.2;
+	width: 150px;
 	position: absolute;
 	right:0;
 	bottom:0;
-
 }
