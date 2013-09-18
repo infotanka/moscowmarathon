@@ -66,6 +66,9 @@ provoda.View.extendTo(StartPageCtr, {
 		var list_bottom = this.state('list_bottom');
 		var header_height = this.state('header_height');
 		if (list_top && list_bottom){
+
+			var list_width = this.list.width();
+
 			var header_fixed = this.state('header_fixed');
 			var possible_top = (header_fixed ? list_top - header_height : list_top) - header_height;
 			var possible_bottom = (header_fixed ? list_bottom - header_height : list_bottom);
@@ -73,13 +76,17 @@ provoda.View.extendTo(StartPageCtr, {
 			var need_fix = scroll_top > possible_top && scroll_top < possible_bottom;
 			this.header.toggleClass('fixed_rheader', need_fix);
 			this.list.css('margin-top', need_fix ? (header_height + 'px') : '' );
-			
+			this.header.css({
+				left: this.list_offset.left,
+				width: list_width
+			});
 		}
 
 		//var possible_top = 
 	},
 	checkListPos: function() {
-		var top = this.list.offset().top;
+		this.list_offset = this.list.offset();
+		var top = this.list_offset.top;
 		this.promiseStateUpdate('list_top', top);
 		this.promiseStateUpdate('list_bottom', top + this.list.height());
 
