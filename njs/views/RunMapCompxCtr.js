@@ -141,14 +141,18 @@ provoda.View.extendTo(RunMapCompxCtr, {
 			p2 = {x: width, y:0},
 			p3 = {x: width/2, y: height};
 
-		var part_height = height/4;
+
+		var part_num = 6;
+
+		var part_height = height/part_num;
 		var lines = [];
 
-		for (var i = 1; i < 4; i++) {
+		for (var i = 1; i < part_num; i++) {
 			lines.push({
 				y: Math.round(i * part_height) + 0.5
 			});
 		}
+
 
 
 		var data = mh.formatPathPoints([p1, p2, p3]) + ' Z';
@@ -166,7 +170,6 @@ provoda.View.extendTo(RunMapCompxCtr, {
 
 
 		for (var i = 0; i < lines.length; i++) {
-			break;
 			var cur = lines[i];
 			cur.x = mh.getDistance(0, width,  height, width/2, cur.y);
 			this.legendcount.append('line')
@@ -181,25 +184,56 @@ provoda.View.extendTo(RunMapCompxCtr, {
 					'stroke-width': 0.5
 				});
 		}
+		lines.unshift({
+			x: width,
+			y: 0
+		});
+		lines.push({
+			x: width/2,
+			y: height
+		});
+		this.promiseStateUpdate('count_lines', lines);
 		this.countlines = lines;
 
 	},
 	'compx-legend_count':{
-		depends_on: ['runners_rate'],
-		fn: function(runners_rate) {
-			if (!runners_rate){
+		depends_on: ['runners_rate', 'count_lines'],
+		fn: function(runners_rate, count_lines) {
+			if (!runners_rate || !count_lines){
 				return;
 			}
 			var container = this.tpl.ancs['legendcount'];
 
 			var width = container.width();
-		//	var height= container.height();
-			//var svg = this.legendcount;
-			//svg.selectAll('*').remove();
-			
 
-			var maxcount = (width * runners_rate.runners)/runners_rate.height;
-			this.tpl.ancs['legendcounttext'].text(Math.round(maxcount));
+			//var count = mh.getStepValueByHeight(width, runners_rate.step);
+
+			this.tpl.ancs['legendcounttext'].empty();
+
+			var dfrg = document.createDocumentFragment();
+
+			for (var i = 0; i < count_lines.length; i++) {
+				if ((i + 1) % 2 != 1){
+					continue;
+				}
+				var cur = count_lines[i];
+				var count = Math.round(mh.getStepValueByHeight((  cur.x - width/2  ) * 2, runners_rate.step));
+				var span = $('<span class="textblock"></span>');
+				span.css({
+					left: Math.round(cur.x),
+					top: Math.round(cur.y)
+
+				});
+				span.text(count);
+
+				$(dfrg).append(span);
+
+
+			}
+
+			this.tpl.ancs['legendcounttext'].append(dfrg);
+			
+			//this.tpl.ancs['legendcounttext'].text(Math.round(count));
 			//console.log(maxcount)
 
 		}

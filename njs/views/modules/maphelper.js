@@ -177,9 +177,17 @@ var setRunnersPoints = function(cur) {
 
 };
 */
+var hclc = {
+	height_scale: 2,
+	man_place_square: Math.pow(3, 2)
+};
 
 var getHeightByRunners = function(runners_count, step){
-	return (2 * Math.pow(3, 2) * runners_count)/step;
+	return (hclc.height_scale * hclc.man_place_square * runners_count)/step;
+};
+var getStepValueByHeight = function(height, step) {
+	return (height * step)/(hclc.height_scale * hclc.man_place_square);
+	//var maxcount = (width * runners_rate.runners)/runners_rate.height;
 };
 
 var getAreaByData = function(runners_array, base_districts, prev_districts, seconds, step, start_time) {
@@ -273,6 +281,7 @@ var getStepHeight = function(knodes, distance, seconds, runners_array, start_tim
 	var runners = getRunners(distances, step_start, step_end);
 	var value = getHeightByRunners(runners, step);
 	return {
+		step: step,
 		height: value,
 		runners: runners
 	};
@@ -591,6 +600,7 @@ return {
 	getPointAtDistance: getPointAtDistance,
 	SVGNS: SVGNS,
 	format: format,
+	getStepValueByHeight: getStepValueByHeight,
 	getStepHeight: getStepHeight,
 	formatPathPoints: function(array){
 		var result = 'M' + format(array[0]);
@@ -601,7 +611,8 @@ return {
 
 		return result;
 
-	}
+	},
+	getDistance: getDistance
 };
 
 

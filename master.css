@@ -180,24 +180,22 @@ path {
 		font-weight: 700;
 		margin-right: 25px;
 		}
-		.legendcount_c{
-		
+		.legend .graph_text_block{
+			font-weight: 400;
+		}
+		.legendcount_c .textblock{
+			font-size: 12px;
+			margin-top:-7px;
+			margin-left: 5px;
 			}
 			.legendcount_c .svgcon{
 				height: 100px;
 				position: relative;
 			}
-			.legendcount-text-c{
-				position: absolute;
-				right:0;
-				top:0;
-			}
-			.legendcount-text{
-				padding-left: 3px;
-				position: absolute;
-				top:-0.2em;
-				left:0;
-			}
+
+		.legendcount_c {
+
+		}
 		.legendage_c .svgcon{
 			height: 100px;
 		}
