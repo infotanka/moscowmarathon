@@ -152,7 +152,7 @@ var ncvs = [];
 		el.start_time = start_time + (Math.ceil((i+1)/groups_count) - 1) * start_diff;
 		el.end_time = start_time + el[8] * 1000;
 		
-		el.result_steps = getResultSteps(el, 42100);
+		el.result_steps = getResultSteps(el, 42800);
 		var gender = Math.random() > 0.66 ? 0 : 1;
 		el.gender = gender;
 

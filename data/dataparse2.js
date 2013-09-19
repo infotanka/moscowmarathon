@@ -179,7 +179,7 @@ var ncvs = [];
 		el.gender = gender;
 		el.birthyear = 1982;
 		
-		el.result_steps = getResultSteps(el, 42100);
+		el.result_steps = getResultSteps(el, 42800);
 
 		//el.gender = gender;
 		//birthyear_range
