@@ -170,7 +170,11 @@
 									style.top: {{end_point.1}}
 									style.left: {{end_point.0}}
 									style.height:  {{(mapheight - 5 - 19) - end_point.1}}
-								"></div>
+								">
+								
+
+
+							</div>
 
 
 							<!-- подпись для высоты 1 -->
@@ -208,7 +212,24 @@
 								<img src="i/alt_mth.svg" alt="">
 							</div>
 							
+
+
+
+
 							
+							
+						</div>
+
+						<div 
+							class="marker_c hidden "
+							pv-class="marker_c  {{!point_left_edge && 'hidden'}}"
+							pv-props="
+								style.top: {{point_left_edge.1}}
+								style.width:  {{point_left_edge.0}}
+							">
+							<div class="marker_text altt_desc"  style="left:35px;top:-7px">
+								+26px
+							</div>
 						</div>
 
 						<div>
@@ -220,6 +241,7 @@
 									style.top: {{point_left_edge.1}}
 									style.width:  {{point_left_edge.0 - 15}}
 								">
+
 							</div>
 
 

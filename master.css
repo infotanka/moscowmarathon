@@ -34,6 +34,7 @@ path {
 	position: absolute;
 	left:0;
 	right:0;
+	margin-left: 20px;
 }
 .controlls{
 	height: 295px;
@@ -621,6 +622,6 @@ path {
 	margin-top: 15px;
 	}
 .altt_desc{
-	font-size: 12px;
+	font-size: 10px;
 	color:#999;
 }
