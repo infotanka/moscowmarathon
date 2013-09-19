@@ -477,16 +477,21 @@ var getPoints = function(cvs_data, knodes, seconds, animate, start_time, total_d
 
 	//
 	(function(){
-		return;
+		var limit = 5;
+
+
 		var i,cur;
 		var place = knodes.debug_group;
 		place.selectAll('*').remove();
 
 		var dfrag = document.createDocumentFragment();
 
-
+		var base_items = getAreaByData(cvs_data.items, complects, complects, seconds, step, start_time);
 
 		for (i = 0; i < complects.length; i++) {
+			if (base_items[i].runners > limit){
+				continue;
+			}
 			cur = complects[i];
 			var gnode = document.createElementNS(SVGNS, 'g');
 			dfrag.appendChild(gnode);
@@ -496,7 +501,7 @@ var getPoints = function(cvs_data, knodes, seconds, animate, start_time, total_d
 					'translate( ' + cur.p1.x + ',' + cur.p1.y + ' ) ' +
 					'rotate( ' + cur.angle/(Math.PI/180) +' )'
 			});
-			getSQPoints(gg, cur.dist, cur.runners);
+			getSQPoints(gg, cur.dist, base_items[i].runners);
 			/*gg.append('rect').attr({
 				x: 0,
 				y: 0,
