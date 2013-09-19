@@ -188,12 +188,22 @@
 								class="marker_c"
 								pv-props="
 									style.top: {{mapheight - 70}}
-									style.right:   {{track_left_padding + 70}}
+									style.right:   {{(track_left_padding || 0) + 70}}
 								">
 								<div class="marker_text altt_desc"  style="bottom: auto;top: 5px;">
 									+46м
 								</div>
 							</div>
+							<div 
+								class="marker_c"
+								pv-props="
+									style.top: {{mapheight - 46}}
+									style.right:   {{(track_left_padding || '0')}}
+								">
+								<img src="i/alt_mth.svg" alt="">
+							</div>
+							
+							
 						</div>
 
 						<div>
