@@ -150,7 +150,7 @@ path {
 		position: absolute;
 		z-index: -1;
 		right:0;
-		top:10px;
+		top:-12px;
 		text-align: center;
 		width: 160px;
 		padding-top: 10px;
