@@ -5,6 +5,11 @@
 	<link rel="stylesheet" type="text/css" href="master.css">
 	<link rel="stylesheet" type="text/css" href="css/leaflet.css">
 	<script data-main="njs/loader.js" src="njs/require-2.1.6.min.js"></script>
+	<script type="text/javascript" src="//vk.com/js/api/openapi.js?101"></script>
+
+	<script type="text/javascript">
+  		VK.init({apiId: 3887279, onlyWidgets: true});
+	</script>
 
 </head>
 <body>
@@ -441,7 +446,7 @@
 				<div class="bmap_etc">			
 					<div class="legend">
 						<div class="legendcount_c">
-							<div>Бегунов на&nbsp;200 м</div>
+							<div>Бегунов на&nbsp;300 м</div>
 							<div pv-anchor="legendcount" class="svgcon graph_has_text">
 								<div class="legendcount-text graph_text_block" pv-anchor="legendcounttext">
 										
@@ -458,10 +463,15 @@
 					</div>
 					
 					<div class="share">
-						<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://datalaboratory.ru/" data-lang="ru">Твитнуть</a>
+						<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://moscowmarathon.datalaboratory.ru/" data-lang="ru">Твитнуть</a>
 						<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
-						<div class="fb-like" data-href="http://moscowmarathon.datalaboratory.ru/" data-width="100" data-show-faces="false" data-send="false"></div>
+						<div class="fb-like" data-href="http://moscowmarathon.datalaboratory.ru/" data-width="100" data-show-faces="false" data-send="false" style="margin-top:5px;"></div>
 						<div>
+
+						<div id="vk_like"></div>
+						<script type="text/javascript">
+						VK.Widgets.Like("vk_like", {type: "mini"});
+						</script>
 							<div class="copyright_desc">Данные <a href="http://moscowmarathon.org/">с сайта марафона</a></div>
 							<div class="copyright_desc">Визуализация <a href="http://datalaboratory.ru/">Лаборатории данных</a></div>
 						</div>
