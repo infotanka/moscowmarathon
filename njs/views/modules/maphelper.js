@@ -534,7 +534,7 @@ var getPoints = function(cvs_data, knodes, seconds, animate, start_time, total_d
 		
 	})();
 
-	
+	return data;
 	//console.log(complects);
 
 };
