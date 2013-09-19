@@ -310,7 +310,7 @@ var getBasePoints = function(base, boundrect, total_distance){
 
 		//var step = getStep(boundrect.height);
 
-		var step = 200 * px_in_m;
+		var step = 300 * px_in_m;
 		var steps = getSteps(step, px_distance, d3path_node);
 		
 

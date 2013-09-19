@@ -298,7 +298,7 @@ provoda.View.extendTo(RunMapCtr, {
 			if (!basepathch || !cvs_data){
 				return;
 			}
-			return mh.getStepHeight(this.knodes, 735, 300, cvs_data.items, cvs_data.start_time, this.total_distance);
+			return mh.getStepHeight(this.knodes, 735, 300, cvs_data.items, cvs_data.start_time, this.total_distance, 300);
 		}
 	},
 	'compx-draw': {
@@ -487,7 +487,7 @@ provoda.View.extendTo(RunMapCtr, {
 
 
 			var points_bottom = [];
-			var bottom_range = [19900, 41700];
+			var bottom_range = [19900, 42700];
 			var bottom_array = getPathPartByRange(coordinates, bottom_range);
 			bottom_array.forEach(function(el){
 				var point = getAltVPoints(el);
