@@ -96,7 +96,7 @@ var getRangeByTime = function(el, time) {
 };
 
 
-var getDistances = function(cvs, miliseconds) {
+var getDistances = function(cvs, miliseconds, full) {
 	var result = [];
 	for (var i = 0; i < cvs.length; i++) {
 		var cur = cvs[i];
@@ -107,23 +107,48 @@ var getDistances = function(cvs, miliseconds) {
 			range.end.time,  range.end.distance,
 			miliseconds);
 		if (typeof time == 'number' && !isNaN(time)){
-			result.push(time);
+			result.push(full ? {
+				time: time,
+				item: cur
+			} : time);
 		}
 
 	}
 	return result;
 };
+var getFullRunners = function(array, d_ge, d_l) {
+	var result = [];
 
-var getRunners = function(array, d_ge, d_l) {
-	var count = 0;
 	for (var i = 0; i < array.length; i++) {
 		var cur = array[i];
-		if (cur >= d_ge && cur < d_l){
-			count++;
+		if (cur.time >= d_ge && cur.time < d_l){
+			
+			result.push(cur.item);
+			
+			
 		}
 		
 	}
-	return count;
+	return result;
+};
+
+var getRunners = function(array, d_ge, d_l, full) {
+	if (full){
+		return getFullRunners(array, d_ge, d_l);
+	}
+	var result = 0;
+
+	for (var i = 0; i < array.length; i++) {
+		var cur = array[i];
+		if (cur >= d_ge && cur < d_l){
+			
+			result++;
+			
+			
+		}
+		
+	}
+	return result;
 };
 
 
@@ -190,10 +215,23 @@ var getStepValueByHeight = function(height, step) {
 	//var maxcount = (width * runners_rate.runners)/runners_rate.height;
 };
 
+
+var getStepsRunners = function(runners_array, base_districts, seconds, start_time, full) {
+	var distances = getDistances(runners_array, start_time +  seconds * 1000, full);
+	var result = [];
+	for (var i = 0; i < base_districts.length; i++) {
+		var cur = base_districts[i];
+		var runners = getRunners(distances, cur.start, cur.end, full);
+		result.push(runners);
+	}
+	return result;
+};
+
 var getAreaByData = function(runners_array, base_districts, prev_districts, seconds, step, start_time) {
 	var area = [];
 	var cur, prev_di;
-	var distances = getDistances(runners_array, start_time +  seconds * 1000);
+	var steps_runners = getStepsRunners(runners_array, base_districts, seconds, start_time);
+	
 	var i;
 	//var max_runners = 0;
 	
@@ -201,7 +239,7 @@ var getAreaByData = function(runners_array, base_districts, prev_districts, seco
 		cur = base_districts[i];
 		prev_di = prev_districts[i];
 		var obj = {};
-		var runners = getRunners(distances, cur.start, cur.end);
+		var runners = steps_runners[i];
 		//max_runners = Math.max(max_runners, runners);
 		//var value = Math.random()*20 + 5;
 		//var value = runners_pxheight_factor * runners;
@@ -353,7 +391,96 @@ var getBasePoints = function(base, boundrect, total_distance){
 	}
 };
 
+var drawRunnersPoints = function(colors, grads, data, cvs_data, knodes, seconds, start_time) {
+	var p_w = 3;
+	//var p_h = 3;
+	var getSQPoint = function(width, num) {
+		var row_capacity = Math.floor(width/p_w);
+		if (!row_capacity){
+			return;
+		}
+		var remainder = num % row_capacity;
+		var row = Math.ceil(num/row_capacity);
+		//var x,y;
 
+		return {
+			x: 2 + (4 * (remainder - 1)),
+			y: 2 + (4 * (row - 1))
+		};
+	//var
+
+	};
+	var getSQPoints = function(node, width, runners) {
+		
+		for (var i = 0; i < runners.length; i++) {
+
+			var cur = runners[i];
+			var el = cur.big_genderage_group_full;
+			if (!el){
+				continue;
+			}
+			var grad = grads[el.gender];
+			var color = colors.getGradColor(el.num, 1, el.groups_count, grad);
+
+			var data = getSQPoint(width, i + 1);
+			if (!data){
+				continue;
+			}
+			node.append('circle')
+				.attr("cy", data.y)
+				.attr("cx", data.x)
+				.attr("r", 1)
+				.style({
+					stroke: 'none',
+					"fill": color
+				});
+		}
+
+	};
+
+	//
+	(function(){
+		var limit = 5;
+
+
+		var i,cur;
+		var place = knodes.debug_group;
+		place.selectAll('*').remove();
+
+		var dfrag = document.createDocumentFragment();
+		var steps_runners = getStepsRunners(cvs_data.items, data.complects, seconds, start_time, true);
+
+	//	var base_items = getAreaByData(, , complects, seconds, data.step, start_time);
+
+		for (i = 0; i < data.complects.length; i++) {
+			if (steps_runners[i].length > limit){
+				continue;
+			}
+			cur = data.complects[i];
+			var gnode = document.createElementNS(SVGNS, 'g');
+			dfrag.appendChild(gnode);
+			var gg = d3.select(gnode);
+			gg.attr({
+				'transform':
+					'translate( ' + cur.p1.x + ',' + cur.p1.y + ' ) ' +
+					'rotate( ' + cur.angle/(Math.PI/180) +' )'
+			});
+			getSQPoints(gg, cur.dist, steps_runners[i]);
+			/*gg.append('rect').attr({
+				x: 0,
+				y: 0,
+				width: width,
+				height: 60,
+				fill: 'none',
+				stroke: '#ccc',
+				'stroke-width': 1
+			});*/
+		}
+		place.node().appendChild(dfrag);
+		
+	})();
+
+};
 
 
 var getPoints = function(cvs_data, knodes, seconds, animate, start_time, total_distance) {
@@ -403,7 +530,7 @@ var getPoints = function(cvs_data, knodes, seconds, animate, start_time, total_d
 		}
 	});
 
-	(function(){
+	/*(function(){
 		return;
 		var connections = [];
 		var angles = [];
@@ -452,88 +579,8 @@ var getPoints = function(cvs_data, knodes, seconds, animate, start_time, total_d
 		}
 
 		//console.log(connections);
-	})();
+	})();*/
 	
-	
-	
-	var p_w = 3;
-	//var p_h = 3;
-	var getSQPoint = function(width, num) {
-		var row_capacity = Math.floor(width/p_w);
-		if (!row_capacity){
-			return;
-		}
-		var remainder = num % row_capacity;
-		var row = Math.ceil(num/row_capacity);
-		//var x,y;
-
-		return {
-			x: 2 + (4 * (remainder - 1)),
-			y: 2 + (4 * (row - 1))
-		};
-	//var
-
-	};
-	var getSQPoints = function(node, width, value) {
-		
-		for (var i = 0; i < value; i++) {
-			var data = getSQPoint(width, i + 1);
-			if (!data){
-				continue;
-			}
-			node.append('circle')
-				.attr("cy", data.y)
-				.attr("cx", data.x)
-				.attr("r", 1)
-				.style({
-					stroke: 'none',
-					"fill": 'blue'
-				});
-		}
-
-	};
-
-	//
-	(function(){
-		var limit = 5;
-
-
-		var i,cur;
-		var place = knodes.debug_group;
-		place.selectAll('*').remove();
-
-		var dfrag = document.createDocumentFragment();
-
-		var base_items = getAreaByData(cvs_data.items, complects, complects, seconds, data.step, start_time);
-
-		for (i = 0; i < complects.length; i++) {
-			if (base_items[i].runners > limit){
-				continue;
-			}
-			cur = complects[i];
-			var gnode = document.createElementNS(SVGNS, 'g');
-			dfrag.appendChild(gnode);
-			var gg = d3.select(gnode);
-			gg.attr({
-				'transform':
-					'translate( ' + cur.p1.x + ',' + cur.p1.y + ' ) ' +
-					'rotate( ' + cur.angle/(Math.PI/180) +' )'
-			});
-			getSQPoints(gg, cur.dist, base_items[i].runners);
-			/*gg.append('rect').attr({
-				x: 0,
-				y: 0,
-				width: width,
-				height: 60,
-				fill: 'none',
-				stroke: '#ccc',
-				'stroke-width': 1
-			});*/
-		}
-		place.node().appendChild(dfrag);
-		
-	})();
-
 	return data;
 	//console.log(complects);
 
@@ -635,7 +682,8 @@ return {
 		return result;
 
 	},
-	getDistance: getDistance
+	getDistance: getDistance,
+	drawRunnersPoints: drawRunnersPoints
 };
 
 

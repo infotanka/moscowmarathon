@@ -186,9 +186,29 @@ var checkData = function() {
 				runners_groups: runners_groups
 			};
 		};
+		var setRunnersGroupMark = function(runners_groups, marker_prop) {
+			if (!marker_prop){
+				throw new Error();
+			}
+			runners_groups.forEach(function(el) {
+				for (var i = 0; i < el.runners.length; i++) {
+					el.runners[i][marker_prop] = el.key;
+					el.runners[i][marker_prop + '_full'] = el;
+				}
+			});
+		};
 
 		var ga_groups = getGenderAgesGroups(age_ranges_to_use);
 		var big_ga_groups = getGenderAgesGroups(big_ages_group);
+		setRunnersGroupMark(big_ga_groups.runners_groups, 'big_genderage_group');
+		/*var bad = [];
+		for (var i = 0; i < cvs_data.items.length; i++) {
+			if (!cvs_data.items[i].big_genderage_group){
+				bad.push(cvs_data.items[i]);
+			}
+			
+		}
+		console.log(bad);*/
 
 		cvs_data.getAgeGroups = getAgeGroups;
 		cvs_data.genders_groups = ga_groups.genders_groups;
