@@ -26,7 +26,6 @@
   </metadata>
   <defs
      id="defs3257" />
- 
   <g
      id="g3057">
     <path
@@ -34,7 +33,7 @@
        id="path4035"
        style="fill:#3b3b3b;fill-opacity:1;stroke:#000000;stroke-width:0.05143113px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
     <use
-       transform="matrix(0.99991281,-0.0132053,0.0132053,0.99991281,152.83907,-56.362735)"
+       transform="matrix(-0.99991281,0.0132053,-0.0132053,-0.99991281,260.14595,144.25328)"
        id="use4037"
        x="0"
        y="0"
@@ -42,7 +41,7 @@
        height="46"
        xlink:href="#path4035" />
     <use
-       transform="matrix(0.99998747,0.00500637,-0.00500637,0.99998747,360.32924,-59.376907)"
+       transform="matrix(-0.99998747,-0.00500637,0.00500637,-0.99998747,463.99117,142.98505)"
        id="use4039"
        x="0"
        y="0"
@@ -50,19 +49,19 @@
        height="46"
        xlink:href="#path4035" />
     <path
-       d="m 409.73249,27.488482 -9.78326,-2.428967 9.48579,-3.41029 -1.95721,3.026766 z"
+       d="m 399.94923,21.649225 9.78326,2.428967 -9.48579,3.41029 1.95721,-3.026766 z"
        id="path4041"
        style="fill:#3b3b3b;fill-opacity:1;stroke:#000000;stroke-width:0.05143113px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
     <path
-       d="m 364.8885,5.027603 8.59058,5.273884 -10.07295,0.381908 2.78092,-2.2931361 z"
+       d="m 371.99671,10.683395 -8.59058,-5.273884 10.07295,-0.381908 -2.78092,2.2931361 z"
        id="path4043"
        style="fill:#3b3b3b;fill-opacity:1;stroke:#000000;stroke-width:0.05143113px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
     <path
-       d="m 527.12305,-0.83003048 9.64701,2.92355898 -9.64701,2.92327 2.10867,-2.92327 z"
+       d="m 536.77006,5.0167985 -9.64701,-2.923559 9.64701,-2.92326998 -2.10867,2.92326998 z"
        id="path4045"
        style="fill:#3b3b3b;fill-opacity:1;stroke:#000000;stroke-width:0.05143113px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
     <path
-       d="m 519.54126,33.700533 -9.79492,-2.381523 9.46915,-3.456224 -1.94252,3.036217 z"
+       d="m 509.74634,27.862786 9.79492,2.381523 -9.46915,3.456224 1.94252,-3.036217 z"
        id="path4047"
        style="fill:#3b3b3b;fill-opacity:1;stroke:#000000;stroke-width:0.05143113px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
   </g>
