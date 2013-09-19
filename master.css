@@ -607,7 +607,7 @@ path {
 	bottom:5px;
 }
 .selector_box{
-	border: 1px solid red;
+	border: 1px solid white;
 	margin-left:-1;
 	margin-bottom: -1px;
 	position: absolute;
