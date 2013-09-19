@@ -140,7 +140,7 @@ var formatCurve = function(prev_pcurv2, pcurv1, endp){
 
 var getAreaPathData = function(area, base_districts, prev_districts) {
 	var bstr = "M";
-	var target = [];
+//	var target = [];
 	var part1 = [], part2 = [];
 	var cur;
 	var i, prevp;
@@ -262,7 +262,7 @@ var getStep = function(height){
 	return height/25;
 };
 //var step_height_cache = {};
-var getStepHeight = function(knodes, distance, seconds, runners_array, start_time, total_distance){
+var getStepHeight = function(knodes, distance, seconds, runners_array, start_time, total_distance, step_distance){
 	/*var cache_key = base.projection_key;
 	if (step_height_cache[cache_key]){
 		return step_height_cache[cache_key];
@@ -272,7 +272,14 @@ var getStepHeight = function(knodes, distance, seconds, runners_array, start_tim
 		px_distance = d3path_node.getTotalLength(),
 		px_in_m = px_distance/total_distance;
 
-	var step = getStep(d3path_node.getBoundingClientRect().height);
+	var step;
+	if (step_distance){
+		step = step_distance * px_in_m;
+	} else {
+		step = getStep(d3path_node.getBoundingClientRect().height);
+	}
+
+	 
 	var step_start = distance;
 	var step_end = distance + step/px_in_m;
 
@@ -283,24 +290,31 @@ var getStepHeight = function(knodes, distance, seconds, runners_array, start_tim
 	return {
 		step: step,
 		height: value,
-		runners: runners
+		runners: runners,
+		step_m: step_distance || step/px_in_m
 	};
 };
 var base_points_cache = {};
-var getBasePoints = function(base, step, total_distance){
+var getBasePoints = function(base, boundrect, total_distance){
 	var points_key = base.projection_key;
 	if (base_points_cache[points_key]){
 		return base_points_cache[points_key];
 	} else {
+		
+
 		var d3path_node = base.node(),
 			px_distance = d3path_node.getTotalLength(),
 			i;
+		var complects = [],
+			px_in_m = px_distance/total_distance;
 
+		//var step = getStep(boundrect.height);
+
+		var step = 100 * px_in_m;
 		var steps = getSteps(step, px_distance, d3path_node);
 		
 
-		var complects = [],
-			px_in_m = px_distance/total_distance;
+		
 
 		
 		for (i = 1; i < steps.length; i++) {
@@ -332,7 +346,8 @@ var getBasePoints = function(base, step, total_distance){
 
 		base_points_cache[points_key] = {
 			complects: complects,
-			points: steps
+			points: steps,
+			step: step
 		};
 		return base_points_cache[points_key];
 	}
@@ -352,8 +367,11 @@ var getPoints = function(cvs_data, knodes, seconds, animate, start_time, total_d
 	} else {
 		//max_graph_height = boundrect.width/10;
 	}
-	var step = getStep(boundrect.height);
-	var complects = getBasePoints(knodes.base, step, total_distance).complects;
+	var data = getBasePoints(knodes.base, boundrect, total_distance);
+
+	
+	
+	var complects = data.complects;
 	
 
 
@@ -369,7 +387,7 @@ var getPoints = function(cvs_data, knodes, seconds, animate, start_time, total_d
 	var prev;
 	cvs_data.runners_groups.forEach(function(el, i) {
 		var prev_districts = (i === 0) ? complects : prev;
-		areas_data[el.key] = getAreaByData(el.runners, complects, prev_districts, seconds, step, start_time);
+		areas_data[el.key] = getAreaByData(el.runners, complects, prev_districts, seconds, data.step, start_time);
 		prev = areas_data[el.key];
 	});
 	cvs_data.runners_groups.forEach(function(el) {
@@ -486,7 +504,7 @@ var getPoints = function(cvs_data, knodes, seconds, animate, start_time, total_d
 
 		var dfrag = document.createDocumentFragment();
 
-		var base_items = getAreaByData(cvs_data.items, complects, complects, seconds, step, start_time);
+		var base_items = getAreaByData(cvs_data.items, complects, complects, seconds, data.step, start_time);
 
 		for (i = 0; i < complects.length; i++) {
 			if (base_items[i].runners > limit){
