@@ -126,7 +126,18 @@ shuffleArray = spv.shuffleArray = function(obj) {
 	return shuffled;
 };
 
+getFields = function(obj, fields){
+	var r = [];
+	for (var i=0; i < fields.length; i++) {
+		var cur = fields[i];
 
+		var value = (typeof cur == 'function') ? cur(obj) : spv.getTargetField(obj, cur);
+		if (value){
+			r.push(value);
+		}
+	}
+	return r;
+};
 getDiffObj = spv.getDiffObj = function(one, two) {
 	var
 		i,
@@ -184,19 +195,6 @@ matchWords = spv.matchWords = function(source, query){
 	return r;
 };
 
-getFields = function(obj, fields){
-	var r = [];
-	for (var i=0; i < fields.length; i++) {
-		var cur = fields[i];
-
-		var value = (typeof cur == 'function') ? cur(obj) : spv.getTargetField(obj, cur);
-		if (value){
-			r.push(value);
-		}
-	}
-	return r;
-};
-
 searchInArray = spv.searchInArray = function (array, query, fields) {
 	query = getStringPattern(query);
 	var r,i,cur;
@@ -224,11 +222,18 @@ searchInArray = spv.searchInArray = function (array, query, fields) {
 	}
 	return r;
 };
+var regexp_escaper = /([$\^*()+\[\]{}|.\/?\\])/g;
+spv.escapeRegExp = function(str, clean) {
+	if (clean){
+		str = str.replace(/\s+/g, ' ').replace(/(^\s)|(\s$)/g, ''); //removing spaces
+	}
+	return str.replace(regexp_escaper, '\\$1'); //escaping regexp symbols
+};
 
 getStringPattern = function (str) {
 	if (str.replace(/\s/g, '')){
-		str = str.replace(/\s+/g, ' ').replace(/(^\s)|(\s$)/g, ''); //removing spaces
-		str = str.replace(/([$\^*()+\[\]{}|.\/?\\])/g, '\\$1').split(/\s/g);  //escaping regexp symbols
+		
+		str = spv.escapeRegExp(str, true).split(/\s/g);
 		for (var i=0; i < str.length; i++) {
 			str[i] = '((^\|\\s)' + str[i] + ')';
 		}
@@ -238,6 +243,7 @@ getStringPattern = function (str) {
 	}
 };
 spv.getStringPattern = getStringPattern;
+
 ttime = function(f){
 	var d = +new Date();
 
@@ -281,8 +287,20 @@ toRealArray = spv.toRealArray = function(array, check_field){
 	}
 };
 
+
+var fields_cache = {};
+var getFieldsTree = function(string) {
+	if (Array.isArray(string)){
+		return string;
+	} else {
+		if (!fields_cache[string]){
+			fields_cache[string] = string.split('.');
+		}
+		return fields_cache[string];
+	}
+};
 getTargetField = function(obj, tree){
-	tree= Array.isArray(tree) ? tree : tree.split('.');
+	tree = getFieldsTree(tree);
 	var nothing;
 	var target = obj;
 	for (var i=0; i < tree.length; i++) {
@@ -296,7 +314,7 @@ getTargetField = function(obj, tree){
 };
 
 spv.setTargetField = function(obj, tree, value) {
-	tree = Array.isArray(tree) ? tree : tree.split('.');
+	tree = getFieldsTree(tree);
 	var cur_obj = obj;
 	for (var i=0; i < tree.length; i++) {
 		var cur = tree[i];
