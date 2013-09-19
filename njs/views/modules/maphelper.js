@@ -588,9 +588,9 @@ var getPoints = function(cvs_data, knodes, seconds, animate, start_time, total_d
 
 
 
-var getPointAtDistance = function(array, distance){
+var getPointAtDistance = function(array, distance, altitude){
 	var distances = [];
-	var sub_distance = distance/earth_radius;
+	//var sub_distance = distance/earth_radius;
 	var target;
 	for (var i = 0; i < array.length; i++) {
 		var el = array[i];
@@ -624,6 +624,9 @@ var getPointAtDistance = function(array, distance){
 		var bearing = startp.bearingTo(endp);
 		var target_point = startp.destinationPoint(bearing, (distance - target.start.distance * earth_radius )/1000);
 		target.target = [target_point._lat, target_point._lon];
+		if (altitude){
+			target.target[2] = ((p1[2] + p2[2])/2);
+		}
 		return target;
 	}
 };

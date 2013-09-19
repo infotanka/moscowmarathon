@@ -376,9 +376,10 @@ provoda.View.extendTo(RunMapCompxCtr, {
 	//point_bottom_edge
 	//point_bottom_middle
 	getPointPxByDistance: function(geodata, distance) {
-		var pp = mh.getPointAtDistance(geodata.geometry.coordinates, distance);
+		var pp = mh.getPointAtDistance(geodata.geometry.coordinates, distance, true);
 
 		var point = this.root_view.projection(pp.target);
+		point[2] = pp.target[2];
 		return point.map(Math.round);
 	},
 	'compx-point_bottom_middle':{
@@ -419,6 +420,27 @@ provoda.View.extendTo(RunMapCompxCtr, {
 			if (d3map_dets && geodata){
 				var total_distance = d3.geo.length(geodata) * mh.earth_radius;
 				return this.getPointPxByDistance(geodata, total_distance);
+			}
+		}
+	},
+	'compx-altitude_p1':{
+		depends_on: ['d3map_dets', 'geodata', 'end_point'],
+		fn: function(d3map_dets, geodata, end_point) {
+			if (!d3map_dets || !geodata || !end_point){
+				return;
+			}
+
+			var pp = this.getPointPxByDistance(geodata, 27132);
+			pp.rel = pp[2] - end_point[2];
+			return pp;
+			
+		}
+	},
+	'compx-altitude_p2':{
+		depends_on: ['d3map_dets', 'geodata', 'end_point'],
+		fn: function(d3map_dets, geodata, end_point) {
+			if (!d3map_dets || !geodata || !end_point){
+				return;
 			}
 		}
 	},

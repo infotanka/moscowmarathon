@@ -153,7 +153,8 @@
 								<span class="marker"></span>
 								<div class="marker_text"  style="bottom: auto;top: 5px;">
 									<span style="font-weight:700">Финиш</span>
-									121 м над уровнем моря
+									121
+									м над уровнем моря
 								</div>
 							</div>
 							<div 
@@ -165,6 +166,34 @@
 									style.left: {{end_point.0}}
 									style.height:  {{(mapheight - 5 - 19) - end_point.1}}
 								"></div>
+
+
+							<!-- подпись для высоты 1 -->
+							<div 
+								class="marker_c"
+								pv-class="marker_c"
+								pv-props="
+									style.top: {{mapheight - 70}}
+									style.right:   {{track_left_padding + 265}}
+									
+								">
+								<div class="marker_text altt_desc"  style="bottom: auto;top: 5px;">
+									+41м
+								</div>
+							</div>
+
+
+							<!-- подпись для высоты 2 -->
+							<div 
+								class="marker_c"
+								pv-props="
+									style.top: {{mapheight - 70}}
+									style.right:   {{track_left_padding + 70}}
+								">
+								<div class="marker_text altt_desc"  style="bottom: auto;top: 5px;">
+									+46м
+								</div>
+							</div>
 						</div>
 
 						<div>
