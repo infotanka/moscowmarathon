@@ -179,7 +179,7 @@ path {
 		float: right;
 		font-size: 13px;
 		font-weight: 700;
-		margin-right: 25px;
+		margin-right: 40px;
 		}
 		.legend .graph_text_block{
 			font-weight: 400;
@@ -206,7 +206,7 @@ path {
 		}
 	.share{
 		padding-top:20px;
-		width: 100px;
+		width: 115px;
 		float: right;
 		font-size: 13px;
 		clear: both;
@@ -620,6 +620,10 @@ path {
 }
 .copyright_desc{
 	margin-top: 15px;
+	font-size: 12px;
+	}
+.copyright_desc_2{
+	margin-top: 10px;
 	font-size: 12px;
 	}
 .altt_desc{
