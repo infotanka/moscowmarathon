@@ -256,7 +256,7 @@ provoda.View.extendTo(RunMapCompxCtr, {
 			var max1 = cvs_data.big_genders_groups[1].age_groups.max;
 			var max2 = cvs_data.big_genders_groups[0].age_groups.max;
 
-			var width_factor = (width - space)/(max1 + max2);
+			var width_factor = ((width - space)/2)/(max1 + max2);
 
 			
 			var result_data = {
