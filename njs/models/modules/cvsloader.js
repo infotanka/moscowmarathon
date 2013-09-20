@@ -115,7 +115,7 @@ var checkData = function() {
 		];
 
 		var age_ranges_to_use = small_ages_group;
-		var age_field = [3];
+		var age_field = ['birthyear'];
 
 		var start_year = (new Date(cvs_data.start_time)).getFullYear();
 
@@ -245,7 +245,7 @@ $(frame)
 		top: 0,
 		left: '-1000px'
 	})
-	.attr('src', 'data/data.html')
+	.attr('src', 'data/data3/data3.html')
 	.on('load', function() {
 		frame.contentWindow.postMessage('send_data','*');
 	})
