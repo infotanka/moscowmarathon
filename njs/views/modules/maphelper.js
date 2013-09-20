@@ -203,7 +203,7 @@ var setRunnersPoints = function(cur) {
 };
 */
 var hclc = {
-	height_scale: 2,
+	height_scale: 0.8,
 	man_place_square: Math.pow(3, 2)
 };
 
