@@ -145,7 +145,7 @@ path {
 .bmap_etc{
 	float:right;
 	width: 160px;
-	padding-top: 150px;
+	padding-top: 140px;
 	}
 	.weather{
 		position: absolute;
@@ -163,7 +163,7 @@ path {
 		.we_temperature{
 			font-size: 24px;
 			font-weight: 700;
-			margin-top: -30px;
+			margin-top: -40px;
 		}
 		.we_wind{
 			font-size: 13px;
@@ -179,7 +179,7 @@ path {
 		float: right;
 		font-size: 13px;
 		font-weight: 700;
-		margin-right: 25px;
+		margin-right: 40px;
 		}
 		.legend .graph_text_block{
 			font-weight: 400;
@@ -206,7 +206,7 @@ path {
 		}
 	.share{
 		padding-top:20px;
-		width: 100px;
+		width: 115px;
 		float: right;
 		font-size: 13px;
 		clear: both;
@@ -620,6 +620,11 @@ path {
 }
 .copyright_desc{
 	margin-top: 15px;
+	font-size: 12px;
+	}
+.copyright_desc_2{
+	margin-top: 10px;
+	font-size: 12px;
 	}
 .altt_desc{
 	font-size: 10px;
