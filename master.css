@@ -225,11 +225,21 @@ path {
 	margin-top: 15px;
 	font-size: 16px;
 }
-.runners_header{
 
+.runners_header{
+	border-bottom: 1px solid #ccc;
 }
 .runners_header h2{
 	float:left;
+}
+.runners_header.fixed_rheader{
+	position: fixed;
+	top: 0;
+	background: #fff;
+	
+	padding: 0 20px;
+	margin: 0 -20px;
+	width:100%;
 }
 .filters{
 	clear:both;
@@ -335,6 +345,7 @@ path {
 		}
 	.runners_list{
 		padding-bottom: 100px;
+		padding-top: 20px;
 		}
 		.runr_pos{
 			width: 5%;
@@ -443,15 +454,7 @@ path {
 	min-width: 1000px;
 }
 
-.runners_header.fixed_rheader{
-	position: fixed;
-	top: 0;
-	background: #fff;
-	border-bottom: 1px solid #ccc;
-	padding: 0 20px;
-	margin: 0 -20px;
-	width:100%;
-}
+
 .mthswitch{
 	border-bottom: 1px dotted #333;
 	cursor: pointer;
