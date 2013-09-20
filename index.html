@@ -673,39 +673,44 @@
 							<div class="firunr_search_c">
 								<input class="firunr_search" placeholder="Имя или номер" type="search" pv-events="input:makeSearch keydown:makeSearch mousemove:makeSearch"/ >
 							</div>
-							<div class="firunr_age_c">
-								<div class="firunr_age filterr_menu">
-									<div class="filtrr" pv-text="{{selected_filter_ages || filter_ages.0.label}}"></div>
-									<div class="flrr_menu_list" >
-										<div class="flrr_menu_item" pv-nest="filter_ages" pv-events="click::setFilter" pv-class="flrr_menu_item {{active && 'active'}} {{novalue && 'no_filtering_item'}}">
-											<span pv-text="{{label}}" class="filter_item_name"></span>
-											<span class="counter" pv-text="{{counter}}"></span>
+							<div pv-class="{{query && 'hidden'}}">
+								<div class="firunr_age_c">
+									<div class="firunr_age filterr_menu">
+										<div class="filtrr" pv-text="{{selected_filter_ages || filter_ages.0.label}}"></div>
+										<div class="flrr_menu_list" >
+											<div class="flrr_menu_item" pv-nest="filter_ages" pv-events="click::setFilter" pv-class="flrr_menu_item {{active && 'active'}} {{novalue && 'no_filtering_item'}}">
+												<span pv-text="{{label}}" class="filter_item_name"></span>
+												<span class="counter" pv-text="{{counter}}"></span>
+											</div>
 										</div>
 									</div>
 								</div>
-							</div>
-							<div class="firunr_teem_c">
-								<div class="firunr_teem filterr_menu">
-									<div class="filtrr" pv-text="{{selected_filter_team || filter_team.0.label}}"></div>
-									<div class="flrr_menu_list" >
-										<div class="flrr_menu_item" pv-nest="filter_team" pv-events="click::setFilter" pv-class="flrr_menu_item {{active && 'active'}} {{novalue && 'no_filtering_item'}}">
-											<span pv-text="{{label}}" class="filter_item_name"></span>
-											<span class="counter" pv-text="{{counter}}"></span>
+								<div class="firunr_teem_c">
+									<div class="firunr_teem filterr_menu">
+										<div class="filtrr" pv-text="{{selected_filter_team || filter_team.0.label}}"></div>
+										<div class="flrr_menu_list" >
+											<div class="flrr_menu_item" pv-nest="filter_team" pv-events="click::setFilter" pv-class="flrr_menu_item {{active && 'active'}} {{novalue && 'no_filtering_item'}}">
+												<span pv-text="{{label}}" class="filter_item_name"></span>
+												<span class="counter" pv-text="{{counter}}"></span>
+											</div>
 										</div>
 									</div>
 								</div>
-							</div>
-							<div class="firunr_place_c">
-								<div class="firunr_place filterr_menu">
-									<div class="filtrr" pv-text="{{selected_filter_city || filter_city.0.label}}" >Со всего мира</div>
-									<div class="flrr_menu_list" >
-										<div class="flrr_menu_item" pv-nest="filter_city" pv-events="click::setFilter" pv-class="flrr_menu_item {{active && 'active'}} {{novalue && 'no_filtering_item'}}">
-											<span pv-text="{{label}}" class="filter_item_name"></span>
-											<span class="counter" pv-text="{{counter}}"></span>
+								<div class="firunr_place_c">
+									<div class="firunr_place filterr_menu">
+										<div class="filtrr" pv-text="{{selected_filter_city || filter_city.0.label}}" >Со всего мира</div>
+										<div class="flrr_menu_list" >
+											<div class="flrr_menu_item" pv-nest="filter_city" pv-events="click::setFilter" pv-class="flrr_menu_item {{active && 'active'}} {{novalue && 'no_filtering_item'}}">
+												<span pv-text="{{label}}" class="filter_item_name"></span>
+												<span class="counter" pv-text="{{counter}}"></span>
+											</div>
 										</div>
 									</div>
 								</div>
+
+								
 							</div>
+							
 							
 						</div>
 						
