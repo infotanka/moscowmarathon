@@ -425,10 +425,11 @@ provoda.View.extendTo(TimeGraphCtr, {
 			pos_y: pos_y
 		});
 	},
+	age_words: ['год', 'года', 'лет'],
 	'compx-selector_matching': {
-		depends_on: ['selector', 'base_graph_data'],
-		fn: function(sel, base_graph_data) {
-			if (!sel || !base_graph_data){
+		depends_on: ['selector', 'base_graph_data', 'cvs_data'],
+		fn: function(sel, base_graph_data, cvs_data) {
+			if (!sel || !base_graph_data || !cvs_data){
 				return;
 			}
 			var used_selector = {};
@@ -466,6 +467,12 @@ provoda.View.extendTo(TimeGraphCtr, {
 			} else {
 				if (!matched.end_time_string){
 					matched.end_time_string = moment(matched.end_time).format('H:mm:ss');
+				}
+				if (!matched.age_years && matched.birthyear){
+					var age = (new Date(cvs_data.start_time)).getFullYear() - matched.birthyear;
+
+					matched.age_years = age + ' ' + this.age_words[spv.getUnitBaseNum(age)];
+	
 				}
 				return {
 					runner: matched,
