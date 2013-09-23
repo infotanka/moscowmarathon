@@ -119,9 +119,11 @@ provoda.View.extendTo(TimeGraphCtr, {
 				if (from_start) {
 					tstr = moment(cvs_data.start_time).startOf('day')
 					.add( cur.relative_to_start)
+
 					.format(cur.last ? 'HH:mm:ss' : 'HH:mm');
 				} else {
 					tstr = moment(cur.relative_to_day)
+					.zone(-240)
 					.format(cur.last ? 'HH:mm:ss' : 'HH:mm');
 				}
 				var span_top = $('<span class="tl_text_mark"></span>').appendTo(dfrg);
