@@ -79,7 +79,7 @@ BrowseMap.Model.extendTo(StartPage, {
 	makeSearch: function(query) {
 		this.updateState('query', query);
 	},
-	search_fields: [['states','pos'], ['states','full_name'], ['states','gender_pos']],
+	search_fields: [['states','num'], ['states','full_name'], ['states','gender_pos']],
 	getFilterData: function(runners, field, limit) {
 		var count = 0;
 		limit = limit || 0;
