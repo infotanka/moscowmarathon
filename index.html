@@ -691,7 +691,7 @@
 										<div class="flrr_menu_list" >
 											<div class="flrr_menu_item" pv-nest="filter_team" pv-events="click::setFilter" pv-class="flrr_menu_item {{active && 'active'}} {{novalue && 'no_filtering_item'}}">
 												<span pv-text="{{label}}" class="filter_item_name"></span>
-												<span class="counter" pv-text="{{counter}}"></span>
+												<span class="counter" pv-text="{{!novalue && counter}}"></span>
 											</div>
 										</div>
 									</div>
@@ -702,7 +702,7 @@
 										<div class="flrr_menu_list" >
 											<div class="flrr_menu_item" pv-nest="filter_city" pv-events="click::setFilter" pv-class="flrr_menu_item {{active && 'active'}} {{novalue && 'no_filtering_item'}}">
 												<span pv-text="{{label}}" class="filter_item_name"></span>
-												<span class="counter" pv-text="{{counter}}"></span>
+												<span class="counter" pv-text="{{!novalue && counter}}"></span>
 											</div>
 										</div>
 									</div>
