@@ -88,7 +88,7 @@
 
 					<div pv-class="{{!current_runner_data && 'hidden'}}">
 						<div class="">
-							<span pv-text="{{current_runner_data.pos}}"></span> место
+							<span pv-text="{{current_runner_data.gender_pos}}"></span> место
 						</div>
 						
 						
@@ -716,7 +716,6 @@
 						
 					</div>
 					<div class="runners_list" pv-anchor="runners_list">
-
 
 						<div pv-nest="runners_filtered|limitTo:100" class="runrs_item">
 							<div class="runr_pos" pv-text="{{pos}}"></div>

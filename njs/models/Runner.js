@@ -11,6 +11,7 @@ BrowseMap.Model.extendTo(Runner, {
 	},
 	raw_map_st: {
 		pos: 'pos',
+		gender_pos: 'gender_pos',
 		num: 'num',
 		full_name: 'full_name',
 		birthyear: 'birthyear',
@@ -18,7 +19,7 @@ BrowseMap.Model.extendTo(Runner, {
 		region: 'region',
 		city: 'city',
 		team: 'team',
-
+		result_time: 'result_time',
 		gender: 'gender',
 		full_time_string: 'result_time_string'
 	}
