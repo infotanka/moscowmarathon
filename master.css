@@ -175,14 +175,17 @@ path {
 		}
 
 	.legend{
-		width: 75px;
+		width: 100px;
 		float: right;
 		font-size: 13px;
 		font-weight: 700;
-		margin-right: 40px;
+		margin-right: 15px;
 		}
 		.legend .graph_text_block{
 			font-weight: 400;
+		}
+		.legendcount_c{
+			padding-right: 25px;
 		}
 		.legendcount_c .textblock{
 			font-size: 10px;
