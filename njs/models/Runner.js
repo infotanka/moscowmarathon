@@ -8,6 +8,7 @@ BrowseMap.Model.extendTo(Runner, {
 		this._super(opts);
 		this.mapStates(this.raw_map_st, raw, true);
 		this.initStates();
+		this.wch(this.map_parent, 'selected_filter_gender');
 	},
 	raw_map_st: {
 		pos: 'pos',

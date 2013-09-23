@@ -718,7 +718,7 @@
 					<div class="runners_list" pv-anchor="runners_list">
 
 						<div pv-nest="runners_filtered" class="runrs_item">
-							<div class="runr_pos" pv-text="{{pos}}"></div>
+							<div class="runr_pos" pv-text="{{selected_filter_gender && gender_pos}} {{!selected_filter_gender && pos}}"></div>
 							<div class="runr_name" pv-text="{{full_name}}"></div>
 							<div class="runr_num" pv-text="{{num}}"></div>
 							<div class="runr_age" pv-text="{{2013 - birthyear}}"></div>
