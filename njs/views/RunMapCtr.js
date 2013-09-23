@@ -260,7 +260,7 @@ provoda.View.extendTo(RunMapCtr, {
 						
 				}).call(this);*/
 
-				return Date.now();
+				return  this.path.bounds(geodata);
 			}
 			
 		}
@@ -325,36 +325,38 @@ provoda.View.extendTo(RunMapCtr, {
 		}
 	},
 	'compx-track_left_padding': {
-		depends_on: ['trackbbox'],
-		fn: function(trackbbox) {
-			if (trackbbox){
-				return Math.round(trackbbox.x);
+		depends_on: ['basedet'],
+		fn: function(basedet) {
+			if (basedet){
+
+
+				return Math.round(basedet[0][0]);
 			}
 		}
 	},
 	'compx-track_top_padding': {
-		depends_on: ['trackbbox'],
-		fn: function( trackbbox) {
-			if ( trackbbox){
-				return Math.round(trackbbox.y);
+		depends_on: ['basedet'],
+		fn: function( basedet) {
+			if ( basedet){
+				return Math.round(basedet[0][1]);
 			}
 		}
 	},
 	'compx-trackwidth': {
-		depends_on: ['trackbbox'],
-		fn: function(trackbbox) {
-			if (trackbbox){
+		depends_on: ['basedet'],
+		fn: function(basedet) {
+			if (basedet){
 
-				return Math.round(trackbbox.width);
+				return Math.round(basedet[1][0] - basedet[0][0]);
 			}
 		}
 	},
 	'compx-trackheight': {
-		depends_on: ['trackbbox'],
-		fn: function(trackbbox) {
-			if (trackbbox){
+		depends_on: ['basedet'],
+		fn: function(basedet) {
+			if (basedet){
 
-				return Math.round(trackbbox.height);
+				return Math.round(basedet[1][1] - basedet[0][1]);
 			}
 		}
 	},
