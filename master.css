@@ -204,6 +204,7 @@ path {
 			height: 100px;
 			float:right;
 			width: 220px;
+			margin-right: -47px;
 		}
 		.svgcon svg{
 			max-width: 100%;
