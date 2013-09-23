@@ -87,13 +87,13 @@
 						<span pv-text="{{current_runner_data.full_time_string}}"></span>
 					</h1>
 
-					<div pv-class="{{!current_runner_data && 'hidden'}}">
+<!-- 					<div pv-class="{{!current_runner_data && 'hidden'}}">
 						<div class="">
 							<span pv-text="{{current_runner_data.gender_pos}}"></span> место
 						</div>
 						
 						
-					</div>
+					</div> -->
 					<div>
 						<div>
 							<!-- start -->
@@ -111,7 +111,7 @@
 							<div 
 								class="marker_c hidden"
 								pv-class="marker_c {{!start_point && 'hidden'}}"
-								style="left:15px"
+								style="left:18px"
 								pv-props="
 									style.top: {{start_point.1}}
 									
@@ -160,7 +160,7 @@
 								<span class="marker"></span>
 								<div class="marker_text"  style="bottom: auto;top: 5px;">
 									<span style="font-weight:700">Финиш</span>
-									121
+									125
 									м над уровнем моря
 								</div>
 							</div>
@@ -507,7 +507,7 @@
 								"
 								pv-class="factoid {{ !( time_value|compareTime: '1:50:00' : '3:30:00' ) && 'hidden'}}" class="factoid hidden">
 									<img class="factoid_img" src="i/small-globe.png" width=100 height=96/>
-									<div class="factoid_d">В марафоне участвовали спортсмены со всего мира: <b>из Парижа, Лондона, Токио, Риги, итальянского городка Кастровиллари, солнечной Калифорнии, Роттердама и Бангкока.</b></h5></div>
+									<div class="factoid_d">В марафоне участвовали спортсмены со всего мира: <b>из Парижа, Лондона, Токио, итальянского городка Кастровиллари, солнечной Калифорнии, далёкой Австралии, Роттердама и Бангкока.</b></h5></div>
 							</div>
 
 
@@ -540,10 +540,10 @@
 					<div class="share">
 						<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://moscowmarathon.datalaboratory.ru/" data-lang="ru">Твитнуть</a>
 						<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
-						<div class="fb-like" data-href="http://moscowmarathon.datalaboratory.ru/" data-width="100" data-show-faces="false" data-send="false" style="margin-top:5px;"></div>
+						<div class="fb-like" data-href="http://moscowmarathon.datalaboratory.ru/" data-width="450" data-layout="button_count" data-show-faces="false" data-send="false" style="margin-top:5px;"></div>
 						<div>
 
-						<div id="vk_like"></div>
+						<div id="vk_like" style="margin-top:5px;"></div>
 						<script type="text/javascript">
 						VK && VK.Widgets.Like("vk_like", {type: "mini"});
 						</script>
