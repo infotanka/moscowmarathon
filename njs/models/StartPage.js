@@ -69,6 +69,9 @@ BrowseMap.Model.extendTo(StartPage, {
 			}
 			this.checkRunners(true);
 		});
+		this.wch(this, 'current_pages', function() {
+			this.checkRunners();
+		});
 		
 		return this;
 	},
@@ -309,16 +312,24 @@ BrowseMap.Model.extendTo(StartPage, {
 		var has_query = !!this.state('query');
 
 		var result = has_query ? this.searched_r : this.filtered_r;
-	/*	var current_page = 0;
-		if (!reset_page){
-			current_page = this.state('current_page');
-			result.slice();
-		} else {
-			var pages = 
+		if (!result){
+			return;
 		}
-*/
-
-		this.updateNesting('runners_filtered', result);
+		
+		var current_pages;
+		if (!reset_page){
+			current_pages = this.state('current_pages');
+		} else {
+			current_pages = 0;
+			this.updateState('current_pages', current_pages);
+		}
+		var cutted = result.slice(0, this.page_limit * ((current_pages || 0) + 1));
+		this.updateState('has_more_button', result.length > cutted.length);
+		this.updateNesting('runners_filtered', cutted);
+	},
+	showMore: function() {
+		var current_pages = this.state('current_pages') || 0;
+		this.updateState('current_pages', current_pages + 1);
 	}
 
 });
