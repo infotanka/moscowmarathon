@@ -477,11 +477,11 @@
 						<div pv-props="
 									style.top:   {{track_top_padding +  (trackheight * 0.6)}}
 									style.left:  {{track_left_padding - (trackwidth * 0.17)}}
-									style.width: {{trackwidth * 0.3}}
+									style.width: {{trackwidth * 0.25}}
 								"
 								pv-class="factoid {{ !( time_value|compareTime: '5:30:00' : '6:30:00' ) && 'hidden'}}" class="factoid hidden">
-							<div class="factoid_d">Марафон — последний финиш перед реконструкцией на&nbsp;Большой спортивной арене</div>
-							<h5 class="factoid_h" style="margin-left:0px;">стадиона Лужники</h5>
+							<div class="factoid_d">Марафон — последний финиш перед реконструкцией Большой спортивной арены стадиона</div>
+							<h5 class="factoid_h" style="margin-left:0px;">Лужники</h5>
 							<img class="factoid_img" src="i/slope.png" width=82 height=68/>
 						</div>
 
@@ -581,8 +581,9 @@
 
 						>
 						<div class="timeline_select_desc-text" >
-							<div pv-text="{{selector_matching.runner.full_name}}"></div>
-							<div pv-text="{{selector_matching.runner.result_time_string}}"></div>
+							<div pv-text="{{selector_matching.runner.full_name}}, {{selector_matching.runner.age_years}}"></div>
+							<div pv-text="{{selector_matching.runner.end_time_string}}"></div>
+
 						</div>
 					</div>					
 				</div>
