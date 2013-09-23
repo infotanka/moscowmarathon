@@ -202,6 +202,7 @@ path {
 		}
 		.legendage_c .svgcon{
 			height: 100px;
+			width: 150%;
 		}
 		.svgcon svg{
 			max-width: 100%;
@@ -464,6 +465,7 @@ path {
 }
 .legendage_c{
 	margin-top:20px;
+	overflow: hidden;
 }
 .genbuttn_group{
 	display: inline-block;
