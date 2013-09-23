@@ -134,13 +134,15 @@ BrowseMap.Model.extendTo(StartPage, {
 					result.items.unshift({
 						label: no_flabel,
 						novalue: true,
-						counter: result.count
+						counter: result.count,
+						limited_count: result.items.length
 					});
 				} else {
 					result.items.unshift({
-						label: 'Все ' + selectByNum(result.count, no_flabel),
+						label: 'Все ' + selectByNum(result.items.length, no_flabel),
 						novalue: true,
-						counter: result.count
+						counter: result.count,
+						limited_count: result.items.length
 					});
 					
 				}
