@@ -88,7 +88,7 @@
 
 					<div pv-class="{{!current_runner_data && 'hidden'}}">
 						<div class="">
-							<span pv-text="{{current_runner_data.pos}}"></span> место
+							<span pv-text="{{current_runner_data.gender_pos}}"></span> место
 						</div>
 						
 						
@@ -719,7 +719,7 @@
 
 
 						<div pv-nest="runners_filtered|limitTo:30" class="runrs_item">
-							<div class="runr_pos" pv-text="{{pos}}"></div>
+							<div class="runr_pos" pv-text="{{gender_pos}}"></div>
 							<div class="runr_name" pv-text="{{full_name}}"></div>
 							<div class="runr_num" pv-text="{{num}}"></div>
 							<div class="runr_age" pv-text="{{2013 - birthyear}}"></div>

@@ -67,15 +67,16 @@ BrowseMap.Model.extendTo(StartPage, {
 				this.searched_r = [];
 				
 			}
-			this.checkRunners();
+			this.checkRunners(true);
 		});
 		
 		return this;
 	},
+	page_limit: 100,
 	makeSearch: function(query) {
 		this.updateState('query', query);
 	},
-	search_fields: [['states','pos'], ['states','full_name']],
+	search_fields: [['states','pos'], ['states','full_name'], ['states','gender_pos']],
 	getFilterData: function(runners, field, limit) {
 		var count = 0;
 		limit = limit || 0;
@@ -294,23 +295,30 @@ BrowseMap.Model.extendTo(StartPage, {
 		} else {
 			//return result;
 		}
-		var rules = [{field: ['states', 'pos']}, {field: ['states', 'num']}];
+		var rules = [{field: ['states', 'result_time']}, {field: ['states', 'pos']}, {field: ['states', 'num']}];
 		result.sort(function(a, b) {
 			return spv.sortByRules(a, b, rules);
 		});
 		this.filtered_r = result;
-		this.checkRunners();
+		this.checkRunners(true);
 		
 		
 
 	},
-	checkRunners: function() {
+	checkRunners: function(reset_page) {
 		var has_query = !!this.state('query');
-		if (has_query){
-			this.updateNesting('runners_filtered', this.searched_r);
+
+		var result = has_query ? this.searched_r : this.filtered_r;
+	/*	var current_page = 0;
+		if (!reset_page){
+			current_page = this.state('current_page');
+			result.slice();
 		} else {
-			this.updateNesting('runners_filtered', this.filtered_r);
+			var pages = 
 		}
+*/
+
+		this.updateNesting('runners_filtered', result);
 	}
 
 });
