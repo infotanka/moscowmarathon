@@ -202,7 +202,8 @@ path {
 		}
 		.legendage_c .svgcon{
 			height: 100px;
-			width: 150%;
+			float:right;
+			width: 160px;
 		}
 		.svgcon svg{
 			max-width: 100%;
