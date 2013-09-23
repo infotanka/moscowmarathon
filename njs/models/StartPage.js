@@ -168,11 +168,11 @@ BrowseMap.Model.extendTo(StartPage, {
 			no_flabel: teams_header
 		}, {
 			name: 'city',
-			limit: 3,
+			limit: 1,
 			no_flabel: city_header
 		}, {
 			name: 'country',
-			limit: 3,
+			limit: 1,
 			no_flabel: 'Со всего мира'
 		}].forEach(function(el) {
 			var result = _this.getFilterData(runners, el.name, el.limit);
