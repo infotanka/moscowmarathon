@@ -363,7 +363,7 @@
 
 							<img class="factoid_img" src="i/dinamo.png" width=81 height=81 />
 							<h5 class="factoid_h">Динамо бежит!</h5>
-							<div class="factoid_d">Во время уличных пробежек бегунов часто спрашивают, бежит ли Динамо. <p style="margin-top:3px;">На этот раз ответ — да!</p></div>
+							<div class="factoid_d">Во время уличных пробежек бегунов часто спрашивают, бежит ли Динамо. На этот раз ответ&nbsp;—&nbsp;да!</p></div>
 						</div>
 
 						<div
@@ -441,8 +441,8 @@
 							pv-class="factoid {{ !( time_value|compareTime: '4:00:00' : '7:00:00' ) && 'hidden'}}"
 							class="factoid hidden">
 								<img class="factoid_img" src="i/photo.png" width=130 height=97/>
-								<h5 class="factoid_h">Десятки волонтёров</h5>
-								<div class="factoid_d">и сотни болельшиков поддерживали бегунов</div>
+								<h5 class="factoid_h">На 34-м км</h5>
+								<div class="factoid_d">обосновались болельщики из команды Moskva River Runners</div>
 						</div>
 
 						<div pv-props="
@@ -453,7 +453,7 @@
 								pv-class="factoid {{ !( time_value|compareTime: '0:00:00' : '1:50:00' ) && 'hidden'}}" class="factoid hidden">
 							<img class="factoid_img" src="i/marathon.png" width=80 height=80 />
 							<h5 class="factoid_h">«νικῶμεν!»</h5>
-							<div class="factoid_d">или «Мы победили» — последние слова греческого воина Фидиппида, прибежавшего в&nbsp;Афины с&nbsp;поля боя близь Марафона и&nbsp;положившего начало марафонской традиции</div>
+							<div class="factoid_d">или «Мы победили» — последние слова греческого воина Фидиппида, прибежавшего в&nbsp;Афины с&nbsp;поля боя близь Марафона (около 40 км)</div>
 						</div>
 
 						<div pv-props="
@@ -461,7 +461,7 @@
 									style.left:  {{track_left_padding - (trackwidth * 0.17)}}
 									style.width: {{trackwidth * 1}}
 								"
-								pv-class="factoid {{ !( time_value|compareTime: '3:30:00' : '7:00:00' ) && 'hidden'}}" class="factoid hidden">
+								pv-class="factoid {{ !( time_value|compareTime: '3:30:00' : '5:30:00' ) && 'hidden'}}" class="factoid hidden">
 							<h5 class="factoid_h" style="margin-left:-10px;">+230 м</h5>
 							<div class="factoid_d">суммарного подъема — <br>это&nbsp;77 этажей или <br>высота ГЗ&nbsp;МГУ со&nbsp;шпилем</div>
 						</div>
@@ -470,11 +470,22 @@
 									style.top:   {{track_top_padding +  (trackheight * 0.65)}}
 									style.left:  {{track_left_padding - (trackwidth * 0.2)}}
 								"
-								pv-class="factoid {{ !( time_value|compareTime: '3:30:00' : '7:00:00' ) && 'hidden'}}" class="factoid hidden"
+								pv-class="factoid {{ !( time_value|compareTime: '3:30:00' : '5:30:00' ) && 'hidden'}}" class="factoid hidden"
 
 								src="i/msu.png" width=150 height=150 />
 
-							<div  pv-props="
+						<div pv-props="
+									style.top:   {{track_top_padding +  (trackheight * 0.6)}}
+									style.left:  {{track_left_padding - (trackwidth * 0.17)}}
+									style.width: {{trackwidth * 0.3}}
+								"
+								pv-class="factoid {{ !( time_value|compareTime: '5:30:00' : '6:30:00' ) && 'hidden'}}" class="factoid hidden">
+							<div class="factoid_d">Марафон — последний финиш перед реконструкцией на&nbsp;Большой спортивной арене</div>
+							<h5 class="factoid_h" style="margin-left:0px;">стадиона Лужники</h5>
+							<img class="factoid_img" src="i/slope.png" width=82 height=68/>
+						</div>
+
+						<div  pv-props="
 								style.top:   {{track_top_padding +  (trackheight * 0.1)}}
 								style.left:  {{track_left_padding - (trackwidth * 0.17)}}
 								style.width: {{trackwidth * 0.25}}
@@ -571,7 +582,7 @@
 						>
 						<div class="timeline_select_desc-text" >
 							<div pv-text="{{selector_matching.runner.full_name}}"></div>
-							<div pv-text="{{selector_matching.runner.end_time_string}}"></div>
+							<div pv-text="{{selector_matching.runner.result_time_string}}"></div>
 						</div>
 					</div>					
 				</div>
