@@ -452,6 +452,8 @@ provoda.View.extendTo(TimeGraphCtr, {
 				matched = getByS(sel.pos_x, sel.pos_y - 1);
 			}
 
+
+
 			/*
 			
 			if (matched){
@@ -462,6 +464,9 @@ provoda.View.extendTo(TimeGraphCtr, {
 			if (!matched){
 				return;
 			} else {
+				if (!matched.end_time_string){
+					matched.end_time_string = moment(matched.end_time).format('H:mm:ss');
+				}
 				return {
 					runner: matched,
 					selector: used_selector
